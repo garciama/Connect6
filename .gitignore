@@ -1,0 +1,20 @@
+# Gradle's default output directory
+build/
+
+# Gradle's local cache
+.gradle/
+
+# IntelliJ will use this as the output directory
+out/
+
+# Ignore all IntelliJ configuration
+.idea/
+*.iml
+
+# Other useful things to ignore
+.DS_Store
+*.class
+a.out
+*.exe
+*.dll
+*~
