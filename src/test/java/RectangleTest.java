@@ -14,6 +14,6 @@ public class RectangleTest{
     @Test
     public void returnXTest(){
         Rectangle r = new Rectangle(4, 9);
-        assertEquals(9, r.returnX());
+        assertEquals(7, r.returnX());
     }
 }
