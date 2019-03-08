@@ -1,16 +1,14 @@
 package core.user;
+import core.game.Board;
+
+import java.awt.*;
 
 public class User {
 
     private int wins;
     private int losses;
     private int ties;
-
-    public User(int w, int l, int t){
-        this.wins = w;
-        this.losses = l;
-        this.ties = t;
-    }
+    private Color color;
 
     public int getWins(){
         return this.wins;
@@ -20,5 +18,9 @@ public class User {
     }
     public int getTies(){
         return this.ties;
+    }
+
+    public void makesMove(int x, int y){
+
     }
 }
