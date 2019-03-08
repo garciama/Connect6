@@ -32,12 +32,12 @@ public class Board {
 //        squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
 //        squaresOnBoard[2][7].changeColor( new Color(7, 7, 7));
 
-        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
+//        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
 
 
 
@@ -73,7 +73,8 @@ public class Board {
 
     private boolean isWinning(int x, int y, Color c){
 
-        return(checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalUp(x, y, c));
+        return(checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalUp(x, y, c) ||
+                checkDiagonalDown(x, y, c));
     }
 
     private boolean checkHorizontal(int x, int y, Color c){
@@ -108,7 +109,7 @@ public class Board {
     }
 
     private boolean checkDiagonalDown(int x, int y, Color c){
-        if (x > 13 || y > 13)
+        if (x < 5 || y < 5)
             return false;
         for (int i = x; i >= 0; i--){
             if(squaresOnBoard[x - i][y - i].getColor().getRed() != c.getRed())
