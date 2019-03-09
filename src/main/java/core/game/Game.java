@@ -2,10 +2,9 @@ package core.game;
 import core.user.User;
 
 public class Game {
+
     private boolean publicOrPrivate;
     private boolean isFinished;
-
-
 
     public void createGame(){
         Board b = new Board();
@@ -14,6 +13,5 @@ public class Game {
 
         player1.makesMove(5 ,5);
     }
-
 
 }
