@@ -24,21 +24,22 @@ public class Board {
             System.out.println();
         }*/
 
-        /*squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
+        /*
+        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][3].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][4].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][5].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][7].changeColor( new Color(7, 7, 7));*/
+        squaresOnBoard[2][7].changeColor( new Color(7, 7, 7)); */
 
-        /*squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
         squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
         squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[4][4].changeColor( new Color(10, 7, 7));
         squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));*/
+        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
 
-       // searchForColor();
+        searchForColor();
     }
 
     //Maybe return something later?
@@ -69,7 +70,7 @@ public class Board {
     public boolean checkHorizontal(int x, int y, Color c){
         if (x > 13)
             return false;
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x + i][y].getColor().getRed() != c.getRed())
                 return false;
         }
@@ -79,7 +80,7 @@ public class Board {
     public boolean checkVertical(int x, int y, Color c){
         if (y > 13)
             return false;
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x][y + i].getColor().getRed() != c.getRed())
                 return false;
         }
@@ -89,7 +90,7 @@ public class Board {
     public boolean checkDiagonalRight(int x, int y, Color c){
         if (x > 13 || y > 13)
             return false;
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x + i][y + i].getColor().getRed() != c.getRed())
                 return false;
         }
@@ -99,7 +100,7 @@ public class Board {
     public boolean checkDiagonalLeft(int x, int y, Color c){
         if (x < 5 || y < 5)
             return false;
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x - i][y + i].getColor().getRed() != c.getRed())
                 return false;
         }
