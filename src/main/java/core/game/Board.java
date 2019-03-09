@@ -25,12 +25,12 @@ public class Board {
             System.out.println();
         }*/
 
-//        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
-//        squaresOnBoard[2][3].changeColor( new Color(7, 7, 7));
-//        squaresOnBoard[2][4].changeColor( new Color(7, 7, 7));
-//        squaresOnBoard[2][5].changeColor( new Color(7, 7, 7));
-//        squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
-//        squaresOnBoard[2][7].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[2][3].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[2][4].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[2][5].changeColor( new Color(7, 7, 7));
+        squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
+        //squaresOnBoard[2][7].changeColor( new Color(7, 7, 7));
 
 //        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
 //        squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
