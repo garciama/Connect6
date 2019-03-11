@@ -5,11 +5,26 @@ import java.util.Date;
 public class Move {
 
     private Date date;
-    private Time time;
     private User player;
 
-    public User getUser(){
+    public Move() {
+        date = new Date();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public User getPlayer() {
         return player;
     }
+
+    public void setPlayer(User player) {
+        this.player = player;
+    }
+
+
+
+
 
 }

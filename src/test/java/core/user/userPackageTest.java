@@ -3,6 +3,10 @@ package core.user;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class userPackageTest {
@@ -35,5 +39,12 @@ public class userPackageTest {
     public void getTies() {
         assertEquals(0, u2.getTies());
         assertEquals(2, u1.getTies());
+    }
+
+    @Test
+    public void testDateAndTime() {
+        Move move = new Move();
+        Date date = new Date();
+        assertEquals(move.getDate(), date);
     }
 }
