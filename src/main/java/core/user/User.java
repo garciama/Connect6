@@ -10,6 +10,12 @@ public class User {
     private int ties;
     private Color color;
 
+    public User(){
+        wins = 0;
+        losses = 0;
+        ties = 0;
+    }
+
     public int getWins(){
         return this.wins;
     }
@@ -18,6 +24,18 @@ public class User {
     }
     public int getTies(){
         return this.ties;
+    }
+
+    public void setWins( int updatedWins ){
+        wins = updatedWins;
+    }
+
+    public void setLosses( int updatedLosses ){
+        losses = updatedLosses;
+    }
+
+    public void setTies( int updatedTies ){
+        ties = updatedTies;
     }
 
     public void makesMove(int x, int y){
