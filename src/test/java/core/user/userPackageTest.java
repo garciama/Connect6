@@ -47,4 +47,11 @@ public class userPackageTest {
         Date date = new Date();
         assertEquals(move.getDate(), date);
     }
+
+    @Test
+    public void testSetGetUser() {
+        Move move = new Move();
+        move.setPlayer(u1);
+        assertEquals( u1, move.getPlayer());
+    }
 }
