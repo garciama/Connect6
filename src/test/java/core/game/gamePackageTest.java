@@ -101,8 +101,8 @@ public class gamePackageTest {
 
     @Test
     public void toStringTestSquare() {
-        assertEquals("( [5, 10]java.awt.Color[r=0,g=0,b=0] )", s1.toString());
-        assertEquals("( [2, 4]java.awt.Color[r=0,g=0,b=0] )", s2.toString());
+        assertEquals("( [10, 5]java.awt.Color[r=0,g=0,b=0] )", s1.toString());
+        assertEquals("( [4, 2]java.awt.Color[r=0,g=0,b=0] )", s2.toString());
     }
 
     @Test

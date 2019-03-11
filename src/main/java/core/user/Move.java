@@ -1,5 +1,4 @@
 package core.user;
-import java.sql.Time;
 import java.util.Date;
 
 public class Move {
@@ -22,9 +21,5 @@ public class Move {
     public void setPlayer(User player) {
         this.player = player;
     }
-
-
-
-
 
 }

@@ -18,3 +18,4 @@ a.out
 *.exe
 *.dll
 *~
+testCoverage/
