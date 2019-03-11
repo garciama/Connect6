@@ -29,6 +29,13 @@ public class gamePackageTest {
         b1.squaresOnBoard[7][2].changeColor( new Color(7, 7, 7));
         assertFalse(b1.checkHorizontal(4,1, b1.squaresOnBoard[2][2].getColor()));
         assertTrue(b1.checkHorizontal(2,2, b1.squaresOnBoard[2][2].getColor()));
+        //only 5 in a row, should fail
+        assertFalse(b1.checkHorizontal(3,2, b1.squaresOnBoard[3][2].getColor()));
+        //would go off board, should fail
+        b1.squaresOnBoard[16][2].changeColor(new Color(7,7,7));
+        b1.squaresOnBoard[17][2].changeColor(new Color(7,7,7));
+        b1.squaresOnBoard[18][2].changeColor(new Color(7,7,7));
+        assertFalse(b1.checkHorizontal(16,2,b1.squaresOnBoard[16][2].getColor()));
     }
 
     @Test
@@ -42,6 +49,14 @@ public class gamePackageTest {
         b1.squaresOnBoard[1][6].changeColor( new Color(7, 7, 7));
         assertFalse(b1.checkVertical(6,4,b1.squaresOnBoard[1][1].getColor()));
         assertTrue(b1.checkVertical(1,1,b1.squaresOnBoard[1][1].getColor()));
+        //only 4 in a row, should fail
+        assertFalse(b1.checkVertical(1,3, b1.squaresOnBoard[1][3].getColor()));
+        //would go off board, should fail
+        b1.squaresOnBoard[1][15].changeColor( new Color(7, 7, 7));
+        b1.squaresOnBoard[1][16].changeColor( new Color(7, 7, 7));
+        b1.squaresOnBoard[1][17].changeColor( new Color(7, 7, 7));
+        b1.squaresOnBoard[1][18].changeColor( new Color(7, 7, 7));
+        assertFalse(b1.checkVertical(1,15, b1.squaresOnBoard[1][15].getColor()));
     }
 
     @Test
