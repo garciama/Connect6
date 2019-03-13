@@ -32,6 +32,7 @@ public class Board {
         squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][7].changeColor( new Color(7, 7, 7)); */
 
+
         squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
         squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
         squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
@@ -39,14 +40,14 @@ public class Board {
         squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
 
-        //searchForColor();
+        searchForColor();
     }
 
     //Maybe return something later?
    // private void lastMove(){
     //}
 
-   /* private void searchForColor(){
+    private void searchForColor(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 System.out.print(squaresOnBoard[i][j].toString());
@@ -60,7 +61,7 @@ public class Board {
             }
             System.out.println();
         }
-    }*/
+    }
 
     public boolean isWinning(int x, int y, Color c){
         return (checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalRight(x, y, c) ||
