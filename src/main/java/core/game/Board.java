@@ -94,4 +94,18 @@ public class Board {
         return true;
     }
 
+    /**
+     *
+     * @param x x coordinate on board
+     * @param y y coordinate on board
+     * @return true if the square isn't occupied, false if the square is already occupied
+     */
+    public boolean checkIfSquareIsOpen(int x, int y) {
+        if (squaresOnBoard[x][y].getColor() != Color.White) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
