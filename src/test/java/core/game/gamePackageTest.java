@@ -108,4 +108,11 @@ public class gamePackageTest {
         assertEquals(Color.White, s2.getColor());
     }
 
+    @Test
+    public void testCheckIfSquareIsOpen() {
+        assertEquals(true, b1.checkIfSquareIsOpen(0, 0));
+        b1.squaresOnBoard[0][0].changeColor(Color.Red);
+        assertEquals(false, b1.checkIfSquareIsOpen(0, 0));
+    }
+
 }
