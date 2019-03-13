@@ -55,4 +55,11 @@ public class userPackageTest {
         assertEquals(0, move.getX());
         assertEquals(0, move.getY());
     }
+
+    @Test
+    public void moveToString() {
+        // TODO will have to change this when we change how we keep track of users
+        Move move = new Move(5, 8, u1);
+        assertEquals("5 8", move.toString());
+    }
 }

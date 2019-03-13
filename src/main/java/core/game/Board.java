@@ -95,7 +95,7 @@ public class Board {
     }
 
     /**
-     *
+     * Checks if a square is occupied already or not
      * @param x x coordinate on board
      * @param y y coordinate on board
      * @return true if the square isn't occupied, false if the square is already occupied
