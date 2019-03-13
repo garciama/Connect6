@@ -35,4 +35,12 @@ public class Move {
         this.player = player;
     }
 
+    public String toString() {
+        // TODO: update this when we figure out how we are keeping track of users
+        String str = String.format("%d %d", x, y);
+        //String str = String.format("%d %d %s", x, y, player.name or whatever);
+        return str;
+    }
+
+
 }
