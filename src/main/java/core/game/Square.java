@@ -1,6 +1,5 @@
 package core.game;
 import core.user.User;
-import java.awt.*;
 
 public class Square {
     private int xCoord;
@@ -11,10 +10,8 @@ public class Square {
     public Square(int y, int x){
         xCoord = x;
         yCoord = y;
-        //Default color is black before anyone clicks the square
-        color = new Color(0, 0, 0);
-        /*Blue (r:25 g:0  b:155)
-        Red (r: 153 g: 0 b: 56)*/
+        //Default color is white before anyone clicks the square
+        color = Color.White;
     }
 
     public void changeColor(Color c){
@@ -22,11 +19,15 @@ public class Square {
     }
 
     public String toString(){
-        return( "( [" + xCoord + ", " + yCoord + "]" + color + " )" );
+        return( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );
     }
 
     public Color getColor(){
         return this.color;
     }
 
+}
+
+enum Color{
+    White, Red, Blue
 }
