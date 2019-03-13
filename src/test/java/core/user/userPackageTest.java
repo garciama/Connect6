@@ -43,15 +43,16 @@ public class userPackageTest {
 
     @Test
     public void testDateAndTime() {
-        Move move = new Move();
+        Move move = new Move(0, 0, u1);
         Date date = new Date();
         assertEquals(move.getDate(), date);
     }
 
     @Test
     public void testSetGetUser() {
-        Move move = new Move();
-        move.setPlayer(u1);
-        assertEquals( u1, move.getPlayer());
+        Move move = new Move(0, 0, u2);
+        assertEquals( u2, move.getPlayer());
+        assertEquals(0, move.getX());
+        assertEquals(0, move.getY());
     }
 }

@@ -5,9 +5,22 @@ public class Move {
 
     private Date date;
     private User player;
+    private int x;
+    private int y;
 
-    public Move() {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Move(int x, int y, User player) {
         date = new Date();
+        this.x = x;
+        this.y = y;
+        this.player = player;
     }
 
     public Date getDate() {
