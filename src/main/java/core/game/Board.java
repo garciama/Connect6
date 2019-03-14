@@ -49,7 +49,7 @@ public class Board {
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 System.out.print(squaresOnBoard[i][j].toString());
-                if (squaresOnBoard[i][j].getColor() != Color.White)
+                if (squaresOnBoard[i][j].getColor() != Color.Black)
                     if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
                         System.out.println("Game over!");
                         System.exit(1);
@@ -111,7 +111,7 @@ public class Board {
      * @return true if the square isn't occupied, false if the square is already occupied
      */
     public boolean checkIfSquareIsOpen(int x, int y) {
-        if (squaresOnBoard[x][y].getColor() != Color.White) {
+        if (squaresOnBoard[x][y].getColor() != Color.Black) {
             return false;
         } else {
             return true;

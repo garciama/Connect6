@@ -10,8 +10,8 @@ public class Square {
     public Square(int y, int x){
         xCoord = x;
         yCoord = y;
-        //Default color is white before anyone clicks the square
-        color = Color.White;
+        //Default color is black before anyone clicks the square
+        color = Color.Black;
     }
 
     public void changeColor(Color c){
@@ -29,5 +29,5 @@ public class Square {
 }
 
 enum Color{
-    White, Red, Blue
+    Black, Red, Blue
 }
