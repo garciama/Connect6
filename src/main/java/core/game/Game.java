@@ -6,7 +6,7 @@ public class Game {
     private boolean publicOrPrivate;
     private boolean isFinished;
 
-    public void createGame(){
+    public void createGame(User redPlayer, User bluePlayer){
         Board b = new Board();
         User player1 = new User();
         User player2 = new User();
