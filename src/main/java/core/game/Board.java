@@ -1,7 +1,5 @@
 package core.game;
 
-import java.awt.*;
-
 public class Board {
 
     private boolean winningState;
@@ -16,22 +14,14 @@ public class Board {
             }
         }
 
-        /*
-        for (int i = 0; i < 19; i++){
-            for (int j = 0; j < 19; j++){
-                System.out.print(squaresOnBoard[j][i] + " ");
-            }
-            System.out.println();
-        }*/
+        /*squaresOnBoard[2][2].changeColor(Color.Red);
+        squaresOnBoard[2][3].changeColor(Color.Red);
+        squaresOnBoard[2][4].changeColor(Color.Red);
+        squaresOnBoard[2][5].changeColor(Color.Red);
+        squaresOnBoard[2][6].changeColor(Color.Red);
+        squaresOnBoard[2][7].changeColor(Color.Red);*/
 
-        /*
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][4].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][5].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][6].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][7].changeColor( new Color(7, 7, 7)); */
-
+<<<<<<< HEAD
 
         squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
         squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
@@ -39,6 +29,14 @@ public class Board {
         squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
         squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
+=======
+        /*squaresOnBoard[7][7].changeColor(Color.Blue);
+        squaresOnBoard[6][6].changeColor(Color.Blue);
+        squaresOnBoard[5][5].changeColor(Color.Blue);
+        squaresOnBoard[4][4].changeColor(Color.Blue);
+        squaresOnBoard[3][3].changeColor(Color.Blue);
+        squaresOnBoard[2][2].changeColor(Color.Blue);*/
+>>>>>>> 5b70ff7bede4c3a8dced9e1471ca7a00a5892439
 
         searchForColor();
     }
@@ -51,9 +49,7 @@ public class Board {
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 System.out.print(squaresOnBoard[i][j].toString());
-                if (squaresOnBoard[i][j].getColor().getRed() != 0 &&
-                        squaresOnBoard[i][j].getColor().getBlue() != 0 &&
-                        squaresOnBoard[i][j].getColor().getGreen() != 0)
+                if (squaresOnBoard[i][j].getColor() != Color.White)
                     if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
                         System.out.println("Game over!");
                         System.exit(1);
@@ -72,7 +68,7 @@ public class Board {
         if (x > 13)
             return false;
         for (int i = 0; i < 6; i++){
-            if(squaresOnBoard[x + i][y].getColor().getRed() != c.getRed())
+            if(squaresOnBoard[x + i][y].getColor() != c)
                 return false;
         }
         return true;
@@ -82,7 +78,7 @@ public class Board {
         if (y > 13)
             return false;
         for (int i = 0; i < 6; i++){
-            if(squaresOnBoard[x][y + i].getColor().getRed() != c.getRed())
+            if(squaresOnBoard[x][y + i].getColor() != c)
                 return false;
         }
         return true;
@@ -92,7 +88,7 @@ public class Board {
         if (x > 13 || y > 13)
             return false;
         for (int i = 0; i < 6; i++){
-            if(squaresOnBoard[x + i][y + i].getColor().getRed() != c.getRed())
+            if(squaresOnBoard[x + i][y + i].getColor() != c)
                 return false;
         }
         return true;
@@ -102,10 +98,24 @@ public class Board {
         if (x < 5 || y < 5)
             return false;
         for (int i = 0; i < 6; i++){
-            if(squaresOnBoard[x - i][y + i].getColor().getRed() != c.getRed())
+            if(squaresOnBoard[x - i][y + i].getColor() != c)
                 return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if a square is occupied already or not
+     * @param x x coordinate on board
+     * @param y y coordinate on board
+     * @return true if the square isn't occupied, false if the square is already occupied
+     */
+    public boolean checkIfSquareIsOpen(int x, int y) {
+        if (squaresOnBoard[x][y].getColor() != Color.White) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

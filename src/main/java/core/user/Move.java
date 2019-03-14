@@ -5,9 +5,22 @@ public class Move {
 
     private Date date;
     private User player;
+    private int x;
+    private int y;
 
-    public Move() {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Move(int x, int y, User player) {
         date = new Date();
+        this.x = x;
+        this.y = y;
+        this.player = player;
     }
 
     public Date getDate() {
@@ -21,5 +34,13 @@ public class Move {
     public void setPlayer(User player) {
         this.player = player;
     }
+
+    public String toString() {
+        // TODO: update this when we figure out how we are keeping track of users
+        String str = String.format("%d %d", x, y);
+        //String str = String.format("%d %d %s", x, y, player.name or whatever);
+        return str;
+    }
+
 
 }
