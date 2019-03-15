@@ -22,7 +22,6 @@ public class Board {
         squaresOnBoard[2][6].changeColor(Color.Red);
         squaresOnBoard[2][7].changeColor(Color.Red);*/
 
-<<<<<<< HEAD
         /*
         squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
         squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
@@ -31,19 +30,14 @@ public class Board {
         squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
         squaresOnBoard[2][2].changeColor( new Color(7, 7, 7)); */
 
-=======
->>>>>>> 52c776207465ddb478302f6cd2250449470e0b83
         /*squaresOnBoard[7][7].changeColor(Color.Blue);
         squaresOnBoard[6][6].changeColor(Color.Blue);
         squaresOnBoard[5][5].changeColor(Color.Blue);
         squaresOnBoard[4][4].changeColor(Color.Blue);
         squaresOnBoard[3][3].changeColor(Color.Blue);
         squaresOnBoard[2][2].changeColor(Color.Blue);*/
-<<<<<<< HEAD
 
         searchForColor();
-=======
->>>>>>> 52c776207465ddb478302f6cd2250449470e0b83
     }
 
     //Maybe return something later?
@@ -53,7 +47,12 @@ public class Board {
     public String displayBoard(){
         StringBuilder sb = new StringBuilder("  ");
         for(int i = 0; i< squaresOnBoard.length; i++){
-            sb.append(i + " ");
+            if(i == 0)
+                sb.append(i + " ");
+            else if(i < 10)
+                sb.append(" " + i + " ");
+            else
+                sb.append(i + " ");
         }
         sb.append("\n");
         for(int i = 0; i < squaresOnBoard.length; i++){

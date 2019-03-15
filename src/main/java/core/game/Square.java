@@ -22,7 +22,7 @@ public class Square {
     public String toString() {
         String color;
         if(this.color.equals(Color.Black))
-            color = "B ";
+            color = "B  ";
         else if(this.color.equals(Color.Blue))
             color = "U ";
         else
