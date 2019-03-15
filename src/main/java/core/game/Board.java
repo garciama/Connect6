@@ -1,4 +1,5 @@
 package core.game;
+import core.Color;
 
 public class Board {
 
@@ -21,41 +22,44 @@ public class Board {
         squaresOnBoard[2][6].changeColor(Color.Red);
         squaresOnBoard[2][7].changeColor(Color.Red);*/
 
-<<<<<<< HEAD
-
-        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
-=======
         /*squaresOnBoard[7][7].changeColor(Color.Blue);
         squaresOnBoard[6][6].changeColor(Color.Blue);
         squaresOnBoard[5][5].changeColor(Color.Blue);
         squaresOnBoard[4][4].changeColor(Color.Blue);
         squaresOnBoard[3][3].changeColor(Color.Blue);
         squaresOnBoard[2][2].changeColor(Color.Blue);*/
->>>>>>> 5b70ff7bede4c3a8dced9e1471ca7a00a5892439
-
-        searchForColor();
     }
 
     //Maybe return something later?
    // private void lastMove(){
     //}
 
+    public String displayBoard(){
+        StringBuilder sb = new StringBuilder("  ");
+        for(int i = 0; i< squaresOnBoard.length; i++){
+            sb.append(i + " ");
+        }
+        sb.append("\n");
+        for(int i = 0; i < squaresOnBoard.length; i++){
+            sb.append(i);
+            sb.append(" ");
+            for(int j = 0; j < squaresOnBoard[0].length; j++){
+                sb.append(squaresOnBoard[i][j].toString());
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     private void searchForColor(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
-                System.out.print(squaresOnBoard[i][j].toString());
                 if (squaresOnBoard[i][j].getColor() != Color.Black)
                     if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
                         System.out.println("Game over!");
                         System.exit(1);
                     }
             }
-            System.out.println();
         }
     }
 

@@ -105,7 +105,7 @@ public class gamePackageTest {
 
     @Test
     public void getColorTestSquare() {
-        assertEquals(Color.White, s2.getColor());
+        assertEquals(Color.Black, s2.getColor());
     }
 
     @Test

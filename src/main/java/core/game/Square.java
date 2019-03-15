@@ -1,5 +1,6 @@
 package core.game;
 import core.user.User;
+import core.Color;
 
 public class Square {
     private int xCoord;
@@ -18,8 +19,15 @@ public class Square {
         this.color = c;
     }
 
-    public String toString(){
-        return( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );
+    public String toString() {
+        String color;
+        if(this.color.equals(Color.Black))
+            color = "B ";
+        else if(this.color.equals(Color.Blue))
+            color = "U ";
+        else
+            color = "R ";
+        return color; /*( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );*/
     }
 
     public Color getColor(){
@@ -28,6 +36,8 @@ public class Square {
 
 }
 
+/*
 enum Color{
     Black, Red, Blue
 }
+*/
