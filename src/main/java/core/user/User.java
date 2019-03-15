@@ -1,7 +1,5 @@
 package core.user;
-import core.game.Board;
-
-import java.awt.*;
+import core.Color;
 
 public class User {
 
@@ -9,8 +7,11 @@ public class User {
     private int losses;
     private int ties;
     private Color color;
+    private String name;
 
-    public User(){
+    public User(String name, Color color) {
+        this.color = color;
+        this.name = name;
         wins = 0;
         losses = 0;
         ties = 0;
