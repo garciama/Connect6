@@ -21,22 +21,20 @@ public class Board {
         squaresOnBoard[2][6].changeColor(Color.Red);
         squaresOnBoard[2][7].changeColor(Color.Red);*/
 
-<<<<<<< HEAD
-
+        /*
         squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
         squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
         squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
         squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
         squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7));
-=======
+        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7)); */
+
         /*squaresOnBoard[7][7].changeColor(Color.Blue);
         squaresOnBoard[6][6].changeColor(Color.Blue);
         squaresOnBoard[5][5].changeColor(Color.Blue);
         squaresOnBoard[4][4].changeColor(Color.Blue);
         squaresOnBoard[3][3].changeColor(Color.Blue);
         squaresOnBoard[2][2].changeColor(Color.Blue);*/
->>>>>>> 5b70ff7bede4c3a8dced9e1471ca7a00a5892439
 
         searchForColor();
     }
