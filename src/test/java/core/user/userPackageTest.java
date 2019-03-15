@@ -1,5 +1,6 @@
 package core.user;
 
+import core.Color;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +17,8 @@ public class userPackageTest {
 
     @Before
     public void initUser(){
-        u1 = new User();
-        u2 = new User();
+        u1 = new User("test", Color.Red);
+        u2 = new User("test1", Color.Blue);
 
         u1.setWins(15);
         u1.setLosses(5);
