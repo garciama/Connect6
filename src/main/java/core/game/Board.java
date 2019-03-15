@@ -15,27 +15,20 @@ public class Board {
             }
         }
 
-        /*squaresOnBoard[2][2].changeColor(Color.Red);
+        squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[2][3].changeColor(Color.Red);
         squaresOnBoard[2][4].changeColor(Color.Red);
         squaresOnBoard[2][5].changeColor(Color.Red);
         squaresOnBoard[2][6].changeColor(Color.Red);
-        squaresOnBoard[2][7].changeColor(Color.Red);*/
+        //squaresOnBoard[2][7].changeColor(Color.Red);
 
-        /*
-        squaresOnBoard[7][7].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[6][6].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[5][5].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[4][4].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[3][3].changeColor( new Color(7, 7, 7));
-        squaresOnBoard[2][2].changeColor( new Color(7, 7, 7)); */
 
-        /*squaresOnBoard[7][7].changeColor(Color.Blue);
-        squaresOnBoard[6][6].changeColor(Color.Blue);
-        squaresOnBoard[5][5].changeColor(Color.Blue);
-        squaresOnBoard[4][4].changeColor(Color.Blue);
-        squaresOnBoard[3][3].changeColor(Color.Blue);
-        squaresOnBoard[2][2].changeColor(Color.Blue);*/
+        //squaresOnBoard[7][7].changeColor(Color.Blue);
+        //squaresOnBoard[6][6].changeColor(Color.Blue);
+        //squaresOnBoard[5][5].changeColor(Color.Blue);
+        //squaresOnBoard[4][4].changeColor(Color.Blue);
+      //  squaresOnBoard[3][3].changeColor(Color.Blue);
+        //squaresOnBoard[2][2].changeColor(Color.Blue);
 
         searchForColor();
     }
@@ -45,25 +38,43 @@ public class Board {
     //}
 
     public String displayBoard(){
-        StringBuilder sb = new StringBuilder("  ");
+        StringBuilder sb = new StringBuilder("  | ");
         for(int i = 0; i< squaresOnBoard.length; i++){
             if(i == 0)
-                sb.append(i + " ");
+                sb.append(i );
             else if(i < 10)
-                sb.append(" " + i + " ");
+                sb.append(" | " + i);
             else
-                sb.append(i + " ");
+                sb.append(" |" + i);
         }
-        sb.append("\n");
+
+        sb.append(" |\n ");
+        printDashedRow(sb);
+
         for(int i = 0; i < squaresOnBoard.length; i++){
             sb.append(i);
-            sb.append(" ");
+            if( i < 10)
+                sb.append(" ");
             for(int j = 0; j < squaresOnBoard[0].length; j++){
                 sb.append(squaresOnBoard[i][j].toString());
             }
-            sb.append("\n");
+            sb.append("|\n ");
+            printDashedRow(sb);
         }
+
         return sb.toString();
+    }
+
+    private void printDashedRow(StringBuilder b){
+
+        for (int k = 0; k < (squaresOnBoard.length*3)+1; k++){
+            if (k%3 == 1) {
+                b.append("|");
+            }
+            b.append("-");
+        }
+        b.append("|\n");
+
     }
 
     private void searchForColor(){

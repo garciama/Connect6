@@ -22,11 +22,11 @@ public class Square {
     public String toString() {
         String color;
         if(this.color.equals(Color.Black))
-            color = "B  ";
+            color = "|   ";
         else if(this.color.equals(Color.Blue))
-            color = "U ";
+            color = "| B ";
         else
-            color = "R ";
+            color = "| R ";
         return color; /*( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );*/
     }
 
