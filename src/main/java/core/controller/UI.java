@@ -2,15 +2,14 @@ package core.controller;
 import java.util.Scanner;
 
 public class UI {
-    static int x1;
-    static int y1;
-    static int x2;
-    static int y2;
+    static int xRed;
+    static int yRed;
+    static int xBlue;
+    static int yBlue;
     static Scanner in;
     static String redPlayer, bluePlayer;
 
     public static void main(String[] args){
-
 
         in = new Scanner(System.in);
 
@@ -24,25 +23,25 @@ public class UI {
 
         while(true) {
             getInputRedPlayer();
-            controller.makeMove(0, y1, x1, redPlayer);
+            controller.makeMove(0, yRed, xRed, redPlayer);
             //System.out.println(controller.reportBoard(0));
             getInputBluePlayer();
-            controller.makeMove(0, y2, x2, bluePlayer);
+            controller.makeMove(0, yBlue, xBlue, bluePlayer);
             System.out.println(controller.reportBoard(0));
         }
     }
 
     public static void getInputRedPlayer() {
         System.out.println(redPlayer + "'s x move: ");
-        x1 = in.nextInt();
+        xRed = in.nextInt();
         System.out.println(redPlayer + "'s y move: ");
-        y1 = in.nextInt();
+        yRed = in.nextInt();
     }
 
     public static void getInputBluePlayer() {
         System.out.println(bluePlayer + "'s x move: ");
-        x2 = in.nextInt();
+        xBlue = in.nextInt();
         System.out.println(bluePlayer + "'s y move: ");
-        y2 = in.nextInt();
+        yBlue = in.nextInt();
     }
 }
