@@ -15,22 +15,20 @@ public class Board {
             }
         }
 
-        squaresOnBoard[2][2].changeColor(Color.Red);
+       /* squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[2][3].changeColor(Color.Red);
         squaresOnBoard[2][4].changeColor(Color.Red);
         squaresOnBoard[2][5].changeColor(Color.Red);
         squaresOnBoard[2][6].changeColor(Color.Red);
-        //squaresOnBoard[2][7].changeColor(Color.Red);
+        squaresOnBoard[2][7].changeColor(Color.Red);*/
 
 
         //squaresOnBoard[7][7].changeColor(Color.Blue);
         //squaresOnBoard[6][6].changeColor(Color.Blue);
         //squaresOnBoard[5][5].changeColor(Color.Blue);
         //squaresOnBoard[4][4].changeColor(Color.Blue);
-      //  squaresOnBoard[3][3].changeColor(Color.Blue);
+        //squaresOnBoard[3][3].changeColor(Color.Blue);
         //squaresOnBoard[2][2].changeColor(Color.Blue);
-
-        searchForColor();
     }
 
     //Maybe return something later?
@@ -47,10 +45,8 @@ public class Board {
             else
                 sb.append(" |" + i);
         }
-
         sb.append(" |\n ");
         printDashedRow(sb);
-
         for(int i = 0; i < squaresOnBoard.length; i++){
             sb.append(i);
             if( i < 10)
@@ -61,32 +57,29 @@ public class Board {
             sb.append("|\n ");
             printDashedRow(sb);
         }
-
         return sb.toString();
     }
 
     private void printDashedRow(StringBuilder b){
-
         for (int k = 0; k < (squaresOnBoard.length*3)+1; k++){
-            if (k%3 == 1) {
+            if (k % 3 == 1) {
                 b.append("|");
             }
             b.append("-");
         }
         b.append("|\n");
-
     }
 
-    private void searchForColor(){
+    public boolean searchForColor(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 if (squaresOnBoard[i][j].getColor() != Color.Black)
                     if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
-                        System.out.println("Game over!");
-                        System.exit(1);
+                        return true;
                     }
             }
         }
+        return false;
     }
 
     public boolean isWinning(int x, int y, Color c){

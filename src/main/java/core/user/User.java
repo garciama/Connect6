@@ -26,6 +26,9 @@ public class User {
     public int getTies(){
         return this.ties;
     }
+    public String getName(){
+        return this.name;
+    }
 
     public void setWins( int updatedWins ){
         wins = updatedWins;
