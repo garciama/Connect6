@@ -13,10 +13,7 @@ public class UI {
 
         in = new Scanner(System.in);
 
-        System.out.print("Enter the first user to play: ");
-        redPlayer = in.nextLine();
-        System.out.print("Enter the next user to play: ");
-        bluePlayer = in.nextLine();
+        getUsers();
 
         GameController controller = new GameController(redPlayer, bluePlayer);
         //System.out.println( controller.reportBoard(0));
@@ -29,6 +26,13 @@ public class UI {
             controller.makeMove(0, yBlue, xBlue, bluePlayer);
             System.out.println(controller.reportBoard(0));
         }
+    }
+
+    public static void getUsers() {
+        System.out.print("Enter the first user to play: ");
+        redPlayer = in.nextLine();
+        System.out.print("Enter the next user to play: ");
+        bluePlayer = in.nextLine();
     }
 
     public static void getInputRedPlayer() {

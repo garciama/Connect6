@@ -21,6 +21,7 @@ public class Game {
         return board.displayBoard();
     }
 
+    //TODO: make this return a bool to represent if the space is open so you can make a move or if its occupied
     public void makeMove(int x, int y, String playerName) {
         if (board.checkIfSquareIsOpen(x, y)) {
             if (playerName.equals(this.red.getName()))
@@ -31,6 +32,7 @@ public class Game {
         else {
             System.out.println("Illegal move - square already taken");
             //may have to let player try again instead?
+
         }
         if(board.searchForColor()){
             System.out.println(playerName + " has won! Game over.");
