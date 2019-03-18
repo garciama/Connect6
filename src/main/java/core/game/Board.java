@@ -15,22 +15,29 @@ public class Board {
             }
         }
 
+<<<<<<< HEAD
         squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[3][3].changeColor(Color.Red);
         squaresOnBoard[4][4].changeColor(Color.Red);
         squaresOnBoard[5][5].changeColor(Color.Red);
         squaresOnBoard[6][6].changeColor(Color.Red);
         //squaresOnBoard[2][7].changeColor(Color.Red);
+=======
+       /* squaresOnBoard[2][2].changeColor(Color.Red);
+        squaresOnBoard[2][3].changeColor(Color.Red);
+        squaresOnBoard[2][4].changeColor(Color.Red);
+        squaresOnBoard[2][5].changeColor(Color.Red);
+        squaresOnBoard[2][6].changeColor(Color.Red);
+        squaresOnBoard[2][7].changeColor(Color.Red);*/
+>>>>>>> e50306ca88c167495329a77cd6ce9b2d7b4079da
 
 
         //squaresOnBoard[7][7].changeColor(Color.Blue);
         //squaresOnBoard[6][6].changeColor(Color.Blue);
         //squaresOnBoard[5][5].changeColor(Color.Blue);
         //squaresOnBoard[4][4].changeColor(Color.Blue);
-      //  squaresOnBoard[3][3].changeColor(Color.Blue);
+        //squaresOnBoard[3][3].changeColor(Color.Blue);
         //squaresOnBoard[2][2].changeColor(Color.Blue);
-
-        searchForColor();
     }
 
     //Maybe return something later?
@@ -47,10 +54,8 @@ public class Board {
             else
                 sb.append(" |" + i);
         }
-
         sb.append(" |\n ");
         printDashedRow(sb);
-
         for(int i = 0; i < squaresOnBoard.length; i++){
             sb.append(i);
             if( i < 10)
@@ -61,32 +66,29 @@ public class Board {
             sb.append("|\n ");
             printDashedRow(sb);
         }
-
         return sb.toString();
     }
 
     private void printDashedRow(StringBuilder b){
-
         for (int k = 0; k < (squaresOnBoard.length*3)+1; k++){
-            if (k%3 == 1) {
+            if (k % 3 == 1) {
                 b.append("|");
             }
             b.append("-");
         }
         b.append("|\n");
-
     }
 
-    private void searchForColor(){
+    public boolean searchForColor(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 if (squaresOnBoard[i][j].getColor() != Color.Black)
                     if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
-                        System.out.println("Game over!");
-                        System.exit(1);
+                        return true;
                     }
             }
         }
+        return false;
     }
 
     public boolean isWinning(int x, int y, Color c){
@@ -125,7 +127,12 @@ public class Board {
     }
 
     public boolean checkDiagonalLeft(int x, int y, Color c){
-        if (x < 5 || y < 5)
+        /* We need to talk about this coordinate system,
+         it was so weird to debug this to find that y can't be > 13.
+         We had a previous condition check for when y was less than
+         5, but that wasn't correct. I will explain this in our
+         next meeting. */
+        if (x < 5 || y > 13)
             return false;
         for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x - i][y + i].getColor() != c)

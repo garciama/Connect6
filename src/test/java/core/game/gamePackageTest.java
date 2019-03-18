@@ -99,8 +99,8 @@ public class gamePackageTest {
 
     @Test
     public void toStringTestSquare() {
-        assertEquals("B  ", s1.toString());
-        assertEquals("B  ", s2.toString());
+        assertEquals("|   ", s1.toString());
+        assertEquals("|   ", s2.toString());
     }
 
     @Test

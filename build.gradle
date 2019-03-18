@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClassName = "mypackage.Main"
+    mainClassName = "core.controller.UI"
 }
 
 dependencies {

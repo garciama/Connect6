@@ -13,4 +13,8 @@ public class GameController {
     public String reportBoard(int gameID){
         return mgr.getGame(gameID);
     }
+
+    public void makeMove(int ID, int x, int y, String playerName){
+        mgr.moveInGame(ID, x, y, playerName);
+    }
 }

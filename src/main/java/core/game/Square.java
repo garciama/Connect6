@@ -35,9 +35,3 @@ public class Square {
     }
 
 }
-
-/*
-enum Color{
-    Black, Red, Blue
-}
-*/
