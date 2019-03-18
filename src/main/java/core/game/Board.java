@@ -16,10 +16,10 @@ public class Board {
         }
 
         squaresOnBoard[2][2].changeColor(Color.Red);
-        squaresOnBoard[2][3].changeColor(Color.Red);
-        squaresOnBoard[2][4].changeColor(Color.Red);
-        squaresOnBoard[2][5].changeColor(Color.Red);
-        squaresOnBoard[2][6].changeColor(Color.Red);
+        squaresOnBoard[3][3].changeColor(Color.Red);
+        squaresOnBoard[4][4].changeColor(Color.Red);
+        squaresOnBoard[5][5].changeColor(Color.Red);
+        squaresOnBoard[6][6].changeColor(Color.Red);
         //squaresOnBoard[2][7].changeColor(Color.Red);
 
 
