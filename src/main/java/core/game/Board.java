@@ -3,7 +3,7 @@ import core.Color;
 
 public class Board {
 
-    private boolean winningState;
+    private boolean hasFinished;
     protected Square[][] squaresOnBoard;
 
     public Board(){
@@ -14,28 +14,6 @@ public class Board {
                 squaresOnBoard[j][i] = individualSquare;
             }
         }
-
-        /*
-        squaresOnBoard[2][2].changeColor(Color.Red);
-        squaresOnBoard[3][3].changeColor(Color.Red);
-        squaresOnBoard[4][4].changeColor(Color.Red);
-        squaresOnBoard[5][5].changeColor(Color.Red);
-        squaresOnBoard[6][6].changeColor(Color.Red);
-        squaresOnBoard[2][7].changeColor(Color.Red);*/
-
-       /* squaresOnBoard[2][2].changeColor(Color.Red);
-        squaresOnBoard[2][3].changeColor(Color.Red);
-        squaresOnBoard[2][4].changeColor(Color.Red);
-        squaresOnBoard[2][5].changeColor(Color.Red);
-        squaresOnBoard[2][6].changeColor(Color.Red);
-        squaresOnBoard[2][7].changeColor(Color.Red);*/
-
-        //squaresOnBoard[7][7].changeColor(Color.Blue);
-        //squaresOnBoard[6][6].changeColor(Color.Blue);
-        //squaresOnBoard[5][5].changeColor(Color.Blue);
-        //squaresOnBoard[4][4].changeColor(Color.Blue);
-        //squaresOnBoard[3][3].changeColor(Color.Blue);
-        //squaresOnBoard[2][2].changeColor(Color.Blue);
     }
 
     //Maybe return something later?

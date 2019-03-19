@@ -5,7 +5,6 @@ import core.Color;
 public class Square {
     private int xCoord;
     private int yCoord;
-    private User owner;
     private Color color;
 
     public Square(int x, int y){
