@@ -8,7 +8,7 @@ public class Square {
     private User owner;
     private Color color;
 
-    public Square(int y, int x){
+    public Square(int x, int y){
         xCoord = x;
         yCoord = y;
         //Default color is black before anyone clicks the square
@@ -20,14 +20,15 @@ public class Square {
     }
 
     public String toString() {
-        String color;
+       /* String color;
         if(this.color.equals(Color.Black))
             color = "|   ";
         else if(this.color.equals(Color.Blue))
             color = "| B ";
         else
             color = "| R ";
-        return color; /*( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );*/
+        return color;*/
+        return "( [" + xCoord + ", " + yCoord + "] " + color + " )";
     }
 
     public Color getColor(){

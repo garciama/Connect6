@@ -9,20 +9,24 @@ public class UI {
         redPlayer = in.nextLine();
         System.out.print("Enter the next user to play: ");
         bluePlayer = in.nextLine();
+        while(redPlayer.equals(bluePlayer)){
+            System.out.print("can't use same user names, enter a user: ");
+            bluePlayer = in.nextLine();
+        }
         GameController controller = new GameController(redPlayer, bluePlayer);
-        //System.out.println( controller.reportBoard(0));
+        System.out.println( controller.reportBoard(0));
         while(true) {
-            System.out.println(redPlayer + "'s x move: ");
+            System.out.print(redPlayer + "'s x move: ");
             int x = in.nextInt();
-            System.out.println(redPlayer + "'s y move: ");
+            System.out.print(redPlayer + "'s y move: ");
             int y = in.nextInt();
-            controller.makeMove(0, y, x, redPlayer);
+            controller.makeMove(0,x,y, redPlayer);
             //System.out.println(controller.reportBoard(0));
-            System.out.println(bluePlayer + "'s x move: ");
+            System.out.print(bluePlayer + "'s x move: ");
             int x1 = in.nextInt();
-            System.out.println(bluePlayer + "'s y move: ");
+            System.out.print(bluePlayer + "'s y move: ");
             int y1 = in.nextInt();
-            controller.makeMove(0, y1, x1, bluePlayer);
+            controller.makeMove(0, x1, y1, bluePlayer);
             System.out.println(controller.reportBoard(0));
         }
     }

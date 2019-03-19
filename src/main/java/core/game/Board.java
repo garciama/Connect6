@@ -7,11 +7,12 @@ public class Board {
     protected Square[][] squaresOnBoard;
 
     public Board(){
-        squaresOnBoard = new Square[19][19];
-        for (int i = 0; i < 19; i++){
-            for (int j = 0; j < 19; j++){
-                Square individualSquare = new Square(i, j);
-                squaresOnBoard[i][j] = individualSquare;
+        squaresOnBoard = new Square[5][5];
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                System.out.println(j + " " + i);
+                Square individualSquare = new Square(j, i);
+                squaresOnBoard[j][i] = individualSquare;
             }
         }
 
@@ -123,7 +124,7 @@ public class Board {
          We had a previous condition check for when y was less than
          5, but that wasn't correct. I will explain this in our
          next meeting. */
-        if (x < 5 || y > 13)
+        if (x < 5 || y < 5)
             return false;
         for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x - i][y + i].getColor() != c)
