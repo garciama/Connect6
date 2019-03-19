@@ -1,4 +1,5 @@
 package core.controller;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI {
@@ -18,21 +19,23 @@ public class UI {
         GameController controller = new GameController(redPlayer, bluePlayer);
         //System.out.println( controller.reportBoard(0));
 
+        // loop that runs the actual playing of the game
         while(true) {
             getInputRedPlayer();
-            while(!controller.makeMove(0, xRed, yRed, redPlayer)){
+            while(!controller.makeMove(0, xRed, yRed, redPlayer))
                 getInputRedPlayer();
-            }
             //System.out.println(controller.reportBoard(0));
             getInputBluePlayer();
-            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer)){
+            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
-            }
             System.out.println();
             System.out.println(controller.reportBoard(0));
         }
     }
 
+    /**
+     * Gets the names of users that are entered
+     */
     public static void getUsers() {
         System.out.print("Enter the first user to play: ");
         redPlayer = in.nextLine();
@@ -40,17 +43,67 @@ public class UI {
         bluePlayer = in.nextLine();
     }
 
+    /**
+     * Gets Red Player's x and y entered coordinates
+     */
     public static void getInputRedPlayer() {
-        System.out.print(redPlayer + "'s (red) x move: ");
-        xRed = in.nextInt();
-        System.out.print(redPlayer + "'s (red) y move: ");
-        yRed = in.nextInt();
+        //TODO: if an int isn't entered, and user doesnt enter an int again then program crashes, maybe have a do while
+        // and take any input as a string and see if it can be casted to a valid int. Does this even matter cuz its a
+        // temp UI
+
+        // gets x coordinate
+        try {
+            System.out.print(redPlayer + "'s x move: ");
+            xRed = in.nextInt();
+        } catch (InputMismatchException e) {
+            in.nextLine();
+            System.out.print("Please enter a number!");
+            System.out.print(redPlayer + "'s x move: ");
+            xRed = in.nextInt();
+        }
+
+        // get y coordinate
+        try {
+            System.out.print(redPlayer + "'s y move: ");
+            yRed = in.nextInt();
+        } catch (InputMismatchException e) {
+            in.nextLine();
+            System.out.print("Please enter a number!");
+            System.out.print(redPlayer + "'s y move: ");
+            yRed = in.nextInt();
+        }
+
     }
 
+    /**
+     * Gets Blue Player's x and y entered coordinates
+     */
     public static void getInputBluePlayer() {
-        System.out.print(bluePlayer + "'s (blue) x move: ");
-        xBlue = in.nextInt();
-        System.out.print(bluePlayer + "'s (blue) y move: ");
-        yBlue = in.nextInt();
+
+
+        // gets x coordinate
+        try {
+            System.out.print(bluePlayer + "'s x move: ");
+            xBlue = in.nextInt();
+        } catch (InputMismatchException e) {
+            in.nextLine();
+            System.out.print("Please enter a number!");
+            System.out.print(bluePlayer + "'s x move: ");
+            xBlue = in.nextInt();
+        }
+
+        // get y coordinate
+        try {
+            System.out.print(bluePlayer + "'s y move: ");
+            yBlue = in.nextInt();
+        } catch (InputMismatchException e) {
+
+                in.nextLine();
+                System.out.print("Please enter a number!");
+                System.out.print(bluePlayer + "'s y move: ");
+                yBlue = in.nextInt();
+        }
+
+
     }
 }
