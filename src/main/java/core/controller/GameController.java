@@ -14,7 +14,10 @@ public class GameController {
         return mgr.getBoard(gameID);
     }
 
-    public void makeMove(int ID, int x, int y, String playerName){
-        mgr.moveInGame(ID, x, y, playerName);
+    public boolean makeMove(int ID, int x, int y, String playerName){
+        if(mgr.moveInGame(ID, x, y, playerName))
+            return true;
+        else
+            return false;
     }
 }

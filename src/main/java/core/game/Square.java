@@ -20,15 +20,15 @@ public class Square {
     }
 
     public String toString() {
-       /* String color;
+        String color;
         if(this.color.equals(Color.Black))
             color = "|   ";
         else if(this.color.equals(Color.Blue))
             color = "| B ";
         else
             color = "| R ";
-        return color;*/
-        return "( [" + xCoord + ", " + yCoord + "] " + color + " )";
+        return color;
+        //return "( [" + xCoord + ", " + yCoord + "] " + color + " )";
     }
 
     public Color getColor(){

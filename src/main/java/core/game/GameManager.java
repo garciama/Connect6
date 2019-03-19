@@ -27,8 +27,11 @@ public class GameManager {
 
         }
 
-    public void moveInGame(int ID, int x, int y, String playerName){
-        allGameMap.get(ID).makeMove(x, y, playerName);
+    public boolean moveInGame(int ID, int x, int y, String playerName){
+        if(allGameMap.get(ID).makeMove(x, y, playerName))
+            return true;
+        else
+            return false;
     }
 
 

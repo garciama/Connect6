@@ -20,10 +20,14 @@ public class UI {
 
         while(true) {
             getInputRedPlayer();
-            controller.makeMove(0, xRed, yRed, redPlayer);
+            while(!controller.makeMove(0, xRed, yRed, redPlayer)){
+                getInputRedPlayer();
+            }
             //System.out.println(controller.reportBoard(0));
             getInputBluePlayer();
-            controller.makeMove(0, xBlue, yBlue, bluePlayer);
+            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer)){
+                getInputBluePlayer();
+            }
             System.out.println();
             System.out.println(controller.reportBoard(0));
         }
