@@ -1,32 +1,36 @@
 package core.game;
-
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameManager {
 
     private int gameIDCount = 0;
-    private ArrayList<Game> allGameList;
+    private Map<Integer, Game> allGameMap;
 
     public GameManager(){
-        allGameList = new ArrayList<Game>();
+        allGameMap = new HashMap<>();
     }
 
-    public void createNew(String redName, String blueName){
-       Game g = new Game(gameIDCount, redName, blueName);
-       allGameList.add(g);
+    public void createNew(String redName, String blueName) {
+        Game g = new Game(gameIDCount, redName, blueName);
+
+        while (allGameMap.putIfAbsent(gameIDCount, g) != null) {
+            gameIDCount++;
+        }
     }
 
-    public String getGame(int id){
-        for(int i = 0; i < allGameList.size(); i++)
-            if(allGameList.get(i).gameID == id)
-                return allGameList.get(i).getBoard();
-        return "no games found";
-    }
+    public String getBoard(int id){
+        if(!allGameMap.containsKey(id))
+            return "no games found";
+        else
+            return (allGameMap.get(id).getBoard());
+
+        }
 
     public void moveInGame(int ID, int x, int y, String playerName){
-        for(int i = 0; i < allGameList.size(); i++)
-            if(allGameList.get(i).gameID == ID)
-                allGameList.get(i).makeMove(x,y,playerName);
+        allGameMap.get(ID).makeMove(x, y, playerName);
     }
+
+
 
 }

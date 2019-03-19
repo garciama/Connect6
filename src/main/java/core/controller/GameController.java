@@ -11,7 +11,7 @@ public class GameController {
     }
 
     public String reportBoard(int gameID){
-        return mgr.getGame(gameID);
+        return mgr.getBoard(gameID);
     }
 
     public void makeMove(int ID, int x, int y, String playerName){
