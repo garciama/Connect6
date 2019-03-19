@@ -10,27 +10,25 @@ public class Board {
         squaresOnBoard = new Square[19][19];
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
-                Square individualSquare = new Square(i, j);
-                squaresOnBoard[i][j] = individualSquare;
+                Square individualSquare = new Square(j, i);
+                squaresOnBoard[j][i] = individualSquare;
             }
         }
 
-<<<<<<< HEAD
+        /*
         squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[3][3].changeColor(Color.Red);
         squaresOnBoard[4][4].changeColor(Color.Red);
         squaresOnBoard[5][5].changeColor(Color.Red);
         squaresOnBoard[6][6].changeColor(Color.Red);
-        //squaresOnBoard[2][7].changeColor(Color.Red);
-=======
+        squaresOnBoard[2][7].changeColor(Color.Red);*/
+
        /* squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[2][3].changeColor(Color.Red);
         squaresOnBoard[2][4].changeColor(Color.Red);
         squaresOnBoard[2][5].changeColor(Color.Red);
         squaresOnBoard[2][6].changeColor(Color.Red);
         squaresOnBoard[2][7].changeColor(Color.Red);*/
->>>>>>> e50306ca88c167495329a77cd6ce9b2d7b4079da
-
 
         //squaresOnBoard[7][7].changeColor(Color.Blue);
         //squaresOnBoard[6][6].changeColor(Color.Blue);
@@ -61,7 +59,7 @@ public class Board {
             if( i < 10)
                 sb.append(" ");
             for(int j = 0; j < squaresOnBoard[0].length; j++){
-                sb.append(squaresOnBoard[i][j].toString());
+                sb.append(squaresOnBoard[j][i].toString());
             }
             sb.append("|\n ");
             printDashedRow(sb);

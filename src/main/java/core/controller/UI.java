@@ -12,17 +12,18 @@ public class UI {
         GameController controller = new GameController(redPlayer, bluePlayer);
         //System.out.println( controller.reportBoard(0));
         while(true) {
-            System.out.println(redPlayer + "'s x move: ");
+            System.out.print(redPlayer + "'s (red) x move: ");
             int x = in.nextInt();
-            System.out.println(redPlayer + "'s y move: ");
+            System.out.print(redPlayer + "'s (red) y move: ");
             int y = in.nextInt();
-            controller.makeMove(0, y, x, redPlayer);
+            controller.makeMove(0, x, y, redPlayer);
             //System.out.println(controller.reportBoard(0));
-            System.out.println(bluePlayer + "'s x move: ");
+            System.out.print(bluePlayer + "'s (blue) x move: ");
             int x1 = in.nextInt();
-            System.out.println(bluePlayer + "'s y move: ");
+            System.out.print(bluePlayer + "'s (blue) y move: ");
             int y1 = in.nextInt();
-            controller.makeMove(0, y1, x1, bluePlayer);
+            controller.makeMove(0, x1, y1, bluePlayer);
+            System.out.println();
             System.out.println(controller.reportBoard(0));
         }
     }
