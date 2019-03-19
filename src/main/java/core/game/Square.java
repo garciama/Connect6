@@ -26,7 +26,8 @@ public class Square {
             color = "| B ";
         else
             color = "| R ";
-        return color; /*( "( [" + xCoord + ", " + yCoord + "] " + color + " )" );*/
+        return color;
+        //return "( [" + xCoord + ", " + yCoord + "] " + color + " )";
     }
 
     public Color getColor(){

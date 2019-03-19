@@ -18,15 +18,15 @@ public class UI {
 
         GameController controller = new GameController(redPlayer, bluePlayer);
 
-        while (true) {
-
-
-            while (!controller.makeMove(0, xRed, yRed, redPlayer))
+        // loop that runs the actual playing of the game
+        while(true) {
+            getInputRedPlayer();
+            while(!controller.makeMove(0, xRed, yRed, redPlayer))
                 getInputRedPlayer();
-
-            while (!controller.makeMove(0, xBlue, yBlue, bluePlayer))
+            //System.out.println(controller.reportBoard(0));
+            getInputBluePlayer();
+            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
-
             System.out.println();
             System.out.println(controller.reportBoard(0));
         }
@@ -96,10 +96,11 @@ public class UI {
             System.out.print(bluePlayer + "'s y move: ");
             yBlue = in.nextInt();
         } catch (InputMismatchException e) {
-            in.nextLine();
-            System.out.print("Please enter a number!");
-            System.out.print(bluePlayer + "'s y move: ");
-            yBlue = in.nextInt();
+
+                in.nextLine();
+                System.out.print("Please enter a number!");
+                System.out.print(bluePlayer + "'s y move: ");
+                yBlue = in.nextInt();
         }
 
 
