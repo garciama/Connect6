@@ -8,7 +8,7 @@ public class Square {
     private User owner;
     private Color color;
 
-    public Square(int y, int x){
+    public Square(int x, int y){
         xCoord = x;
         yCoord = y;
         //Default color is black before anyone clicks the square

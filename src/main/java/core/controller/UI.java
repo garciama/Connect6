@@ -24,8 +24,10 @@ public class UI {
             getInputRedPlayer();
             controller.makeMove(0, yRed, xRed, redPlayer);
             System.out.println(controller.reportBoard(0));
+
             getInputBluePlayer();
-            controller.makeMove(0, yBlue, xBlue, bluePlayer);
+            controller.makeMove(0, xBlue, yBlue, bluePlayer);
+            System.out.println();
             System.out.println(controller.reportBoard(0));
         }
     }
@@ -76,6 +78,7 @@ public class UI {
      * Gets Blue Player's x and y entered coordinates
      */
     public static void getInputBluePlayer() {
+
 
         // gets x coordinate
         try {
