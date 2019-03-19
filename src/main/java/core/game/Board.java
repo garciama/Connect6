@@ -7,14 +7,21 @@ public class Board {
     protected Square[][] squaresOnBoard;
 
     public Board(){
-        squaresOnBoard = new Square[5][5];
-        for (int i = 0; i < 5; i++){
-            for (int j = 0; j < 5; j++){
-                System.out.println(j + " " + i);
+        squaresOnBoard = new Square[19][19];
+        for (int i = 0; i < 19; i++){
+            for (int j = 0; j < 19; j++){
                 Square individualSquare = new Square(j, i);
                 squaresOnBoard[j][i] = individualSquare;
             }
         }
+
+        /*
+        squaresOnBoard[2][2].changeColor(Color.Red);
+        squaresOnBoard[3][3].changeColor(Color.Red);
+        squaresOnBoard[4][4].changeColor(Color.Red);
+        squaresOnBoard[5][5].changeColor(Color.Red);
+        squaresOnBoard[6][6].changeColor(Color.Red);
+        squaresOnBoard[2][7].changeColor(Color.Red);*/
 
        /* squaresOnBoard[2][2].changeColor(Color.Red);
         squaresOnBoard[2][3].changeColor(Color.Red);
@@ -22,7 +29,6 @@ public class Board {
         squaresOnBoard[2][5].changeColor(Color.Red);
         squaresOnBoard[2][6].changeColor(Color.Red);
         squaresOnBoard[2][7].changeColor(Color.Red);*/
-
 
         //squaresOnBoard[7][7].changeColor(Color.Blue);
         //squaresOnBoard[6][6].changeColor(Color.Blue);
@@ -53,7 +59,7 @@ public class Board {
             if( i < 10)
                 sb.append(" ");
             for(int j = 0; j < squaresOnBoard[0].length; j++){
-                sb.append(squaresOnBoard[i][j].toString());
+                sb.append(squaresOnBoard[j][i].toString());
             }
             sb.append("|\n ");
             printDashedRow(sb);
@@ -124,7 +130,7 @@ public class Board {
          We had a previous condition check for when y was less than
          5, but that wasn't correct. I will explain this in our
          next meeting. */
-        if (x < 5 || y < 5)
+        if (x < 5 || y > 13)
             return false;
         for (int i = 0; i < 6; i++){
             if(squaresOnBoard[x - i][y + i].getColor() != c)
