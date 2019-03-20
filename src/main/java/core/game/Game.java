@@ -63,6 +63,9 @@ public class Game {
             redPlayer.addTie();
             bluePlayer.addTie();
 
+            System.out.println(redPlayer.getName() + " now has " + redPlayer.getTies() + " ties!");
+            System.out.println(bluePlayer.getName() + " now has " + bluePlayer.getTies() + " ties!");
+
             isFinished = true;
         }
 
