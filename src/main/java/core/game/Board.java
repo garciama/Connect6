@@ -3,7 +3,6 @@ import core.Color;
 
 public class Board {
 
-    private boolean winningState;
     protected Square[][] squaresOnBoard;
 
     public Board(){
@@ -14,21 +13,6 @@ public class Board {
                 squaresOnBoard[j][i] = individualSquare;
             }
         }
-
-       /* squaresOnBoard[2][2].changeColor(Color.Red);
-        squaresOnBoard[2][3].changeColor(Color.Red);
-        squaresOnBoard[2][4].changeColor(Color.Red);
-        squaresOnBoard[2][5].changeColor(Color.Red);
-        squaresOnBoard[2][6].changeColor(Color.Red);
-        squaresOnBoard[2][7].changeColor(Color.Red);*/
-
-
-        //squaresOnBoard[7][7].changeColor(Color.Blue);
-        //squaresOnBoard[6][6].changeColor(Color.Blue);
-        //squaresOnBoard[5][5].changeColor(Color.Blue);
-        //squaresOnBoard[4][4].changeColor(Color.Blue);
-        //squaresOnBoard[3][3].changeColor(Color.Blue);
-        //squaresOnBoard[2][2].changeColor(Color.Blue);
     }
 
     //Maybe return something later?
@@ -52,7 +36,7 @@ public class Board {
             if( i < 10)
                 sb.append(" ");
             for(int j = 0; j < squaresOnBoard[0].length; j++){
-                sb.append(squaresOnBoard[i][j].toString());
+                sb.append(squaresOnBoard[j][i].toString());
             }
             sb.append("|\n ");
             printDashedRow(sb);
@@ -70,11 +54,11 @@ public class Board {
         b.append("|\n");
     }
 
-    public boolean searchForColor(){
+    public boolean isWinning(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
-                if (squaresOnBoard[i][j].getColor() != Color.Black)
-                    if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
+                if (squaresOnBoard[j][i].getColor() != Color.Black)
+                    if (subIsWinning(j, j, squaresOnBoard[j][i].getColor())) {
                         return true;
                     }
             }
@@ -82,7 +66,7 @@ public class Board {
         return false;
     }
 
-    public boolean isWinning(int x, int y, Color c){
+    public boolean subIsWinning(int x, int y, Color c){
         return (checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalRight(x, y, c) ||
                 checkDiagonalLeft(x, y, c));
     }

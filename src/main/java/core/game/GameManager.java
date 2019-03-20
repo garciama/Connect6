@@ -25,16 +25,11 @@ public class GameManager {
             return "no games found";
         else
             return (allGameMap.get(id).getBoard());
-
-        }
-
-    public boolean moveInGame(int ID, int x, int y, String playerName){
-        if(allGameMap.get(ID).makeMove(x, y, playerName))
-            return true;
-        else
-            return false;
     }
 
+    public boolean moveInGame(int ID, int x, int y, String playerName){
+        return allGameMap.get(ID).makeMove(x, y, playerName);
+        }
 
 
 }

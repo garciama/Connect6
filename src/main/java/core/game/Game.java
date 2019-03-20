@@ -1,6 +1,8 @@
 package core.game;
 import core.Color;
 import core.user.User;
+import core.user.Move;
+import java.util.ArrayList;
 
 public class Game {
 
@@ -8,33 +10,49 @@ public class Game {
     private boolean publicOrPrivate;
     private boolean isFinished;
     private Board board;
-    User red, blue;
+    User redPlayer, bluePlayer;
+    public ArrayList<Move> movesInGame;
 
     public Game(int id, String redName, String blueName){
-     this.gameID = id;
-     board = new Board();
-     red = new User(redName, Color.Red);
-     blue = new User(blueName, Color.Blue);
+        movesInGame = new ArrayList<>();
+        this.gameID = id;
+        board = new Board();
+        redPlayer = new User(redName, Color.Red);
+        bluePlayer = new User(blueName, Color.Blue);
+        isFinished = false;
     }
 
     public String getBoard() {
         return board.displayBoard();
     }
 
+    //TODO: make this return a bool to represent if the space is open so you can make a move or if its occupied
     public boolean makeMove(int x, int y, String playerName) {
         if (board.checkIfSquareIsOpen(x, y)) {
-            if (playerName.equals(this.red.getName()))
+            if (playerName.equals(this.redPlayer.getName())) {
                 board.squaresOnBoard[x][y].changeColor(Color.Red);
-            else
+            }else
                 board.squaresOnBoard[x][y].changeColor(Color.Blue);
+
+            Move currentMove = new Move(x, y);
+            movesInGame.add(currentMove);
         }
         else {
             System.out.println("Illegal move - square already taken");
             return false;
         }
-        if(board.searchForColor()){
-            System.out.println(playerName + " has won! Game over.");
-            System.exit(1);
+
+        if(board.isWinning()){
+            if (redPlayer.getName().equals(playerName)) {
+                System.out.println(playerName + " has won! Game over.");
+                redPlayer.addWin();
+            }
+            else if(bluePlayer.getName().equals(playerName)) {
+                System.out.println(playerName + " has won! Game over.");
+                bluePlayer.addWin();
+            }
+
+            isFinished = true;
         }
         return true;
     }

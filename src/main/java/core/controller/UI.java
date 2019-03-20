@@ -12,7 +12,7 @@ public class UI {
     static String redPlayer, bluePlayer; // TODO: change this when we keep track of users better
     static GameController controller;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         in = new Scanner(System.in);
         controller = new GameController();
@@ -20,6 +20,7 @@ public class UI {
         menu();
 
     }
+
 
     /**
      * Gets the names of users that are entered
@@ -29,6 +30,10 @@ public class UI {
         redPlayer = in.nextLine();
         System.out.print("Enter the next user to play: ");
         bluePlayer = in.nextLine();
+        while(bluePlayer.equals(redPlayer)){
+            System.out.print("The same names can't be used, enter a different name: ");
+            bluePlayer = in.nextLine();
+        }
     }
 
     /**
@@ -45,7 +50,7 @@ public class UI {
             xRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(redPlayer + "'s x move: ");
             xRed = in.nextInt();
         }
@@ -60,7 +65,7 @@ public class UI {
             yRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(redPlayer + "'s y move: ");
             yRed = in.nextInt();
         }
@@ -80,7 +85,7 @@ public class UI {
             xBlue = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(bluePlayer + "'s x move: ");
             xBlue = in.nextInt();
         }
@@ -96,7 +101,7 @@ public class UI {
         } catch (InputMismatchException e) {
 
                 in.nextLine();
-                System.out.print("Please enter a number!");
+                System.out.println("Please enter a number!");
                 System.out.print(bluePlayer + "'s y move: ");
                 yBlue = in.nextInt();
         }
@@ -140,7 +145,7 @@ public class UI {
         int gameID = in.nextInt();
         // loop that runs the actual playing of the game
 
-        controller.reportBoard(gameID);
+        System.out.println(controller.reportBoard(gameID));
 
         while(true) {
             getInputRedPlayer();
