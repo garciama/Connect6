@@ -87,8 +87,10 @@ public class gamePackageTest {
     @Test
     public void testIsWinning(){
         b1.squaresOnBoard[13][13].changeColor(Color.Red);
-        assertFalse(b1.isWinning(13,13,b1.squaresOnBoard[13][13].getColor()));
-        assertTrue(b1.isWinning(2,3,b1.squaresOnBoard[2][3].getColor()));
+        //assertFalse(b1.isWinning(13,13,b1.squaresOnBoard[13][13].getColor()));
+        //assertTrue(b1.isWinning(2,3,b1.squaresOnBoard[2][3].getColor()));
+        assertFalse(b1.isWinning());
+        //assertTrue(b1.isWinning());
     }
 
     @Test
