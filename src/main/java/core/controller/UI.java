@@ -14,7 +14,7 @@ public class UI {
     public static void main(String[] args){
 
         in = new Scanner(System.in);
-
+        menu();
 
         getUsers();
 
@@ -107,31 +107,31 @@ public class UI {
         }
     }
 
-    private void createUser() {
+    private static void createUser() {
 
     }
 
-    private void makeNewGame() {
+    private static void makeNewGame() {
 
     }
 
-    private void joinGame() {
+    private static void joinGame() {
 
     }
 
-    private void seeGamesInProgress() {
+    private static void seeGamesInProgress() {
 
     }
 
-    private void seeCompletedGames() {
+    private static void seeCompletedGames() {
 
     }
 
-    private void seeLeaderboard() {
+    private static void seeLeaderboard() {
 
     }
 
-    private void menu() {
+    private static void menu() {
         System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard");
         menuChoice = in.nextInt();
         switch (menuChoice) {
