@@ -16,7 +16,6 @@ public class UI {
         in = new Scanner(System.in);
         menu();
 
-<<<<<<< HEAD
         getUsers();
 
         GameController controller = new GameController(redPlayer, bluePlayer);
@@ -33,8 +32,6 @@ public class UI {
             System.out.println();
             System.out.println(controller.reportBoard(0));
         }
-=======
->>>>>>> 3db59e0d91cb08fe8ea5321ca632dfb5ad9926a0
     }
 
 
@@ -62,7 +59,7 @@ public class UI {
             xRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(redPlayer + "'s x move: ");
             xRed = in.nextInt();
         }
@@ -73,7 +70,7 @@ public class UI {
             yRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(redPlayer + "'s y move: ");
             yRed = in.nextInt();
         }
@@ -91,7 +88,7 @@ public class UI {
             xBlue = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
-            System.out.print("Please enter a number!");
+            System.out.println("Please enter a number!");
             System.out.print(bluePlayer + "'s x move: ");
             xBlue = in.nextInt();
         }
@@ -103,7 +100,7 @@ public class UI {
         } catch (InputMismatchException e) {
 
                 in.nextLine();
-                System.out.print("Please enter a number!");
+                System.out.println("Please enter a number!");
                 System.out.print(bluePlayer + "'s y move: ");
                 yBlue = in.nextInt();
         }
@@ -149,7 +146,8 @@ public class UI {
     }
 
     private static void menu() {
-        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
+        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n" +
+                "3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
         menuChoice = in.nextInt();
         System.out.println();
         in.nextLine();
