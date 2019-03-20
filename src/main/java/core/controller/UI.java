@@ -47,6 +47,10 @@ public class UI {
             xRed = in.nextInt();
         }
 
+        if (xRed == -1) {
+            menu();
+        }
+
         // get y coordinate
         try {
             System.out.print(redPlayer + "'s y move: ");
@@ -58,14 +62,15 @@ public class UI {
             yRed = in.nextInt();
         }
 
+        if (yRed == -1) {
+            menu();
+        }
     }
 
     /**
      * Gets Blue Player's x and y entered coordinates
      */
     public static void getInputBluePlayer() {
-
-
         // gets x coordinate
         try {
             System.out.print(bluePlayer + "'s x move: ");
@@ -75,6 +80,10 @@ public class UI {
             System.out.print("Please enter a number!");
             System.out.print(bluePlayer + "'s x move: ");
             xBlue = in.nextInt();
+        }
+
+        if (xBlue == -1) {
+            menu();
         }
 
         // get y coordinate
@@ -88,6 +97,10 @@ public class UI {
                 System.out.print(bluePlayer + "'s y move: ");
                 yBlue = in.nextInt();
         }
+
+        if (yBlue == -1) {
+            menu();
+        }
     }
 
     private static void createUser() {
@@ -95,6 +108,7 @@ public class UI {
     }
 
     private static void makeNewGame() {
+        System.out.println("Enter -1 to go back to the main menu");
         getUsers();
         GameController controller = new GameController(redPlayer, bluePlayer);
         //System.out.println( controller.reportBoard(0));
