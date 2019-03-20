@@ -18,6 +18,6 @@ public class GameController {
     }
 
     public int newGame(String redPlayer, String bluePlayer) {
-        return gammeManager.createNew(redPlayer, bluePlayer);
+        return gameManager.createNew(redPlayer, bluePlayer);
     }
 }

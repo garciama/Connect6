@@ -21,7 +21,7 @@ public class UI {
 
         getUsers();
 
-        GameController controller = new GameController(redPlayer, bluePlayer);
+        GameController controller = new GameController();
 
         // loop that runs the actual playing of the game
         while(true) {

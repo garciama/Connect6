@@ -57,8 +57,8 @@ public class Board {
     public boolean isWinning(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
-                if (squaresOnBoard[i][j].getColor() != Color.Black)
-                    if (subIsWinning(i, j, squaresOnBoard[i][j].getColor())) {
+                if (squaresOnBoard[j][i].getColor() != Color.Black)
+                    if (subIsWinning(j, j, squaresOnBoard[j][i].getColor())) {
                         return true;
                     }
             }
