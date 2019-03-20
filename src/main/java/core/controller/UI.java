@@ -148,7 +148,8 @@ public class UI {
     }
 
     private static void menu() {
-        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
+        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
+                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
         menuChoice = in.nextInt();
         System.out.println();
         in.nextLine();
