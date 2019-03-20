@@ -1,6 +1,4 @@
 package core.game;
-import com.sun.xml.internal.bind.v2.TODO;
-import core.controller.GameController;
 import core.Color;
 import org.junit.Before;
 import org.junit.Test;
