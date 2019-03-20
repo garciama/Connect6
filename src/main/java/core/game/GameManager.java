@@ -11,12 +11,13 @@ public class GameManager {
         allGameMap = new HashMap<>();
     }
 
-    public void createNew(String redName, String blueName) {
+    public int createNew(String redName, String blueName) {
         Game g = new Game(gameIDCount, redName, blueName);
 
         while (allGameMap.putIfAbsent(gameIDCount, g) != null) {
             gameIDCount++;
         }
+        return gameIDCount;
     }
 
     public String getBoard(int id){

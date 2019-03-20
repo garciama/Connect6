@@ -20,26 +20,26 @@ public class userPackageTest {
         u1 = new User("test", Color.Red);
         u2 = new User("test1", Color.Blue);
 
-        u1.setWins(15);
-        u1.setLosses(5);
-        u1.setTies(2);
+        u1.addWin();
+        u1.addLoss();
+        u1.addTie();
     }
     @Test
     public void getWins() {
         assertEquals(0, u2.getWins());
-        assertEquals(15, u1.getWins());
+        assertEquals(1, u1.getWins());
     }
 
     @Test
     public void getLosses() {
         assertEquals(0, u2.getLosses());
-        assertEquals(5, u1.getLosses());
+        assertEquals(1, u1.getLosses());
     }
 
     @Test
     public void getTies() {
         assertEquals(0, u2.getTies());
-        assertEquals(2, u1.getTies());
+        assertEquals(1, u1.getTies());
     }
 
     @Test

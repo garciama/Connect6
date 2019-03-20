@@ -3,7 +3,6 @@ import core.Color;
 
 public class Board {
 
-    private boolean winningState;
     protected Square[][] squaresOnBoard;
 
     public Board(){
