@@ -30,16 +30,20 @@ public class User {
         return this.name;
     }
 
-    public void setWins( int updatedWins ){
-        wins = updatedWins;
+    public void addWin(){
+        wins++;
     }
 
-    public void setLosses( int updatedLosses ){
-        losses = updatedLosses;
+    public void addLoss(){
+        losses++;
     }
 
-    public void setTies( int updatedTies ){
-        ties = updatedTies;
+    public void addTie(){
+        ties++;
+    }
+
+    public int getScore() {
+        return 3 * wins + ties;
     }
 
     public void makesMove(int x, int y){

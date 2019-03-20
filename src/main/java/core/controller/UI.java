@@ -17,7 +17,6 @@ public class UI {
         getUsers();
 
         GameController controller = new GameController(redPlayer, bluePlayer);
-        //System.out.println( controller.reportBoard(0));
 
         // loop that runs the actual playing of the game
         while(true) {
