@@ -16,7 +16,6 @@ public class UI {
 
         in = new Scanner(System.in);
         controller = new GameController();
-
         menu();
 
     }
@@ -125,6 +124,10 @@ public class UI {
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //System.out.println(controller.reportBoard(0));
+
+            //Add a break in between to cut the game right after the winning move is made.
+            if (controller.checkForFinishedGame(gameId))
+                break;
 
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
