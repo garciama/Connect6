@@ -102,11 +102,6 @@ public class Board {
     }
 
     public boolean checkDiagonalLeft(int x, int y, Color c){
-        /* We need to talk about this coordinate system,
-         it was so weird to debug this to find that y can't be > 13.
-         We had a previous condition check for when y was less than
-         5, but that wasn't correct. I will explain this in our
-         next meeting. */
         if (x < 5 || y > 13)
             return false;
         for (int i = 0; i < 6; i++){

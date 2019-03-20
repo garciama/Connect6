@@ -1,4 +1,6 @@
 package core.game;
+import com.sun.xml.internal.bind.v2.TODO;
+import core.controller.GameController;
 import core.Color;
 import org.junit.Before;
 import org.junit.Test;
@@ -116,5 +118,20 @@ public class gamePackageTest {
         b1.squaresOnBoard[0][0].changeColor(Color.Red);
         assertEquals(false, b1.checkIfSquareIsOpen(0, 0));
     }
+
+
+    //TODO: figure out how to test a tie.
+
+   /* @Test
+    public void testTie(){
+        GameController c = new GameController();
+        String redPlayer = "sam", bluePlayer = "nick";
+        int id = c.newGame(redPlayer, bluePlayer);
+
+        c.makeMove(id, 5, 5);
+
+
+        System.out.println(c.reportBoard(id));
+    }*/
 
 }
