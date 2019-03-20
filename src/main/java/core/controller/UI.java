@@ -9,7 +9,7 @@ public class UI {
     static int yBlue;
     static int menuChoice;
     static Scanner in;
-    static String redPlayer, bluePlayer;
+    static String redPlayer, bluePlayer; // TODO: change this when we keep track of users better
     static GameController controller;
 
     public static void main(String[] args){
@@ -110,6 +110,7 @@ public class UI {
 
     }
 
+    //TODO: have an actual way to keep track of users so you can actually join
     private static void makeNewGame() {
         System.out.println("Enter -1 to go back to the main menu");
         getUsers();
@@ -120,18 +121,39 @@ public class UI {
         // loop that runs the actual playing of the game
         while(true) {
             getInputRedPlayer();
-            while(!controller.makeMove(0, xRed, yRed, redPlayer))
+            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //System.out.println(controller.reportBoard(0));
             getInputBluePlayer();
-            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
+            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
             System.out.println();
-            System.out.println(controller.reportBoard(0));
+            System.out.println(controller.reportBoard(gameId));
         }
     }
 
+    //TODO: When you exit and join a game, need to keep track of who was the last move! and user names are messed up cuz the globals
+
     private static void joinGame() {
+
+        System.out.println("Enter the ID of a game to join");
+        int gameID = in.nextInt();
+        // loop that runs the actual playing of the game
+
+        controller.reportBoard(gameID);
+
+        while(true) {
+            getInputRedPlayer();
+            while(!controller.makeMove(gameID, xRed, yRed, redPlayer))
+                getInputRedPlayer();
+            //System.out.println(controller.reportBoard(0));
+            getInputBluePlayer();
+            while(!controller.makeMove(gameID, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
+            System.out.println();
+            System.out.println(controller.reportBoard(gameID));
+        }
+
 
     }
 
