@@ -13,10 +13,7 @@ public class GameController {
     }
 
     public boolean makeMove(int ID, int x, int y, String playerName){
-        if(mgr.moveInGame(ID, x, y, playerName))
-            return true;
-        else
-            return false;
+        return(mgr.moveInGame(ID, x, y, playerName));
     }
 
     public int newGame(String redPlayer, String bluePlayer) {
