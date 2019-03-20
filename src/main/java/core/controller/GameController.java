@@ -10,11 +10,12 @@ public class GameController {
         gameManager.createNew(redName, blueName);
     }
 
-    public String reportBoard(int gameID){
+    public String reportBoard(int gameID) {
         return gameManager.getBoard(gameID);
     }
 
     public boolean makeMove(int ID, int x, int y, String playerName) {
         return gameManager.moveInGame(ID, x, y, playerName);
+
     }
 }

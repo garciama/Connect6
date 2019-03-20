@@ -45,11 +45,11 @@ public class Game {
         if(board.isWinning()){
             if (redPlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
-                //redPlayer.setWins();
+                redPlayer.addWin();
             }
             else if(bluePlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
-                //redPlayer.setWins();
+                redPlayer.addWin();
             }
 
             isFinished = true;
