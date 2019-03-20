@@ -27,6 +27,10 @@ public class GameManager {
             return (allGameMap.get(id).getBoard());
     }
 
+    public boolean checkForGameOver(int gameID) {
+        return allGameMap.get(gameID).getGameStatus();
+    }
+
     public boolean moveInGame(int ID, int x, int y, String playerName){
         return allGameMap.get(ID).makeMove(x, y, playerName);
         }

@@ -58,4 +58,8 @@ public class Game {
         }
         return true;
     }
+
+    public boolean getGameStatus(){
+        return isFinished;
+    }
 }

@@ -120,17 +120,21 @@ public class UI {
         //System.out.println( controller.reportBoard(0));
 
         // loop that runs the actual playing of the game
-        while(true) {
+        while(!controller.checkForFinishedGame(gameId)) {
             getInputRedPlayer();
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //System.out.println(controller.reportBoard(0));
+
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
             System.out.println();
             System.out.println(controller.reportBoard(gameId));
         }
+
+        System.out.println("Thank you for playing!\n");
+        menu();
     }
 
     //TODO: When you exit and join a game, need to keep track of who was the last move! and user names are messed up cuz the globals
