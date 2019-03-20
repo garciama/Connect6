@@ -60,6 +60,6 @@ public class userPackageTest {
     public void moveToString() {
         // TODO will have to change this when we change how we keep track of users
         Move move = new Move(5, 8);
-        assertEquals("5 8", move.toString());
+        assertEquals("(5, 8)", move.toString());
     }
 }
