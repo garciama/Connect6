@@ -42,9 +42,4 @@ public class User {
         ties = updatedTies;
     }
 
-    public void makesMove(int x, int y){
-        // TODO need to update the player part of this call when we know how we are keeping track of users
-        Move move = new Move(x, y, this);
-
-    }
 }

@@ -3,7 +3,6 @@ import core.Color;
 
 public class Board {
 
-    private boolean hasFinished;
     protected Square[][] squaresOnBoard;
 
     public Board(){
@@ -55,11 +54,11 @@ public class Board {
         b.append("|\n");
     }
 
-    public boolean searchForColor(){
+    public boolean isWinning(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
                 if (squaresOnBoard[i][j].getColor() != Color.Black)
-                    if (isWinning(i, j, squaresOnBoard[i][j].getColor())) {
+                    if (subIsWinning(i, j, squaresOnBoard[i][j].getColor())) {
                         return true;
                     }
             }
@@ -67,7 +66,7 @@ public class Board {
         return false;
     }
 
-    public boolean isWinning(int x, int y, Color c){
+    public boolean subIsWinning(int x, int y, Color c){
         return (checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalRight(x, y, c) ||
                 checkDiagonalLeft(x, y, c));
     }
