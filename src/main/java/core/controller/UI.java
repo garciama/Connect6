@@ -132,8 +132,8 @@ public class UI {
         }
     }
 
-    //TODO: When you exit and join a game, need to keep track of who was the last move!
-    //TODO: I created one game, made some moves, closed and made a new game, then the board was the same with the new game
+    //TODO: When you exit and join a game, need to keep track of who was the last move! and user names are messed up cuz the globals
+
     private static void joinGame() {
 
         System.out.println("Enter the ID of a game to join");
