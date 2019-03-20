@@ -10,8 +10,8 @@ public class Board {
         squaresOnBoard = new Square[19][19];
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
-                Square individualSquare = new Square(i, j);
-                squaresOnBoard[i][j] = individualSquare;
+                Square individualSquare = new Square(j, i);
+                squaresOnBoard[j][i] = individualSquare;
             }
         }
 
