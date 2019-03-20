@@ -10,10 +10,13 @@ public class UI {
     static int menuChoice;
     static Scanner in;
     static String redPlayer, bluePlayer;
+    static GameController controller;
 
     public static void main(String[] args){
 
         in = new Scanner(System.in);
+        controller = new GameController();
+
         menu();
 
     }
@@ -110,7 +113,8 @@ public class UI {
     private static void makeNewGame() {
         System.out.println("Enter -1 to go back to the main menu");
         getUsers();
-        GameController controller = new GameController(redPlayer, bluePlayer);
+        int gameId = controller.newGame(redPlayer, bluePlayer);
+        System.out.println("Your gameId is " + gameId);
         //System.out.println( controller.reportBoard(0));
 
         // loop that runs the actual playing of the game
@@ -167,6 +171,9 @@ public class UI {
             case 6:
                 seeLeaderboard();
                 break;
+            default:
+                System.out.println("Exiting game...");
+                System.exit(0);
         }
     }
 }

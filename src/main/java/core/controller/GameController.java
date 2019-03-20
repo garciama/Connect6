@@ -6,9 +6,7 @@ public class GameController {
 
     private GameManager mgr = new GameManager();
 
-    public GameController(String redName, String blueName) {
-        mgr.createNew(redName, blueName);
-    }
+    public GameController() { }
 
     public String reportBoard(int gameID){
         return mgr.getBoard(gameID);
@@ -19,5 +17,9 @@ public class GameController {
             return true;
         else
             return false;
+    }
+
+    public int newGame(String redPlayer, String bluePlayer) {
+        return mgr.createNew(redPlayer, bluePlayer);
     }
 }
