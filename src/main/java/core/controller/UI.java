@@ -19,22 +19,6 @@ public class UI {
 
         menu();
 
-        getUsers();
-
-        GameController controller = new GameController();
-
-        // loop that runs the actual playing of the game
-        while(true) {
-            getInputRedPlayer();
-            while(!controller.makeMove(0, xRed, yRed, redPlayer))
-                getInputRedPlayer();
-            //System.out.println(controller.reportBoard(0));
-            getInputBluePlayer();
-            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
-                getInputBluePlayer();
-            System.out.println();
-            System.out.println(controller.reportBoard(0));
-        }
     }
 
 
