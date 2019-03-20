@@ -17,6 +17,10 @@ public class GameController {
 
     }
 
+    public boolean checkForFinishedGame(int gameID) {
+        return gameManager.checkForGameOver(gameID);
+    }
+
     public int newGame(String redPlayer, String bluePlayer) {
         return gameManager.createNew(redPlayer, bluePlayer);
     }

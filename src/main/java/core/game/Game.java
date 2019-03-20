@@ -42,18 +42,34 @@ public class Game {
             return false;
         }
 
-        if(board.isWinning()){
+        if (board.isWinning()){
             if (redPlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
                 redPlayer.addWin();
+                System.out.println(redPlayer.getName() + " now has " + redPlayer.getWins() + " wins!");
             }
             else if(bluePlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
                 bluePlayer.addWin();
+                System.out.println(bluePlayer.getName() + " now has " + bluePlayer.getWins() + " wins!");
             }
 
             isFinished = true;
+
         }
+
+        if (movesInGame.size() == (19*19)){
+            System.out.println("Tie! Game over.");
+            redPlayer.addTie();
+            bluePlayer.addTie();
+
+            isFinished = true;
+        }
+
         return true;
+    }
+
+    public boolean getGameStatus(){
+        return isFinished;
     }
 }

@@ -16,7 +16,6 @@ public class UI {
 
         in = new Scanner(System.in);
         controller = new GameController();
-
         menu();
 
     }
@@ -28,12 +27,15 @@ public class UI {
     public static void getUsers() {
         System.out.print("Enter the first user to play: ");
         redPlayer = in.nextLine();
+
+        if (redPlayer.equals("-1"))
+            menu();
+
         System.out.print("Enter the next user to play: ");
         bluePlayer = in.nextLine();
-        while(bluePlayer.equals(redPlayer)){
-            System.out.print("The same names can't be used, enter a different name: ");
-            bluePlayer = in.nextLine();
-        }
+
+        if (bluePlayer.equals("-1"))
+            menu();
     }
 
     /**
@@ -55,9 +57,9 @@ public class UI {
             xRed = in.nextInt();
         }
 
-        if (xRed == -1) {
+        if (xRed == -1)
             menu();
-        }
+
 
         // get y coordinate
         try {
@@ -70,9 +72,9 @@ public class UI {
             yRed = in.nextInt();
         }
 
-        if (yRed == -1) {
+        if (yRed == -1)
             menu();
-        }
+
     }
 
     /**
@@ -90,9 +92,9 @@ public class UI {
             xBlue = in.nextInt();
         }
 
-        if (xBlue == -1) {
+        if (xBlue == -1)
             menu();
-        }
+
 
         // get y coordinate
         try {
@@ -106,9 +108,9 @@ public class UI {
                 yBlue = in.nextInt();
         }
 
-        if (yBlue == -1) {
+        if (yBlue == -1)
             menu();
-        }
+
     }
 
     private static void createUser() {
@@ -117,24 +119,36 @@ public class UI {
 
     //TODO: have an actual way to keep track of users so you can actually join
     private static void makeNewGame() {
-        System.out.println("Enter -1 to go back to the main menu");
+        System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
         int gameId = controller.newGame(redPlayer, bluePlayer);
         System.out.println("Your gameId is " + gameId);
         //System.out.println( controller.reportBoard(0));
 
         // loop that runs the actual playing of the game
-        while(true) {
+        while(!controller.checkForFinishedGame(gameId)) {
             getInputRedPlayer();
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //System.out.println(controller.reportBoard(0));
+
+            //Add a break in between to cut the game right after the winning move is made.
+            if (controller.checkForFinishedGame(gameId)) {
+                System.out.println();
+                System.out.println(controller.reportBoard(gameId));
+                break;
+            }
+
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
+
             System.out.println();
             System.out.println(controller.reportBoard(gameId));
         }
+
+        System.out.println("Thank you for playing!\n");
+        menu();
     }
 
     //TODO: When you exit and join a game, need to keep track of who was the last move! and user names are messed up cuz the globals
@@ -145,7 +159,7 @@ public class UI {
         int gameID = in.nextInt();
         // loop that runs the actual playing of the game
 
-        System.out.println(controller.reportBoard(gameID));
+        controller.reportBoard(gameID);
 
         while(true) {
             getInputRedPlayer();
