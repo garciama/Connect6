@@ -16,23 +16,6 @@ public class UI {
         in = new Scanner(System.in);
         menu();
 
-        getUsers();
-
-        GameController controller = new GameController(redPlayer, bluePlayer);
-        //System.out.println( controller.reportBoard(0));
-
-        // loop that runs the actual playing of the game
-        while(true) {
-            getInputRedPlayer();
-            while(!controller.makeMove(0, xRed, yRed, redPlayer))
-                getInputRedPlayer();
-            //System.out.println(controller.reportBoard(0));
-            getInputBluePlayer();
-            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
-                getInputBluePlayer();
-            System.out.println();
-            System.out.println(controller.reportBoard(0));
-        }
     }
 
     /**
@@ -112,7 +95,22 @@ public class UI {
     }
 
     private static void makeNewGame() {
+        getUsers();
+        GameController controller = new GameController(redPlayer, bluePlayer);
+        //System.out.println( controller.reportBoard(0));
 
+        // loop that runs the actual playing of the game
+        while(true) {
+            getInputRedPlayer();
+            while(!controller.makeMove(0, xRed, yRed, redPlayer))
+                getInputRedPlayer();
+            //System.out.println(controller.reportBoard(0));
+            getInputBluePlayer();
+            while(!controller.makeMove(0, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
+            System.out.println();
+            System.out.println(controller.reportBoard(0));
+        }
     }
 
     private static void joinGame() {
@@ -132,8 +130,10 @@ public class UI {
     }
 
     private static void menu() {
-        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard");
+        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
         menuChoice = in.nextInt();
+        System.out.println();
+        in.nextLine();
         switch (menuChoice) {
             case 1:
                 createUser();
