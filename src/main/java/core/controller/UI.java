@@ -7,12 +7,14 @@ public class UI {
     static int yRed;
     static int xBlue;
     static int yBlue;
+    static int menuChoice;
     static Scanner in;
     static String redPlayer, bluePlayer;
 
     public static void main(String[] args){
 
         in = new Scanner(System.in);
+
 
         getUsers();
 
@@ -103,7 +105,54 @@ public class UI {
                 System.out.print(bluePlayer + "'s y move: ");
                 yBlue = in.nextInt();
         }
+    }
 
+    private void createUser() {
 
+    }
+
+    private void makeNewGame() {
+
+    }
+
+    private void joinGame() {
+
+    }
+
+    private void seeGamesInProgress() {
+
+    }
+
+    private void seeCompletedGames() {
+
+    }
+
+    private void seeLeaderboard() {
+
+    }
+
+    private void menu() {
+        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard");
+        menuChoice = in.nextInt();
+        switch (menuChoice) {
+            case 1:
+                createUser();
+                break;
+            case 2:
+                makeNewGame();
+                break;
+            case 3:
+                seeGamesInProgress();
+                break;
+            case 4:
+                joinGame();
+                break;
+            case 5:
+                seeCompletedGames();
+                break;
+            case 6:
+                seeLeaderboard();
+                break;
+        }
     }
 }
