@@ -10,10 +10,13 @@ public class UI {
     static int menuChoice;
     static Scanner in;
     static String redPlayer, bluePlayer;
+    static GameController controller;
 
     public static void main(String[] args) {
 
         in = new Scanner(System.in);
+        controller = new GameController();
+
         menu();
 
         getUsers();
@@ -64,6 +67,10 @@ public class UI {
             xRed = in.nextInt();
         }
 
+        if (xRed == -1) {
+            menu();
+        }
+
         // get y coordinate
         try {
             System.out.print(redPlayer + "'s y move: ");
@@ -75,13 +82,15 @@ public class UI {
             yRed = in.nextInt();
         }
 
+        if (yRed == -1) {
+            menu();
+        }
     }
 
     /**
      * Gets Blue Player's x and y entered coordinates
      */
     public static void getInputBluePlayer() {
-
         // gets x coordinate
         try {
             System.out.print(bluePlayer + "'s x move: ");
@@ -91,6 +100,10 @@ public class UI {
             System.out.println("Please enter a number!");
             System.out.print(bluePlayer + "'s x move: ");
             xBlue = in.nextInt();
+        }
+
+        if (xBlue == -1) {
+            menu();
         }
 
         // get y coordinate
@@ -104,6 +117,10 @@ public class UI {
                 System.out.print(bluePlayer + "'s y move: ");
                 yBlue = in.nextInt();
         }
+
+        if (yBlue == -1) {
+            menu();
+        }
     }
 
     private static void createUser() {
@@ -111,8 +128,10 @@ public class UI {
     }
 
     private static void makeNewGame() {
+        System.out.println("Enter -1 to go back to the main menu");
         getUsers();
-        GameController controller = new GameController(redPlayer, bluePlayer);
+        int gameId = controller.newGame(redPlayer, bluePlayer);
+        System.out.println("Your gameId is " + gameId);
         //System.out.println( controller.reportBoard(0));
 
         // loop that runs the actual playing of the game
@@ -146,8 +165,8 @@ public class UI {
     }
 
     private static void menu() {
-        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n" +
-                "3. See games in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
+        System.out.println("Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
+                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n");
         menuChoice = in.nextInt();
         System.out.println();
         in.nextLine();
@@ -170,6 +189,9 @@ public class UI {
             case 6:
                 seeLeaderboard();
                 break;
+            default:
+                System.out.println("Exiting game...");
+                System.exit(0);
         }
     }
 }
