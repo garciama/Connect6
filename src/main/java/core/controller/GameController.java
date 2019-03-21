@@ -24,4 +24,8 @@ public class GameController {
     public int newGame(String redPlayer, String bluePlayer) {
         return gameManager.createNew(redPlayer, bluePlayer);
     }
+
+    public boolean hasPlayerRegistered(String playerName){
+        return gameManager.checkIfUsersExist(playerName);
+    }
 }

@@ -48,12 +48,12 @@ public class UI {
 
         // gets x coordinate
         try {
-            System.out.print(redPlayer + "'s x move: ");
+            System.out.print(redPlayer + "'s (red) x move: ");
             xRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
             System.out.println("Please enter a number!");
-            System.out.print(redPlayer + "'s x move: ");
+            System.out.print(redPlayer + "'s (red) x move: ");
             xRed = in.nextInt();
         }
 
@@ -63,12 +63,12 @@ public class UI {
 
         // get y coordinate
         try {
-            System.out.print(redPlayer + "'s y move: ");
+            System.out.print(redPlayer + "'s (red) y move: ");
             yRed = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
             System.out.println("Please enter a number!");
-            System.out.print(redPlayer + "'s y move: ");
+            System.out.print(redPlayer + "'s (red) y move: ");
             yRed = in.nextInt();
         }
 
@@ -83,12 +83,12 @@ public class UI {
     public static void getInputBluePlayer() {
         // gets x coordinate
         try {
-            System.out.print(bluePlayer + "'s x move: ");
+            System.out.print(bluePlayer + "'s (blue) x move: ");
             xBlue = in.nextInt();
         } catch (InputMismatchException e) {
             in.nextLine();
             System.out.println("Please enter a number!");
-            System.out.print(bluePlayer + "'s x move: ");
+            System.out.print(bluePlayer + "'s (blue) x move: ");
             xBlue = in.nextInt();
         }
 
@@ -98,13 +98,13 @@ public class UI {
 
         // get y coordinate
         try {
-            System.out.print(bluePlayer + "'s y move: ");
+            System.out.print(bluePlayer + "'s (blue) y move: ");
             yBlue = in.nextInt();
         } catch (InputMismatchException e) {
 
                 in.nextLine();
                 System.out.println("Please enter a number!");
-                System.out.print(bluePlayer + "'s y move: ");
+                System.out.print(bluePlayer + "'s (blue) y move: ");
                 yBlue = in.nextInt();
         }
 
@@ -122,8 +122,15 @@ public class UI {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
         int gameId = controller.newGame(redPlayer, bluePlayer);
+
+        if (gameId == -1)
+            menu();
+
         System.out.println("Your gameId is " + gameId);
         //System.out.println( controller.reportBoard(0));
+
+        System.out.println();
+        System.out.println(controller.reportBoard(gameId));
 
         // loop that runs the actual playing of the game
         while(!controller.checkForFinishedGame(gameId)) {
@@ -131,6 +138,10 @@ public class UI {
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //System.out.println(controller.reportBoard(0));
+
+
+            System.out.println();
+            System.out.println(controller.reportBoard(gameId));
 
             //Add a break in between to cut the game right after the winning move is made.
             if (controller.checkForFinishedGame(gameId)) {
@@ -190,6 +201,7 @@ public class UI {
     }
 
     private static void seeLeaderboard() {
+
 
     }
 
