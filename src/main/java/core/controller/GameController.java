@@ -21,6 +21,14 @@ public class GameController {
         return gameManager.checkForGameOver(gameID);
     }
 
+    public String seeInProgressGames() {
+        return gameManager.getAllGamesInProgress();
+    }
+
+    public String seeFinishedGames() {
+        return gameManager.getAllFinishedGames();
+    }
+
     public int newGame(String redPlayer, String bluePlayer) {
         return gameManager.createNew(redPlayer, bluePlayer);
     }

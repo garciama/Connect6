@@ -127,7 +127,19 @@ public class UI {
             menu();
 
         System.out.println("Your gameId is " + gameId);
-        //System.out.println( controller.reportBoard(0));
+
+        //first user gets one move, second user gets 2 moves, then enter game loop
+        getInputRedPlayer();
+        while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+            getInputRedPlayer();
+        getInputBluePlayer();
+        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+            getInputBluePlayer();
+        getInputBluePlayer();
+        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+            getInputBluePlayer();
+        System.out.println(controller.reportBoard(gameId));
+
 
         System.out.println();
         System.out.println(controller.reportBoard(gameId));
@@ -137,7 +149,9 @@ public class UI {
             getInputRedPlayer();
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
-            //System.out.println(controller.reportBoard(0));
+            getInputRedPlayer();
+            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+                getInputRedPlayer();
 
 
             System.out.println();
@@ -150,6 +164,9 @@ public class UI {
                 break;
             }
 
+            getInputBluePlayer();
+            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
@@ -175,7 +192,7 @@ public class UI {
         }
         // loop that runs the actual playing of the game
 
-        controller.reportBoard(gameID);
+        System.out.println(controller.reportBoard(gameID));
 
         while(true) {
             getInputRedPlayer();
@@ -193,11 +210,15 @@ public class UI {
     }
 
     private static void seeGamesInProgress() {
-
+        System.out.println("Games in progress:\nid red player blue player");
+        System.out.println(controller.seeInProgressGames());
+        menu();
     }
 
     private static void seeCompletedGames() {
-
+        System.out.println("Games that have been completed:\nid red player blue player");
+        System.out.println(controller.seeFinishedGames());
+        menu();
     }
 
     private static void seeLeaderboard() {

@@ -1,5 +1,6 @@
 package core.game;
 import core.Color;
+import core.controller.GameController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -120,16 +121,53 @@ public class gamePackageTest {
 
     //TODO: figure out how to test a tie.
 
-   /* @Test
+    @Test
     public void testTie(){
         GameController c = new GameController();
         String redPlayer = "sam", bluePlayer = "nick";
         int id = c.newGame(redPlayer, bluePlayer);
 
-        c.makeMove(id, 5, 5);
+        for (int row = 0; row < 19; row++){
+
+            if (row%2 == 0) {
+                for (int col = 0; col < 18; col += 4) {
+                    c.makeMove(id, col, row, redPlayer);
+                    c.makeMove(id, col + 1, row, redPlayer);
+
+                }
+
+                for (int col = 2; col < 18; col += 4) {
+                    c.makeMove(id, col, row, bluePlayer);
+                    c.makeMove(id, col + 1, row, bluePlayer);
+
+                }
+            }else{
+                for (int col = 0; col < 18; col += 4) {
+                    c.makeMove(id, col, row, bluePlayer);
+                    c.makeMove(id, col + 1, row, bluePlayer);
+
+                }
+
+                for (int col = 2; col < 18; col += 4) {
+                    c.makeMove(id, col, row, redPlayer);
+                    c.makeMove(id, col + 1, row, redPlayer);
+                }
+            }
+        }
+
+        for (int row = 0; row < 19; row++){
+            if (row%2 == 0)
+                c.makeMove(id, 18, row, redPlayer);
+            else
+                c.makeMove(id, 18, row, bluePlayer);
 
 
+        }
+
+        /*We can see the board is full and nobody has won,
+        so the game gives each player a tie and closes the game. */
         System.out.println(c.reportBoard(id));
-    }*/
+
+    }
 
 }
