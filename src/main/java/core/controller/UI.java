@@ -123,14 +123,28 @@ public class UI {
         getUsers();
         int gameId = controller.newGame(redPlayer, bluePlayer);
         System.out.println("Your gameId is " + gameId);
-        //System.out.println( controller.reportBoard(0));
+
+        //first user gets one move, second user gets 2 moves, then enter game loop
+        getInputRedPlayer();
+        while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+            getInputRedPlayer();
+        getInputBluePlayer();
+        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+            getInputBluePlayer();
+        getInputBluePlayer();
+        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+            getInputBluePlayer();
+        System.out.println(controller.reportBoard(gameId));
+
 
         // loop that runs the actual playing of the game
         while(!controller.checkForFinishedGame(gameId)) {
             getInputRedPlayer();
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
-            //System.out.println(controller.reportBoard(0));
+            getInputRedPlayer();
+            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+                getInputRedPlayer();
 
             //Add a break in between to cut the game right after the winning move is made.
             if (controller.checkForFinishedGame(gameId)) {
@@ -139,6 +153,9 @@ public class UI {
                 break;
             }
 
+            getInputBluePlayer();
+            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
