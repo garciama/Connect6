@@ -159,7 +159,7 @@ public class UI {
         int gameID = in.nextInt();
         // loop that runs the actual playing of the game
 
-        controller.reportBoard(gameID);
+        System.out.println(controller.reportBoard(gameID));
 
         while(true) {
             getInputRedPlayer();
@@ -177,11 +177,15 @@ public class UI {
     }
 
     private static void seeGamesInProgress() {
-
+        System.out.println("Games in progress:\nid red player blue player");
+        System.out.println(controller.seeInProgressGames());
+        menu();
     }
 
     private static void seeCompletedGames() {
-
+        System.out.println("Games that have been completed:\nid red player blue player");
+        System.out.println(controller.seeFinishedGames());
+        menu();
     }
 
     private static void seeLeaderboard() {

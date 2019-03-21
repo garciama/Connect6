@@ -1,5 +1,6 @@
 package core.game;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class GameManager {
@@ -31,9 +32,52 @@ public class GameManager {
         return allGameMap.get(gameID).getGameStatus();
     }
 
+    /**
+     * Loops through all of the games in allGameMap and if the game has not finished then that games information,
+     * the ID and each player's name, is added to a string to be returned
+     * @return string representation of every in progress game, including the gameID and each players name
+     */
+    public String getAllGamesInProgress() {
+        StringBuilder str = new StringBuilder();
+        for (Game g : allGameMap.values()) {
+            if (g.getGameStatus() == false) {
+                str.append(getGameInfo(g));
+            }
+        }
+        return str.toString();
+    }
+
+    /**
+     * Loops through all of the games in allGameMap and if the game has been completed then that games information,
+     * the ID and each player's name, is added to a string to be returned
+     * @return string representation of every finished game, including the gameID and each players name
+     */
+    public String getAllFinishedGames() {
+        StringBuilder str = new StringBuilder();
+        for (Game g : allGameMap.values()) {
+            if (g.getGameStatus() == true) {
+                str.append(getGameInfo(g));
+            }
+        }
+        return str.toString();
+    }
+
+    /**
+     * Helper method for getAllGamesInProgress and getAllFinishedGames that returns a string with a game's information
+     * with the ID and player names
+     * @param g the game to get the info from
+     * @return string representation of the passed in game, including the gameID and each players name
+     */
+    private String getGameInfo(Game g) {
+        int id = g.gameID;
+        String redPlayer = g.redPlayer.getName();
+        String bluePlayer = g.bluePlayer.getName();
+        return String.format("%s %s %s\n", Integer.toString(id), redPlayer, bluePlayer);
+    }
+
     public boolean moveInGame(int ID, int x, int y, String playerName){
         return allGameMap.get(ID).makeMove(x, y, playerName);
-        }
+    }
 
 
 }
