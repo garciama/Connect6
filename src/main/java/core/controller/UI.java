@@ -31,11 +31,21 @@ public class UI {
         if (redPlayer.equals("-1"))
             menu();
 
+        if (!controller.hasPlayerRegistered(redPlayer)) {
+            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
+            menu();
+        }
+
         System.out.print("Enter the next user to play: ");
         bluePlayer = in.nextLine();
 
         if (bluePlayer.equals("-1"))
             menu();
+
+        if (!controller.hasPlayerRegistered(bluePlayer)) {
+            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
+            menu();
+        }
     }
 
     /**
@@ -59,7 +69,6 @@ public class UI {
 
         if (xRed == -1)
             menu();
-
 
         // get y coordinate
         try {
@@ -114,6 +123,16 @@ public class UI {
     }
 
     private static void createUser() {
+        System.out.print("Enter your unique username: ");
+        String newPlayerName = in.nextLine();
+        while(!controller.registerNewPlayer(newPlayerName)) {
+            System.out.println("Error: Player already exists! Enter another name");
+            System.out.print("Enter your unique username: ");
+            newPlayerName = in.nextLine();
+
+        }
+        System.out.println("User successfully created! Returning to menu...");
+        menu();
 
     }
 
@@ -121,10 +140,18 @@ public class UI {
     private static void makeNewGame() {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
+
+
         int gameId = controller.newGame(redPlayer, bluePlayer);
 
-        if (gameId == -1)
+
+
+        if (!controller.hasPlayerRegistered(bluePlayer)) {
+            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
             menu();
+        }
+
+
 
         System.out.println("Your gameId is " + gameId);
 

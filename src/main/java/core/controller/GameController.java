@@ -30,10 +30,14 @@ public class GameController {
     }
 
     public int newGame(String redPlayer, String bluePlayer) {
-        return gameManager.createNew(redPlayer, bluePlayer);
+        return gameManager.createNewGame(redPlayer, bluePlayer);
     }
 
     public boolean hasPlayerRegistered(String playerName){
         return gameManager.checkIfUsersExist(playerName);
+    }
+
+    public boolean registerNewPlayer(String nameOfNewUser){
+        return gameManager.createNewUser(nameOfNewUser);
     }
 }

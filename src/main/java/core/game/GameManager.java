@@ -3,7 +3,6 @@ import core.Color;
 import core.user.User;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class GameManager {
@@ -14,36 +13,32 @@ public class GameManager {
 
     public GameManager(){
         allGameMap = new HashMap<>();
+        allUsers = new HashMap<>();
     }
 
-    public int createNew(String redName, String blueName) {
+    public int createNewGame(String redName, String blueName) {
         Game g = new Game(gameIDCount, redName, blueName);
 
-        allUsers = new HashMap<>();
-
-        User player1 = new User(redName, Color.Red);
-        User player2 = new User(blueName, Color.Blue);
-
-        if (allUsers.get(redName) == null) {
-            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
-            return -1;
-        }
-
-        if (allUsers.get(blueName) == null) {
-            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
-            return -1;
-        }
-
-
-
-        while (allGameMap.putIfAbsent(gameIDCount, g) != null) {
+        while (allGameMap.putIfAbsent(gameIDCount, g) != null)
             gameIDCount++;
-        }
+
         return gameIDCount;
     }
 
     public boolean checkIfUsersExist(String playerName){
-        return (allUsers.get(playerName) != null);
+        if (allUsers.get(playerName) != null)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean createNewUser(String nameOfNewPlayer){
+        User newPlayer = new User(nameOfNewPlayer);
+        if (allUsers.putIfAbsent(nameOfNewPlayer, newPlayer) == null)
+            return true;
+
+        return false;
+
     }
 
     public String getBoard(int id){

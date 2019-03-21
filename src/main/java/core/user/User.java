@@ -6,11 +6,9 @@ public class User {
     private int wins;
     private int losses;
     private int ties;
-    private Color color;
     private String name;
 
-    public User(String name, Color color) {
-        this.color = color;
+    public User(String name) {
         this.name = name;
         wins = 0;
         losses = 0;

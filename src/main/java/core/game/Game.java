@@ -17,8 +17,8 @@ public class Game {
         movesInGame = new ArrayList<>();
         this.gameID = id;
         board = new Board();
-        redPlayer = new User(redName, Color.Red);
-        bluePlayer = new User(blueName, Color.Blue);
+        redPlayer = new User(redName);
+        bluePlayer = new User(blueName);
         isFinished = false;
     }
 
