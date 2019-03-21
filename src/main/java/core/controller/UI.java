@@ -154,6 +154,10 @@ public class UI {
 
 
         System.out.println("Your gameId is " + gameId);
+        playGame(gameId);
+    }
+
+    private static void playGame(int gameId) {
 
         //first user gets one move, second user gets 2 moves, then enter game loop
         getInputRedPlayer();
