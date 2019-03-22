@@ -253,8 +253,7 @@ public class UI {
     }
 
     private static void seeLeaderboard() {
-
-
+        System.out.println(controller.getLeaderBoard());
     }
 
     private static void menu() {

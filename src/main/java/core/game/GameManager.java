@@ -2,8 +2,7 @@ package core.game;
 import core.Color;
 import core.user.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameManager {
 
@@ -39,6 +38,25 @@ public class GameManager {
 
         return false;
 
+    }
+
+    public String displayLeaderboard(){
+        StringBuilder sb = new StringBuilder();
+        Iterator it = allUsers.entrySet().iterator();
+
+        ArrayList<Integer> scores = new ArrayList<>();
+        User temp;
+        while(it.hasNext()){
+            Map.Entry pair =(Map.Entry)it.next();
+            temp = (User)pair.getValue();
+            scores.add(temp.getScore());
+            Collections.sort(scores);
+        }
+
+
+
+
+        return sb.toString();
     }
 
     public String getBoard(int id){

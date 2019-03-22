@@ -40,4 +40,8 @@ public class GameController {
     public boolean registerNewPlayer(String nameOfNewUser){
         return gameManager.createNewUser(nameOfNewUser);
     }
+
+    public String getLeaderBoard(){
+        return gameManager.displayLeaderboard();
+    }
 }

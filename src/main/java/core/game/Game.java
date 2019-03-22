@@ -26,15 +26,17 @@ public class Game {
         return board.displayBoard();
     }
 
-    //TODO: make this return a bool to represent if the space is open so you can make a move or if its occupied
     public boolean makeMove(int x, int y, String playerName) {
+        Move currentMove;
         if (board.checkIfSquareIsOpen(x, y)) {
             if (playerName.equals(this.redPlayer.getName())) {
                 board.squaresOnBoard[x][y].changeColor(Color.Red);
+                currentMove = new Move(x, y, redPlayer);
             }else
                 board.squaresOnBoard[x][y].changeColor(Color.Blue);
+                currentMove = new Move(x, y, bluePlayer);
 
-            Move currentMove = new Move(x, y);
+
             movesInGame.add(currentMove);
         }
         else {
