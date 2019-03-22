@@ -1,5 +1,4 @@
 package core.game;
-import core.Color;
 import core.user.User;
 
 import java.util.HashMap;

@@ -1,7 +1,6 @@
 package core.game;
 import core.Color;
 import core.controller.GameController;
-import core.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
