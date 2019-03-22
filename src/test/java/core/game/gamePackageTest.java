@@ -1,6 +1,7 @@
 package core.game;
 import core.Color;
 import core.controller.GameController;
+import core.user.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -173,7 +174,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void gameControllerGameCreationAndProgressReport() {
+    public void gameManagerGameCreationAndProgressReport() {
         // make a game and make sure its in progress and not finished
         gm.createNewGame("red", "blue");
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
@@ -183,13 +184,20 @@ public class gamePackageTest {
         gm.createNewGame("red2", "blue2");
         for (int i = 0; i < 6; i++)
             gm.moveInGame(2, 0, i, "red2");
+
         // check that the second game has finished and that the game in progress is still there and that there is a
         // new finished game
         assertEquals(true, gm.getInstanceOfGame(2).getGameStatus());
-
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
-
         assertEquals("2 red2 blue2\n", gm.getAllFinishedGames());
+
+    }
+
+    @Test
+    public void gameManagerUserCreation() {
+        assertEquals(false, gm.checkIfUsersExist("nick"));
+        gm.createNewUser("nick");
+        assertEquals(true, gm.checkIfUsersExist("nick"));
 
     }
 

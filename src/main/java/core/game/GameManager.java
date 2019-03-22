@@ -26,9 +26,6 @@ public class GameManager {
         System.out.println("gameIDCount = " + gameIDCount);
         allGameMap.put(gameIDCount,g);
 
-//        while (allGameMap.putIfAbsent(gameIDCount, g) != null)
-//            gameIDCount++;
-
         return gameIDCount;
     }
 
