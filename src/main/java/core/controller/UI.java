@@ -228,7 +228,7 @@ public class UI {
         }
         printBoard(gameID);
         //check to see who made last move, then start game with other player
-        String lastUserToMakeMove = controller.lasUserToMakeMove(gameID);
+        String lastUserToMakeMove = controller.lastUserToMakeMove(gameID);
         if(lastUserToMakeMove.equals(redPlayer)){
             playGameStartingWithBlue(gameID);
         }

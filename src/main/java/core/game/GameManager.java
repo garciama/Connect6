@@ -4,13 +4,13 @@ import core.user.User;
 
 import java.util.*;
 
-public class GameManager {
+public class GameManager{
 
     private int gameIDCount = 0;
     private Map<Integer, Game> allGameMap;
     private Map<String, User> allUsers;
 
-    public GameManager(){
+    public GameManager() {
         allGameMap = new HashMap<>();
         allUsers = new HashMap<>();
     }
@@ -44,20 +44,45 @@ public class GameManager {
         StringBuilder sb = new StringBuilder();
         Iterator it = allUsers.entrySet().iterator();
 
-        ArrayList<Integer> scores = new ArrayList<>();
+        ArrayList<LeaderboardString> scores = new ArrayList<>();
         User temp;
+
         while(it.hasNext()){
             Map.Entry pair =(Map.Entry)it.next();
             temp = (User)pair.getValue();
-            scores.add(temp.getScore());
-            Collections.sort(scores);
+            String boardRow;
+
+            boardRow = temp.getName() + " " + temp.getWins() + " "+ temp.getLosses() + " "
+                + temp.getTies() + temp.getScore();
+
+            System.out.println(boardRow);
         }
 
-
+        Collections.sort(scores);
 
 
         return sb.toString();
     }
+
+    private class LeaderboardString implements Comparable{
+        private String nameScoreString;
+
+        public LeaderboardString(String in){
+            in = nameScoreString;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            String in = (String)o;
+            int space = in.indexOf(' ');
+            //int score =
+
+            return 0;
+        }
+    }
+
+
+
 
     public String getBoard(int id){
         if(!allGameMap.containsKey(id))
@@ -122,5 +147,6 @@ public class GameManager {
         String lastUserToMakeMove = g.lastUserToMakeMove();
         return lastUserToMakeMove;
     }
+
 
 }

@@ -7,7 +7,8 @@ public class GameController {
 
     private GameManager gameManager = new GameManager();
 
-    public GameController() { }
+    public GameController() {
+    }
 
     public String reportBoard(int gameID) {
         return gameManager.getBoard(gameID);
@@ -33,19 +34,21 @@ public class GameController {
         return gameManager.createNewGame(redPlayer, bluePlayer);
     }
 
-    public boolean hasPlayerRegistered(String playerName){
+    public boolean hasPlayerRegistered(String playerName) {
         return gameManager.checkIfUsersExist(playerName);
     }
 
-    public boolean registerNewPlayer(String nameOfNewUser){
+    public boolean registerNewPlayer(String nameOfNewUser) {
         return gameManager.createNewUser(nameOfNewUser);
     }
 
-    public String getLeaderBoard(){
+    public String getLeaderBoard() {
         return gameManager.displayLeaderboard();
-
-
-    public String lasUserToMakeMove(int id){
-        return gameManager.getLastUserToMakeMove(id);
     }
+
+
+        public String lastUserToMakeMove( int id){
+            return gameManager.getLastUserToMakeMove(id);
+        }
+
 }
