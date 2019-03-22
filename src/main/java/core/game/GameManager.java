@@ -102,5 +102,10 @@ public class GameManager {
         return allGameMap.get(ID).makeMove(x, y, playerName);
     }
 
+    public String  getLastUserToMakeMove(int id){
+        Game g = allGameMap.get(id);
+        String lastUserToMakeMove = g.lastUserToMakeMove();
+        return lastUserToMakeMove;
+    }
 
 }
