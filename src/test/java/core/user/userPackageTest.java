@@ -1,11 +1,7 @@
 package core.user;
 
-import core.Color;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -17,8 +13,8 @@ public class userPackageTest {
 
     @Before
     public void initUser(){
-        u1 = new User("test", Color.Red);
-        u2 = new User("test1", Color.Blue);
+        u1 = new User("test");
+        u2 = new User("test1");
 
         u1.addWin();
         u1.addLoss();
@@ -44,14 +40,14 @@ public class userPackageTest {
 
     @Test
     public void testDateAndTime() {
-        Move move = new Move(0, 0);
+        Move move = new Move(0, 0, u1);
         Date date = new Date();
         assertEquals(move.getDate(), date);
     }
 
     @Test
     public void testSetGetUser() {
-        Move move = new Move(0, 0);
+        Move move = new Move(0, 0, u2);
         assertEquals(0, move.getX());
         assertEquals(0, move.getY());
     }
@@ -59,7 +55,7 @@ public class userPackageTest {
     @Test
     public void moveToString() {
         // TODO will have to change this when we change how we keep track of users
-        Move move = new Move(5, 8);
+        Move move = new Move(5, 8, u1);
         assertEquals("(5, 8)", move.toString());
     }
 }

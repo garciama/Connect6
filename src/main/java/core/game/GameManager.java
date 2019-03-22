@@ -1,5 +1,4 @@
 package core.game;
-import core.Color;
 import core.user.User;
 
 import java.util.*;
@@ -15,11 +14,15 @@ public class GameManager{
         allUsers = new HashMap<>();
     }
 
-    public int createNewGame(String redName, String blueName) {
-        Game g = new Game(gameIDCount, redName, blueName);
+    public Game getInstanceOfGame(int gameID) {
+        return allGameMap.get(gameID);
+    }
 
-        while (allGameMap.putIfAbsent(gameIDCount, g) != null)
-            gameIDCount++;
+    public int createNewGame(String redName, String blueName) {
+        gameIDCount++;
+        Game g = new Game(gameIDCount, redName, blueName);
+        System.out.println("gameIDCount = " + gameIDCount);
+        allGameMap.put(gameIDCount,g);
 
         return gameIDCount;
     }

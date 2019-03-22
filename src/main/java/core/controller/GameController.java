@@ -46,7 +46,6 @@ public class GameController {
         return gameManager.displayLeaderboard();
     }
 
-
         public String lastUserToMakeMove( int id){
             return gameManager.getLastUserToMakeMove(id);
         }
