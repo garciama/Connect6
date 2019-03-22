@@ -155,89 +155,119 @@ public class UI {
 
     private static void playGame(int gameId) {
 
-        //first user gets one move, second user gets 2 moves, then enter game loop
-        getInputRedPlayer();
-        while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
-            getInputRedPlayer();
-        getInputBluePlayer();
-        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
-            getInputBluePlayer();
-        getInputBluePlayer();
-        while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
-            getInputBluePlayer();
-        System.out.println(controller.reportBoard(gameId));
-
-
-        System.out.println();
-        System.out.println(controller.reportBoard(gameId));
+        takeFirstTurn(gameId);
 
         // loop that runs the actual playing of the game
         while(!controller.checkForFinishedGame(gameId)) {
-            getInputRedPlayer();
-            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
-                getInputRedPlayer();
 
-            System.out.println();
-            System.out.println(controller.reportBoard(gameId));
+            bluePlayerTakeTurn(gameId);
 
-            getInputRedPlayer();
-            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
-                getInputRedPlayer();
-
-
-            System.out.println();
-            System.out.println(controller.reportBoard(gameId));
-
-            //Add a break in between to cut the game right after the winning move is made.
+            //Break to cut the game right after the winning move is made.
             if (controller.checkForFinishedGame(gameId)) {
-                System.out.println();
-                System.out.println(controller.reportBoard(gameId));
+                printBoard(gameId);
                 break;
             }
 
-            getInputBluePlayer();
-            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
-                getInputBluePlayer();
-            getInputBluePlayer();
-            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
-                getInputBluePlayer();
-
-            System.out.println();
-            System.out.println(controller.reportBoard(gameId));
+            redPlayerTakeTurn(gameId);
         }
 
         System.out.println("Thank you for playing!\n");
         menu();
     }
 
-    //TODO: When you exit and join a game, need to keep track of who was the last move! and user names are messed up cuz the globals
+    private static void takeFirstTurn(int gameId) {
+
+        printBoard(gameId);
+
+        // First player gets 1 turn.
+        getInputRedPlayer();
+
+        while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+            getInputRedPlayer();
+
+        printBoard(gameId);
+    }
+
+    private static void bluePlayerTakeTurn(int gameId) {
+
+        for (int i = 0; i < 2; i++){
+            getInputBluePlayer();
+
+            while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
+
+            printBoard(gameId);
+        }
+
+    }
+
+    private static void redPlayerTakeTurn(int gameId) {
+
+        for (int i = 0; i < 2; i++) {
+            getInputRedPlayer();
+
+            while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
+                getInputRedPlayer();
+
+            printBoard(gameId);
+        }
+
+    }
+
+    private static void printBoard(int gameId) {
+        System.out.println("\n" + controller.reportBoard(gameId));
+    }
 
     private static void joinGame() {
 
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
-
         if (controller.checkForFinishedGame(gameID)){
             System.out.println("Game already finished. Returning to main menu.");
             menu();
         }
-        // loop that runs the actual playing of the game
-
-        System.out.println(controller.reportBoard(gameID));
-
-        while(true) {
-            getInputRedPlayer();
-            while(!controller.makeMove(gameID, xRed, yRed, redPlayer))
-                getInputRedPlayer();
-            //System.out.println(controller.reportBoard(0));
-            getInputBluePlayer();
-            while(!controller.makeMove(gameID, xBlue, yBlue, bluePlayer))
-                getInputBluePlayer();
-            System.out.println();
-            System.out.println(controller.reportBoard(gameID));
+        printBoard(gameID);
+        //check to see who made last move, then start game with other player
+        String lastUserToMakeMove = controller.lasUserToMakeMove(gameID);
+        if(lastUserToMakeMove.equals(redPlayer)){
+            playGameStartingWithBlue(gameID);
+        }
+        else{
+            playGameStartingWithRed(gameID);
         }
 
+        System.out.println("Thank you for playing!\n");
+        menu();
+    }
 
+    private static void playGameStartingWithBlue(int id){
+        while(!controller.checkForFinishedGame(id)) {
+
+            bluePlayerTakeTurn(id);
+
+            //Break to cut the game right after the winning move is made.
+            if (controller.checkForFinishedGame(id)) {
+                printBoard(id);
+                break;
+            }
+
+            redPlayerTakeTurn(id);
+        }
+    }
+
+    private static void playGameStartingWithRed(int id){
+        while(!controller.checkForFinishedGame(id)) {
+
+            redPlayerTakeTurn(id);
+
+            //Break to cut the game right after the winning move is made.
+            if (controller.checkForFinishedGame(id)) {
+                printBoard(id);
+                break;
+            }
+
+            bluePlayerTakeTurn(id);
+        }
     }
 
     private static void seeGamesInProgress() {

@@ -1,6 +1,7 @@
 package core.controller;
 
 import core.game.GameManager;
+import core.user.User;
 
 public class GameController {
 
@@ -14,7 +15,6 @@ public class GameController {
 
     public boolean makeMove(int ID, int x, int y, String playerName) {
         return gameManager.moveInGame(ID, x, y, playerName);
-
     }
 
     public boolean checkForFinishedGame(int gameID) {
@@ -43,5 +43,9 @@ public class GameController {
 
     public String getLeaderBoard(){
         return gameManager.displayLeaderboard();
+
+
+    public String lasUserToMakeMove(int id){
+        return gameManager.getLastUserToMakeMove(id);
     }
 }

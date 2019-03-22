@@ -17,10 +17,14 @@ public class Move {
     }
 
     public Move(int x, int y, User player) {
+<<<<<<< HEAD
         this.owner = player;
+=======
+>>>>>>> 4d161c5a3e67245a0680689ac84c1a1a62834b67
         date = new Date();
         this.x = x;
         this.y = y;
+        this.owner = player;
     }
 
     public Date getDate() {
@@ -36,5 +40,6 @@ public class Move {
         return str;
     }
 
+    public String getOwner(){ return owner.getName(); }
 
 }
