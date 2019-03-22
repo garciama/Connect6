@@ -216,10 +216,14 @@ public class UI {
 
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
-
         if (controller.checkForFinishedGame(gameID)){
             System.out.println("Game already finished. Returning to main menu.");
             menu();
+        }
+        //check to see who made last move
+        String lastUserToMakeMove = controller.lasUserToMakeMove(gameID);
+        if(lastUserToMakeMove.equals(redPlayer)){
+
         }
         // loop that runs the actual playing of the game
 

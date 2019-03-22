@@ -6,6 +6,7 @@ public class Move {
     private Date date;
     private int x;
     private int y;
+    private User owner;
 
     public int getX() {
         return x;
@@ -15,10 +16,11 @@ public class Move {
         return y;
     }
 
-    public Move(int x, int y) {
+    public Move(int x, int y, User player) {
         date = new Date();
         this.x = x;
         this.y = y;
+        this.owner = player;
     }
 
     public Date getDate() {
@@ -34,5 +36,6 @@ public class Move {
         return str;
     }
 
+    public String getOwner(){ return owner.getName(); }
 
 }

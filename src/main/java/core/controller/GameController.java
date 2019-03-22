@@ -1,6 +1,7 @@
 package core.controller;
 
 import core.game.GameManager;
+import core.user.User;
 
 public class GameController {
 
@@ -39,5 +40,9 @@ public class GameController {
 
     public boolean registerNewPlayer(String nameOfNewUser){
         return gameManager.createNewUser(nameOfNewUser);
+    }
+
+    public String lasUserToMakeMove(int id){
+        return gameManager.getLastUserToMakeMove(id);
     }
 }
