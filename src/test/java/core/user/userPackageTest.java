@@ -17,8 +17,8 @@ public class userPackageTest {
 
     @Before
     public void initUser(){
-        u1 = new User("test", Color.Red);
-        u2 = new User("test1", Color.Blue);
+        u1 = new User("test");
+        u2 = new User("test1");
 
         u1.addWin();
         u1.addLoss();

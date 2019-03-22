@@ -10,12 +10,14 @@ public class gamePackageTest {
 
     Board b1;
     Square s1, s2;
+    GameManager gm;
 
     @Before
     public void init(){
         b1 = new Board();
         s1 = new Square(5,10);
         s2 = new Square(2,4);
+        gm = new GameManager();
     }
 
     @Test
@@ -167,6 +169,27 @@ public class gamePackageTest {
         /*We can see the board is full and nobody has won,
         so the game gives each player a tie and closes the game. */
         System.out.println(c.reportBoard(id));
+
+    }
+
+    @Test
+    public void gameControllerGameCreationAndProgressReport() {
+        // make a game and make sure its in progress and not finished
+        gm.createNewGame("red", "blue");
+        assertEquals("1 red blue\n", gm.getAllGamesInProgress());
+        assertEquals("", gm.getAllFinishedGames());
+
+        // make a second game and make it be finished
+        gm.createNewGame("red2", "blue2");
+        for (int i = 0; i < 6; i++)
+            gm.moveInGame(2, 0, i, "red2");
+        // check that the second game has finished and that the game in progress is still there and that there is a
+        // new finished game
+        assertEquals(true, gm.getInstanceOfGame(2).getGameStatus());
+
+        assertEquals("1 red blue\n", gm.getAllGamesInProgress());
+
+        assertEquals("2 red2 blue2\n", gm.getAllFinishedGames());
 
     }
 
