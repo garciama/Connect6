@@ -41,7 +41,7 @@ public class GameController {
         return gameManager.createNewUser(nameOfNewUser);
     }
 
-    public String lasUserToMakeMove(int id){
+    public String lastUserToMakeMove(int id){
         return gameManager.getLastUserToMakeMove(id);
     }
 }

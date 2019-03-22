@@ -157,22 +157,7 @@ public class UI {
 
         takeFirstTurn(gameId);
 
-        // loop that runs the actual playing of the game
-        while(!controller.checkForFinishedGame(gameId)) {
-
-            bluePlayerTakeTurn(gameId);
-
-            //Break to cut the game right after the winning move is made.
-            if (controller.checkForFinishedGame(gameId)) {
-                printBoard(gameId);
-                break;
-            }
-
-            redPlayerTakeTurn(gameId);
-        }
-
-        System.out.println("Thank you for playing!\n");
-        menu();
+        playGameStartingWithBlue(gameId);
     }
 
     private static void takeFirstTurn(int gameId) {
@@ -228,7 +213,7 @@ public class UI {
         }
         printBoard(gameID);
         //check to see who made last move, then start game with other player
-        String lastUserToMakeMove = controller.lasUserToMakeMove(gameID);
+        String lastUserToMakeMove = controller.lastUserToMakeMove(gameID);
         if(lastUserToMakeMove.equals(redPlayer)){
             playGameStartingWithBlue(gameID);
         }
@@ -253,6 +238,8 @@ public class UI {
 
             redPlayerTakeTurn(id);
         }
+        System.out.println("Thank you for playing!\n");
+        menu();
     }
 
     private static void playGameStartingWithRed(int id){
@@ -268,6 +255,9 @@ public class UI {
 
             bluePlayerTakeTurn(id);
         }
+
+        System.out.println("Thank you for playing!\n");
+        menu();
     }
 
     private static void seeGamesInProgress() {
