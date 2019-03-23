@@ -41,7 +41,7 @@ public class User {
     }
 
     public int getScore() {
-        return 3 * wins + ties;
+        return (3 * wins) + ties;
     }
 
 }

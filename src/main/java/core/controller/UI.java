@@ -106,10 +106,9 @@ public class UI {
     }
 
     private static void createUser() {
-        System.out.print("Enter your unique username: ");
+        System.out.print("Enter your unique username (12 characters max): ");
         String newPlayerName = in.nextLine();
         while(!controller.registerNewPlayer(newPlayerName)) {
-            System.out.println("Error: Player already exists! Enter another name");
             System.out.print("Enter your unique username: ");
             newPlayerName = in.nextLine();
         }

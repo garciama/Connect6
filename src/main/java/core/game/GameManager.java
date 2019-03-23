@@ -35,54 +35,84 @@ public class GameManager{
     }
 
     public boolean createNewUser(String nameOfNewPlayer){
+        if (nameOfNewPlayer.length() > 12) {
+            System.out.println("Error: Name too long!");
+
+            return false;
+        }
+
         User newPlayer = new User(nameOfNewPlayer);
         if (allUsers.putIfAbsent(nameOfNewPlayer, newPlayer) == null)
             return true;
 
+        System.out.println("Error: Player already exists! Enter another name");
         return false;
 
     }
 
     public String displayLeaderboard(){
         StringBuilder sb = new StringBuilder();
-        Iterator it = allUsers.entrySet().iterator();
+        Map<String, User> sortedUserByScore = prepMap();
 
-        ArrayList<LeaderboardString> scores = new ArrayList<>();
-        User temp;
 
-        while(it.hasNext()){
-            Map.Entry pair =(Map.Entry)it.next();
-            temp = (User)pair.getValue();
-            String boardRow;
-
-            boardRow = temp.getName() + " " + temp.getWins() + " "+ temp.getLosses() + " "
-                + temp.getTies() + temp.getScore();
-
-            System.out.println(boardRow);
+        for (String key : sortedUserByScore.keySet()){
+            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore());
         }
 
-        Collections.sort(scores);
 
 
-        return sb.toString();
+        return null;
     }
 
-    private class LeaderboardString implements Comparable{
-        private String nameScoreString;
+//    private String buildLeaderBoard(List<LeaderboardString> boardStrings, StringBuilder s){
+//        String header = "|    Name    |   Score   |   Wins   |   Loss   |   Ties   |";
+//        s.append(header + "\n");
+//
+//        for (int i = 0; i < header.length(); i++){
+//            s.append("-");
+//        }
+//        s.append("\n");
+//
+//
+//        for (int i = 0; i < boardStrings.size(); i++){
+//            s.append(boardStrings.get(i).getName() + "\n");
+//
+//        }
+//        return s.toString();
+//    }
 
-        public LeaderboardString(String in){
-            in = nameScoreString;
+    private Map<String, User> prepMap(){
+
+        for (String key : allUsers.keySet()){
+            System.out.println(allUsers.get(key).getName() + " " + allUsers.get(key).getScore());
         }
 
-        @Override
-        public int compareTo(Object o) {
-            String in = (String)o;
-            int space = in.indexOf(' ');
-            //int score =
+        //Convert userScores to list
+        List<Map.Entry<String, User>> list =
+                new LinkedList<>(allUsers.entrySet());
 
-            return 0;
+        //Sort the list by the user score
+        Collections.sort(list, new Comparator<Map.Entry<String, User>>() {
+            public int compare(Map.Entry<String, User> o1, Map.Entry<String, User> o2) {
+                return ((Integer)o1.getValue().getScore()).compareTo(o2.getValue().getScore());
+            }
+        });
+
+
+        //Convert back to map
+        Map<String, User> sortedUserMap = new LinkedHashMap<>();
+        for (Map.Entry<String, User> entry : list) {
+            sortedUserMap.put(entry.getKey(), entry.getValue());
         }
+
+
+
+
+
+        return sortedUserMap;
+
     }
+
 
 
 
