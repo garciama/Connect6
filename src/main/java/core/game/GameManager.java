@@ -72,6 +72,7 @@ public class GameManager{
     }
 
     private String buildLeaderBoard(Map<String, User> boardStrings) {
+        //Widths for the columns, easily change later if needed!
         int rowNameWidth = 12; //Make sure this >  than username min length!
         int rowScoreWidth = 11;
         int rowWinsWidth = 10;
@@ -105,16 +106,13 @@ public class GameManager{
         s.append("Losses");
         leaderboardSpaceAppend("Losses", rowLossesWidth, s, true);
         s.append("|\n");
-        //String header = "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |";
-        //s.append(header + "\n");
+
 
         //Add 6 for | in between
         for (int i = 0; i < total + 6; i++){
             s.append("-");
         }
         s.append("\n");
-
-        //Widths for the columns, easily change later if needed!
 
 
         //Now build the leaderboard string
@@ -169,6 +167,7 @@ public class GameManager{
         for (int i = 0; i < (width - col.length()) / 2; i++)
             sb.append(" ");
 
+        //Append another space on second half for special cases
         if (secondHalf && ((col.length() % 2 == 1 && width % 2 == 0) ||
                 (col.length() % 2 == 0 && width % 2 == 1)))
             sb.append(" ");
