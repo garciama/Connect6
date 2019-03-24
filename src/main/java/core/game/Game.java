@@ -13,12 +13,12 @@ public class Game {
     User redPlayer, bluePlayer;
     public ArrayList<Move> movesInGame;
 
-    public Game(int id, String redName, String blueName){
+    public Game(int id, User redName, User blueName){
         movesInGame = new ArrayList<>();
         this.gameID = id;
         board = new Board();
-        redPlayer = new User(redName);
-        bluePlayer = new User(blueName);
+        redPlayer = redName;
+        bluePlayer = blueName;
         isFinished = false;
     }
 

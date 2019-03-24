@@ -43,7 +43,7 @@ public class GameController {
     }
 
     public String getLeaderBoard() {
-        return gameManager.displayLeaderboard();
+        return gameManager.leaderboardToString();
     }
 
         public String lastUserToMakeMove( int id){

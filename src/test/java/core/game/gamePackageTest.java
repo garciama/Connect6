@@ -1,8 +1,11 @@
 package core.game;
 import core.Color;
 import core.controller.GameController;
+import core.user.User;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -125,56 +128,56 @@ public class gamePackageTest {
 
     @Test
     public void testTie(){
-        GameController c = new GameController();
-        String redPlayer = "sam", bluePlayer = "nick";
-        int id = c.newGame(redPlayer, bluePlayer);
+        gm.createNewUser("Sam");
+        gm.createNewUser("Nick");
+        String redPlayer = "Sam", bluePlayer = "Nick";
+        int id = gm.createNewGame(redPlayer, bluePlayer);
 
         for (int row = 0; row < 19; row++){
 
             if (row%2 == 0) {
                 for (int col = 0; col < 18; col += 4) {
-                    c.makeMove(id, col, row, redPlayer);
-                    c.makeMove(id, col + 1, row, redPlayer);
-
+                    gm.moveInGame(id, col, row, redPlayer);
+                    gm.moveInGame(id, col + 1, row, redPlayer);
                 }
-
                 for (int col = 2; col < 18; col += 4) {
-                    c.makeMove(id, col, row, bluePlayer);
-                    c.makeMove(id, col + 1, row, bluePlayer);
-
+                    gm.moveInGame(id, col, row, bluePlayer);
+                    gm.moveInGame(id, col + 1, row, bluePlayer);
                 }
             }else{
                 for (int col = 0; col < 18; col += 4) {
-                    c.makeMove(id, col, row, bluePlayer);
-                    c.makeMove(id, col + 1, row, bluePlayer);
-
+                    gm.moveInGame(id, col, row, bluePlayer);
+                    gm.moveInGame(id, col + 1, row, bluePlayer);
                 }
 
                 for (int col = 2; col < 18; col += 4) {
-                    c.makeMove(id, col, row, redPlayer);
-                    c.makeMove(id, col + 1, row, redPlayer);
+                    gm.moveInGame(id, col, row, redPlayer);
+                    gm.moveInGame(id, col + 1, row, redPlayer);
                 }
             }
         }
 
         for (int row = 0; row < 19; row++){
             if (row%2 == 0)
-                c.makeMove(id, 18, row, redPlayer);
+                gm.moveInGame(id, 18, row, redPlayer);
             else
-                c.makeMove(id, 18, row, bluePlayer);
+                gm.moveInGame(id, 18, row, bluePlayer);
 
 
         }
 
         /*We can see the board is full and nobody has won,
         so the game gives each player a tie and closes the game. */
-        System.out.println(c.reportBoard(id));
+        System.out.println(gm.getBoard(id));
 
     }
 
     @Test
     public void gameManagerGameCreationAndProgressReport() {
         // make a game and make sure its in progress and not finished
+        gm.createNewUser("red");
+        gm.createNewUser("blue");
+
         gm.createNewGame("red", "blue");
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
         assertEquals("", gm.getAllFinishedGames());
@@ -197,6 +200,37 @@ public class gamePackageTest {
         assertEquals(false, gm.checkIfUsersExist("nick"));
         gm.createNewUser("nick");
         assertEquals(true, gm.checkIfUsersExist("nick"));
+
+    }
+
+    @Test
+    public void LeaderboardTest(){
+        gm.createNewUser("Sam");
+        gm.createNewUser("Michael");
+        gm.createNewUser("Walker");
+        gm.createNewUser("San");
+        gm.createNewUser("Nick");
+        Map<String, User> users = gm.getAllUsers();
+        users.get("Sam").addWin();
+        users.get("Sam").addWin();
+        users.get("Sam").addWin();
+        users.get("Michael").addLoss();
+        users.get("Walker").addLoss();
+        users.get("San").addLoss();
+        users.get("Nick").addWin();
+        users.get("Walker").addLoss();
+        users.get("Sam").addTie();
+        users.get("Nick").addTie();
+
+        for (int i = 0; i < 125; i++)
+            users.get("Sam").addWin();
+
+        for (int i = 0; i < 78; i++)
+            users.get("Michael").addLoss();
+
+        System.out.println(gm.leaderboardToString());
+
+
 
     }
 

@@ -20,7 +20,9 @@ public class GameManager{
 
     public int createNewGame(String redName, String blueName) {
         gameIDCount++;
-        Game g = new Game(gameIDCount, redName, blueName);
+
+
+        Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName));
         System.out.println("gameIDCount = " + gameIDCount);
         allGameMap.put(gameIDCount,g);
 
@@ -50,42 +52,119 @@ public class GameManager{
 
     }
 
-    public String displayLeaderboard(){
+    public String leaderboardToString(){
         StringBuilder sb = new StringBuilder();
-        Map<String, User> sortedUserByScore = prepMap();
-
-
-        for (String key : sortedUserByScore.keySet()){
-            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore());
-        }
+        Map<String, User> sortedUserByScore = sortMap();
 
 
 
-        return null;
+//        for (String key : sortedUserByScore.keySet()){
+//            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore()
+//            + " " + sortedUserByScore.get(key).getWins() + " " + sortedUserByScore.get(key).getLosses() +
+//                    " " + sortedUserByScore.get(key).getTies());
+//        }
+
+        return buildLeaderBoard(sortedUserByScore);
     }
 
-//    private String buildLeaderBoard(List<LeaderboardString> boardStrings, StringBuilder s){
-//        String header = "|    Name    |   Score   |   Wins   |   Loss   |   Ties   |";
-//        s.append(header + "\n");
-//
-//        for (int i = 0; i < header.length(); i++){
-//            s.append("-");
-//        }
-//        s.append("\n");
-//
-//
-//        for (int i = 0; i < boardStrings.size(); i++){
-//            s.append(boardStrings.get(i).getName() + "\n");
-//
-//        }
-//        return s.toString();
-//    }
+    private String buildLeaderBoard(Map<String, User> boardStrings) {
+        int rowNameWidth = 12; //Make sure this >  than username min length!
+        int rowScoreWidth = 11;
+        int rowWinsWidth = 10;
+        int rowLossesWidth = 10;
+        int rowTiesWidth = 10;
+        int total = rowNameWidth + rowScoreWidth + rowWinsWidth + rowLossesWidth + rowTiesWidth;
 
-    private Map<String, User> prepMap(){
+        StringBuilder s = new StringBuilder();
 
-        for (String key : allUsers.keySet()){
-            System.out.println(allUsers.get(key).getName() + " " + allUsers.get(key).getScore());
+        s.append("|");
+        leaderboardSpaceAppend("Name", rowNameWidth, s, false);
+        s.append("Name");
+        leaderboardSpaceAppend("Name", rowNameWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Score", rowScoreWidth, s, false);
+        s.append("Score");
+        leaderboardSpaceAppend("Score", rowScoreWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Wins", rowWinsWidth, s, false);
+        s.append("Wins");
+        leaderboardSpaceAppend("Wins", rowWinsWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, false);
+        s.append("Ties");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Losses", rowLossesWidth, s, false);
+        s.append("Losses");
+        leaderboardSpaceAppend("Losses", rowLossesWidth, s, true);
+        s.append("|\n");
+        //String header = "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |";
+        //s.append(header + "\n");
+
+        //Add 6 for | in between
+        for (int i = 0; i < total + 6; i++){
+            s.append("-");
         }
+        s.append("\n");
+
+        //Widths for the columns, easily change later if needed!
+
+
+        //Now build the leaderboard string
+        for (String key: boardStrings.keySet()){
+            String rowName = boardStrings.get(key).getName();
+            String rowScore = Integer.toString(boardStrings.get(key).getScore());
+            String rowWins = Integer.toString(boardStrings.get(key).getWins());
+            String rowLosses = Integer.toString(boardStrings.get(key).getLosses());
+            String rowTies = Integer.toString(boardStrings.get(key).getTies());
+
+            s.append("|");
+
+            leaderboardSpaceAppend(rowName, rowNameWidth, s, false);
+            s.append(rowName);
+            leaderboardSpaceAppend(rowName, rowNameWidth, s, true);
+
+            s.append("|");
+
+            leaderboardSpaceAppend(rowScore, rowScoreWidth, s, false);
+            s.append(rowScore);
+            leaderboardSpaceAppend(rowScore, rowScoreWidth, s, true);
+
+            s.append("|");
+
+            leaderboardSpaceAppend(rowWins, rowWinsWidth, s, false);
+            s.append(rowWins);
+            leaderboardSpaceAppend(rowWins, rowWinsWidth, s, true);
+
+            s.append("|");
+
+            leaderboardSpaceAppend(rowLosses, rowLossesWidth, s, false);
+            s.append(rowLosses);
+            leaderboardSpaceAppend(rowLosses, rowLossesWidth, s, true);
+
+            s.append("|");
+
+            leaderboardSpaceAppend(rowTies, rowTiesWidth, s, false);
+            s.append(rowTies);
+            leaderboardSpaceAppend(rowTies, rowTiesWidth, s, true);
+
+            s.append("|\n");
+
+        }
+        return s.toString();
+    }
+
+    private void leaderboardSpaceAppend(String col, int width, StringBuilder sb, boolean secondHalf){
+        for (int i = 0; i < (width - col.length()) / 2; i++)
+            sb.append(" ");
+
+        if (secondHalf && ((col.length() % 2 == 1 && width % 2 == 0) ||
+                (col.length() % 2 == 0 && width % 2 == 1)))
+            sb.append(" ");
+
+    }
+
+    private Map<String, User> sortMap(){
 
         //Convert userScores to list
         List<Map.Entry<String, User>> list =
@@ -97,6 +176,8 @@ public class GameManager{
                 return ((Integer)o1.getValue().getScore()).compareTo(o2.getValue().getScore());
             }
         });
+
+        Collections.reverse(list);
 
 
         //Convert back to map
@@ -113,7 +194,9 @@ public class GameManager{
 
     }
 
-
+    public Map<String, User> getAllUsers(){
+        return allUsers;
+    }
 
 
 
