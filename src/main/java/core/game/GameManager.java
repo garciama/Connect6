@@ -163,6 +163,15 @@ public class GameManager{
         return s.toString();
     }
 
+    /**
+     * Helper method for leaderboardToString that appends the correct number of
+     * spaces to a column depending on the length of the string and the width of
+     * the column.
+     * @param col the string to be in the center of the column
+     * @param width the number of characters of the column
+     * @param sb the StringBuilder to append to
+     * @param secondHalf boolean to check if another space needs to be appended in special cases
+     */
     private void leaderboardSpaceAppend(String col, int width, StringBuilder sb, boolean secondHalf){
         for (int i = 0; i < (width - col.length()) / 2; i++)
             sb.append(" ");
