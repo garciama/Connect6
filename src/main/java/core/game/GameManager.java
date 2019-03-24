@@ -81,7 +81,10 @@ public class GameManager{
 
         StringBuilder s = new StringBuilder();
 
-        s.append("|");
+        for (int i = 0 ; i < total + 6; i++)
+            s.append("-");
+
+        s.append("\n|");
         leaderboardSpaceAppend("Name", rowNameWidth, s, false);
         s.append("Name");
         leaderboardSpaceAppend("Name", rowNameWidth, s, true);
@@ -155,6 +158,10 @@ public class GameManager{
             s.append("|\n");
 
         }
+
+        for (int i = 0 ; i < total + 6; i++)
+            s.append("-");
+
         return s.toString();
     }
 
