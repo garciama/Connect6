@@ -182,6 +182,9 @@ public class gamePackageTest {
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
         assertEquals("", gm.getAllFinishedGames());
 
+
+        gm.createNewUser("red2");
+        gm.createNewUser("blue2");
         // make a second game and make it be finished
         gm.createNewGame("red2", "blue2");
         for (int i = 0; i < 6; i++)

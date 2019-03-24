@@ -21,6 +21,10 @@ public class GameManager{
     public int createNewGame(String redName, String blueName) {
         gameIDCount++;
 
+        if (!checkIfUsersExist(redName) || !checkIfUsersExist(blueName)) {
+            System.err.println("This player doesn't exist! Create a new user first.");
+            return -7;
+        }
 
         Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName));
         System.out.println("gameIDCount = " + gameIDCount);

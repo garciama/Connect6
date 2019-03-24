@@ -121,10 +121,10 @@ public class UI {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
         int gameId = controller.newGame(redPlayer, bluePlayer);
-        if (!controller.hasPlayerRegistered(bluePlayer)) {
-            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
+
+        if (gameId == -7)
             menu();
-        }
+
         System.out.println("Your gameId is " + gameId);
         playGame(gameId);
     }
