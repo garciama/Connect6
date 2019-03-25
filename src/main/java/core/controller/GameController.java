@@ -1,14 +1,12 @@
 package core.controller;
 
 import core.game.GameManager;
-import core.user.User;
 
 public class GameController {
 
     private GameManager gameManager = new GameManager();
 
-    public GameController() {
-    }
+    public GameController() { }
 
     public String reportBoard(int gameID) {
         return gameManager.getBoard(gameID);
@@ -46,8 +44,8 @@ public class GameController {
         return gameManager.leaderboardToString();
     }
 
-        public String lastUserToMakeMove( int id){
-            return gameManager.getLastUserToMakeMove(id);
-        }
+    public String lastUserToMakeMove( int id){
+        return gameManager.getLastUserToMakeMove(id);
+    }
 
 }

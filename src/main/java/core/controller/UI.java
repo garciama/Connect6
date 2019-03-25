@@ -13,12 +13,10 @@ public class UI {
     static GameController controller;
 
     public static void main(String[] args) {
-
         in = new Scanner(System.in);
         controller = new GameController();
         menu();
     }
-
 
     /**
      * Gets the names of users that are entered
@@ -46,9 +44,6 @@ public class UI {
      * Gets Red Player's x and y entered coordinates
      */
     public static void getInputRedPlayer() {
-        //TODO: if an int isn't entered, and user doesnt enter an int again then program crashes, maybe have a do while
-        // and take any input as a string and see if it can be casted to a valid int. Does this even matter cuz its a
-        // temp UI
         // gets x coordinate
         try {
             System.out.print(redPlayer + "'s (red) x move: ");
