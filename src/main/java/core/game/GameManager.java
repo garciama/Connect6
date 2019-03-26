@@ -44,21 +44,13 @@ public class GameManager{
         return gameIDCount;
     }
 
-<<<<<<< HEAD
-    public boolean checkIfUsersExist(String playerName) {
-        return (allUsers.containsKey(playerName));
-=======
     /**
      * Checks to see if the given user exists in the all users map
      * @param playerName the name of the user being created
      * @return true if the user exists, false if not
      */
     public boolean checkIfUsersExist(String playerName){
-        if (allUsers.get(playerName) != null)
-            return true;
-        else
-            return false;
->>>>>>> 2240d8951ec83dbabc6d09b4b3b0720aa1295e81
+        return (allUsers.containsKey(playerName));
     }
 
     /**
@@ -80,15 +72,12 @@ public class GameManager{
 
     public String leaderboardToString(){
         Map<String, User> sortedUserByScore = sortMap();
-<<<<<<< HEAD
 
-=======
 //        for (String key : sortedUserByScore.keySet()){
 //            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore()
 //            + " " + sortedUserByScore.get(key).getWins() + " " + sortedUserByScore.get(key).getLosses() +
 //                    " " + sortedUserByScore.get(key).getTies());
-//        }
->>>>>>> 2240d8951ec83dbabc6d09b4b3b0720aa1295e81
+//
         return buildLeaderBoard(sortedUserByScore);
     }
 

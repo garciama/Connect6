@@ -192,7 +192,7 @@ public class gamePackageTest {
 
         // check that the second game has finished and that the game in progress is still there and that there is a
         // new finished game
-        assertEquals(true, gm.getInstanceOfGame(2).getGameStatus());
+        assertEquals(true, gm.getInstanceOfGame(2).gameIsFinished());
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
         assertEquals("2 red2 blue2\n", gm.getAllFinishedGames());
 
