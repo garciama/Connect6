@@ -33,11 +33,8 @@ public class GameManager{
         return gameIDCount;
     }
 
-    public boolean checkIfUsersExist(String playerName){
-        if (allUsers.get(playerName) != null)
-            return true;
-        else
-            return false;
+    public boolean checkIfUsersExist(String playerName) {
+        return (allUsers.containsKey(playerName));
     }
 
     public boolean createNewUser(String nameOfNewPlayer){
@@ -57,16 +54,7 @@ public class GameManager{
     }
 
     public String leaderboardToString(){
-        StringBuilder sb = new StringBuilder();
         Map<String, User> sortedUserByScore = sortMap();
-
-
-
-//        for (String key : sortedUserByScore.keySet()){
-//            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore()
-//            + " " + sortedUserByScore.get(key).getWins() + " " + sortedUserByScore.get(key).getLosses() +
-//                    " " + sortedUserByScore.get(key).getTies());
-//        }
 
         return buildLeaderBoard(sortedUserByScore);
     }
@@ -227,7 +215,7 @@ public class GameManager{
     }
 
     public boolean checkForGameOver(int gameID) {
-        return allGameMap.get(gameID).getGameStatus();
+        return allGameMap.get(gameID).gameIsFinished();
     }
 
     /**
@@ -238,7 +226,7 @@ public class GameManager{
     public String getAllGamesInProgress() {
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
-            if (g.getGameStatus() == false) {
+            if (!g.gameIsFinished()) {
                 str.append(getGameInfo(g));
             }
         }
@@ -253,7 +241,7 @@ public class GameManager{
     public String getAllFinishedGames() {
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
-            if (g.getGameStatus() == true) {
+            if (g.gameIsFinished()) {
                 str.append(getGameInfo(g));
             }
         }

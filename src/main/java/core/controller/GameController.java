@@ -1,7 +1,6 @@
 package core.controller;
 
 import core.game.GameManager;
-import core.user.User;
 
 public class GameController {
 

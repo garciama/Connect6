@@ -73,7 +73,7 @@ public class Game {
         return true;
     }
 
-    public boolean getGameStatus(){
+    public boolean gameIsFinished(){
         return isFinished;
     }
 
