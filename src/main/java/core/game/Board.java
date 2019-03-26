@@ -15,10 +15,6 @@ public class Board {
         }
     }
 
-    //Maybe return something later?
-   // private void lastMove(){
-    //}
-
     public String displayBoard(){
         StringBuilder sb = new StringBuilder("  | ");
         for(int i = 0; i< squaresOnBoard.length; i++){

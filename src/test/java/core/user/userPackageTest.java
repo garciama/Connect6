@@ -39,10 +39,22 @@ public class userPackageTest {
     }
 
     @Test
+    public void testGetName() {
+        assertEquals("test", u1.getName());
+        assertEquals("test1", u2.getName());
+    }
+
+    @Test
     public void testDateAndTime() {
         Move move = new Move(0, 0, u1);
         Date date = new Date();
-        assertEquals(move.getDate(), date);
+        assertEquals(move.getDate(),date);
+    }
+
+    @Test
+    public void testGetScore() {
+        assertEquals(4, u1.getScore());
+        assertEquals(0, u2.getScore());
     }
 
     @Test
@@ -50,6 +62,14 @@ public class userPackageTest {
         Move move = new Move(0, 0, u2);
         assertEquals(0, move.getX());
         assertEquals(0, move.getY());
+    }
+
+    @Test
+    public void testGetOwner() {
+        Move move = new Move(0,0,u1);
+        Move move2 = new Move(1,1,u2);
+        assertEquals("test", move.getOwner());
+        assertEquals("test1", move2.getOwner());
     }
 
     @Test

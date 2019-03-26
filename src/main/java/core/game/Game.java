@@ -42,7 +42,6 @@ public class Game {
             System.out.println("Illegal move - square already taken");
             return false;
         }
-
         if (board.isWinning()){
             if (redPlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
@@ -54,22 +53,16 @@ public class Game {
                 bluePlayer.addWin();
                 System.out.println(bluePlayer.getName() + " now has " + bluePlayer.getWins() + " wins!");
             }
-
             isFinished = true;
-
         }
-
         if (movesInGame.size() == (19*19)){
             System.out.println("Tie! Game over.");
             redPlayer.addTie();
             bluePlayer.addTie();
-
             System.out.println(redPlayer.getName() + " now has " + redPlayer.getTies() + " ties!");
             System.out.println(bluePlayer.getName() + " now has " + bluePlayer.getTies() + " ties!");
-
             isFinished = true;
         }
-
         return true;
     }
 
@@ -82,4 +75,5 @@ public class Game {
         Move lastMove = movesInGame.get(last);
         return lastMove.getOwner();
     }
+
 }
