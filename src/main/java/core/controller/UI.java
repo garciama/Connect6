@@ -121,10 +121,10 @@ public class UI {
             menu();
 
         System.out.println("Your gameId is " + gameId);
-        playGame(gameId);
+        playNewGame(gameId);
     }
 
-    private static void playGame(int gameId) {
+    private static void playNewGame(int gameId) {
         takeFirstTurn(gameId);
         playGameStartingWithBlue(gameId);
     }
