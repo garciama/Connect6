@@ -50,6 +50,12 @@ public class Board {
         b.append("|\n");
     }
 
+    /**
+     * Method that checks board for a winning state. If a color is found
+     * (not the default board color) in a square, then the surrounding squares
+     * are checked for six colors in a row.
+     * @return True if there is a winning state, false if there is not a winning state.
+     */
     public boolean isWinning(){
         for (int i = 0; i < 19; i++){
             for (int j = 0; j < 19; j++){
@@ -62,6 +68,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * Submethod to isWinning. Calls a check to functions that check every
+     * direction in which a win is possible.
+     */
     public boolean subIsWinning(int x, int y, Color c){
         return (checkHorizontal(x, y, c) || checkVertical(x, y, c) || checkDiagonalRight(x, y, c) ||
                 checkDiagonalLeft(x, y, c));

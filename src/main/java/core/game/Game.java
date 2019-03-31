@@ -26,6 +26,15 @@ public class Game {
         return board.displayBoard();
     }
 
+    /**
+     * Method that is called when a user attempts to make a move from the
+     * UI. The method checks if the move is valid, then checks if the board
+     * is in a winning state after the move is placed.
+     * @param x x coordinate on the board
+     * @param y y coordinate on the board
+     * @param playerName name of the user that is making the move.
+     * @return True if the move was made, false if not ( due to violations).
+     */
     public boolean makeMove(int x, int y, String playerName) {
         Move currentMove;
         if (board.checkIfSquareIsOpen(x, y)) {
@@ -70,6 +79,11 @@ public class Game {
         return isFinished;
     }
 
+    /**
+     * Method that checks the board for the last move and returns the
+     * user's name.
+     * @return User's name who made the last move.
+     */
     public String lastUserToMakeMove(){
         int last = movesInGame.size() - 1;
         Move lastMove = movesInGame.get(last);

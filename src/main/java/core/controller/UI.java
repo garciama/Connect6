@@ -124,11 +124,23 @@ public class UI {
         playNewGame(gameId);
     }
 
+    /**
+     * Function called after a user creates a new game. This method is
+     * different from playGameStartingWithBlue and playGameStartingWithRed
+     * because it gives the first player one turn first, then each
+     * player gets two turns.
+     * @param gameId ID of the game that is being played.
+     */
     private static void playNewGame(int gameId) {
         takeFirstTurn(gameId);
         playGameStartingWithBlue(gameId);
     }
 
+    /**
+     * Method called from playNewGame method that allows the first
+     * player to only take one turn on their first play.
+     * @param gameId
+     */
     private static void takeFirstTurn(int gameId) {
         printBoard(gameId);
         // First player gets 1 turn.
@@ -170,6 +182,10 @@ public class UI {
         System.out.println("\n" + controller.reportBoard(gameId));
     }
 
+    /**
+     * Method that allows a user to join a game, and to start playing the game
+     * based on who took the last turn.
+     */
     private static void joinGame() {
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
