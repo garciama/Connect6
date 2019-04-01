@@ -101,7 +101,7 @@ public class UI {
     }
 
     private static void createUser() {
-        System.out.print("Enter your unique username (12 characters max): ");
+        System.out.print("Enter your unique username (12 characters max, -1 to return to menu): ");
         String newPlayerName = in.nextLine();
         while(!controller.registerNewPlayer(newPlayerName)) {
             System.out.print("Enter your unique username: ");
