@@ -155,7 +155,6 @@ public class UI {
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
             //Break to cut the game right after the winning move is made.
-            // TODO not convinced this check works
             if (controller.checkForFinishedGame(gameId)) {
                 printBoard(gameId);
                 return;
@@ -170,7 +169,6 @@ public class UI {
             while(!controller.makeMove(gameId, xRed, yRed, redPlayer))
                 getInputRedPlayer();
             //Break to cut the game right after the winning move is made.
-            // TODO not convinced this check works
             if (controller.checkForFinishedGame(gameId)) {
                 printBoard(gameId);
                 return;

@@ -116,7 +116,7 @@ public class gamePackageTest {
         gm.moveInGame(1, 0, 4, "nick");
         gm.moveInGame(1, 10, 4, "sam");
         gm.moveInGame(1, 10, 5, "sam");
-        
+
         assertEquals(0, gm.getAUser("nick").getWins());
         assertEquals(1, gm.getAUser("nick").getLosses());
         assertEquals(1, gm.getAUser("sam").getWins());
