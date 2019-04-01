@@ -169,7 +169,7 @@ public class gamePackageTest {
         /*We can see the board is full and nobody has won,
         so the game gives each player a tie and closes the game. */
         System.out.println(c.reportBoard(id));
-
+        
     }
 
     @Test
