@@ -63,7 +63,10 @@ public class GameManager{
             System.out.println("Error: Name too long!");
             return false;
         }
+
+        //TODO: Make it so the new player object won't be created if name already exists.
         User newPlayer = new User(nameOfNewPlayer);
+
         if (allUsers.putIfAbsent(nameOfNewPlayer, newPlayer) == null)
             return true;
         System.out.println("Error: Player already exists! Enter another name");
