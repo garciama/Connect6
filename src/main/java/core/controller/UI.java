@@ -111,7 +111,6 @@ public class UI {
         menu();
     }
 
-    //TODO: have an actual way to keep track of users so you can actually join
     private static void makeNewGame() {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
@@ -186,6 +185,7 @@ public class UI {
      * Method that allows a user to join a game, and to start playing the game
      * based on who took the last turn.
      */
+    //TODO: check if both moves were made on last turn so we know whose turn it is
     private static void joinGame() {
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();

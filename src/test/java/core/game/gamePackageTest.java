@@ -217,6 +217,7 @@ public class gamePackageTest {
         users.get("Sam").addWin();
         users.get("Sam").addWin();
         users.get("Sam").addWin();
+
         users.get("Michael").addLoss();
         users.get("Walker").addLoss();
         users.get("San").addLoss();

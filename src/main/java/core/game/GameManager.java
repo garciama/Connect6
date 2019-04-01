@@ -39,7 +39,6 @@ public class GameManager{
             return -7;
         }
         Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName));
-        System.out.println("gameIDCount = " + gameIDCount);
         allGameMap.put(gameIDCount,g);
         return gameIDCount;
     }
@@ -102,13 +101,13 @@ public class GameManager{
         s.append("Wins");
         leaderboardSpaceAppend("Wins", rowWinsWidth, s, true);
         s.append("|");
-        leaderboardSpaceAppend("Ties", rowTiesWidth, s, false);
-        s.append("Ties");
-        leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
-        s.append("|");
         leaderboardSpaceAppend("Losses", rowLossesWidth, s, false);
         s.append("Losses");
         leaderboardSpaceAppend("Losses", rowLossesWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, false);
+        s.append("Ties");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
         s.append("|\n");
         //Add 6 for | in between
         for (int i = 0; i < total + 6; i++){
