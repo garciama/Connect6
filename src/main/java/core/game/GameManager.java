@@ -102,13 +102,13 @@ public class GameManager{
         s.append("Wins");
         leaderboardSpaceAppend("Wins", rowWinsWidth, s, true);
         s.append("|");
-        leaderboardSpaceAppend("Ties", rowTiesWidth, s, false);
-        s.append("Ties");
-        leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
-        s.append("|");
         leaderboardSpaceAppend("Losses", rowLossesWidth, s, false);
         s.append("Losses");
         leaderboardSpaceAppend("Losses", rowLossesWidth, s, true);
+        s.append("|");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, false);
+        s.append("Ties");
+        leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
         s.append("|\n");
         //Add 6 for | in between
         for (int i = 0; i < total + 6; i++){
