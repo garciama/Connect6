@@ -100,6 +100,55 @@ public class gamePackageTest {
     }
 
     @Test
+    public void testAWinUsingGameManager1() {
+        gm.createNewUser("nick");
+        gm.createNewUser("sam");
+        gm.createNewGame("nick", "sam");
+
+        gm.moveInGame(1, 0, 0, "nick");
+        gm.moveInGame(1, 10, 0, "sam");
+        gm.moveInGame(1, 10, 1, "sam");
+        gm.moveInGame(1, 0, 1, "nick");
+        gm.moveInGame(1, 0, 2, "nick");
+        gm.moveInGame(1, 10, 2, "sam");
+        gm.moveInGame(1, 10, 3, "sam");
+        gm.moveInGame(1, 0, 3, "nick");
+        gm.moveInGame(1, 0, 4, "nick");
+        gm.moveInGame(1, 10, 4, "sam");
+        gm.moveInGame(1, 10, 5, "sam");
+        
+        assertEquals(0, gm.getAUser("nick").getWins());
+        assertEquals(1, gm.getAUser("nick").getLosses());
+        assertEquals(1, gm.getAUser("sam").getWins());
+        assertEquals(0, gm.getAUser("sam").getLosses());
+    }
+
+    @Test
+    public void testAWinUsingGameManager2() {
+        gm.createNewUser("nick");
+        gm.createNewUser("sam");
+        gm.createNewGame("nick", "sam");
+
+        gm.moveInGame(1, 0, 0, "nick");
+        gm.moveInGame(1, 10, 0, "sam");
+        gm.moveInGame(1, 10, 1, "sam");
+        gm.moveInGame(1, 0, 1, "nick");
+        gm.moveInGame(1, 0, 2, "nick");
+        gm.moveInGame(1, 10, 2, "sam");
+        gm.moveInGame(1, 10, 3, "sam");
+        gm.moveInGame(1, 0, 3, "nick");
+        gm.moveInGame(1, 0, 4, "nick");
+        gm.moveInGame(1, 10, 4, "sam");
+        gm.moveInGame(1, 10, 7, "sam");
+        gm.moveInGame(1, 0, 5, "nick");
+
+        assertEquals(1, gm.getAUser("nick").getWins());
+        assertEquals(0, gm.getAUser("nick").getLosses());
+        assertEquals(0, gm.getAUser("sam").getWins());
+        assertEquals(1, gm.getAUser("sam").getLosses());
+    }
+
+    @Test
     public void changeColorTestSquare() {
         s1.changeColor(Color.Red);
         assertEquals(Color.Red, s1.getColor());

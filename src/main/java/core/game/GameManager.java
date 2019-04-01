@@ -26,6 +26,10 @@ public class GameManager{
         return allGameMap.get(gameID);
     }
 
+    public User getAUser(String username) {
+        return allUsers.get(username);
+    }
+
     /**
      * Creates a new game with the 2 given users as long as they are valid and adds the new game to the map
      * @param redName the first player in the game
