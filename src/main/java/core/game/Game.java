@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Game {
 
     public int gameID;
-    private boolean publicOrPrivate;
+    private boolean publicOrPrivate; // TODO: have public or private be reflected in looking at list of games
     private boolean isFinished;
     private Board board;
     User redPlayer, bluePlayer;
