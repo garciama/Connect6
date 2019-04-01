@@ -39,7 +39,6 @@ public class GameManager{
             return -7;
         }
         Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName));
-        System.out.println("gameIDCount = " + gameIDCount);
         allGameMap.put(gameIDCount,g);
         return gameIDCount;
     }
