@@ -75,12 +75,6 @@ public class GameManager{
 
     public String leaderboardToString(){
         Map<String, User> sortedUserByScore = sortMap();
-
-//        for (String key : sortedUserByScore.keySet()){
-//            System.out.println(sortedUserByScore.get(key).getName() + " " + sortedUserByScore.get(key).getScore()
-//            + " " + sortedUserByScore.get(key).getWins() + " " + sortedUserByScore.get(key).getLosses() +
-//                    " " + sortedUserByScore.get(key).getTies());
-//
         return buildLeaderBoard(sortedUserByScore);
     }
 
