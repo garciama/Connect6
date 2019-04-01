@@ -21,6 +21,7 @@ public class Game {
         bluePlayer = blueName;
         isFinished = false;
     }
+    
 
     public String getBoard() {
         return board.displayBoard();
