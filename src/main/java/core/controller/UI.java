@@ -13,12 +13,10 @@ public class UI {
     static GameController controller;
 
     public static void main(String[] args) {
-
         in = new Scanner(System.in);
         controller = new GameController();
         menu();
     }
-
 
     /**
      * Gets the names of users that are entered
@@ -46,9 +44,6 @@ public class UI {
      * Gets Red Player's x and y entered coordinates
      */
     public static void getInputRedPlayer() {
-        //TODO: if an int isn't entered, and user doesnt enter an int again then program crashes, maybe have a do while
-        // and take any input as a string and see if it can be casted to a valid int. Does this even matter cuz its a
-        // temp UI
         // gets x coordinate
         try {
             System.out.print(redPlayer + "'s (red) x move: ");
@@ -106,10 +101,9 @@ public class UI {
     }
 
     private static void createUser() {
-        System.out.print("Enter your unique username: ");
+        System.out.print("Enter your unique username (12 characters max): ");
         String newPlayerName = in.nextLine();
         while(!controller.registerNewPlayer(newPlayerName)) {
-            System.out.println("Error: Player already exists! Enter another name");
             System.out.print("Enter your unique username: ");
             newPlayerName = in.nextLine();
         }
@@ -122,19 +116,31 @@ public class UI {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
         int gameId = controller.newGame(redPlayer, bluePlayer);
-        if (!controller.hasPlayerRegistered(bluePlayer)) {
-            System.out.println("Error: This player doesn't exist! Create a new user first.\n");
+
+        if (gameId == -7)
             menu();
-        }
+
         System.out.println("Your gameId is " + gameId);
-        playGame(gameId);
+        playNewGame(gameId);
     }
 
-    private static void playGame(int gameId) {
+    /**
+     * Function called after a user creates a new game. This method is
+     * different from playGameStartingWithBlue and playGameStartingWithRed
+     * because it gives the first player one turn first, then each
+     * player gets two turns.
+     * @param gameId ID of the game that is being played.
+     */
+    private static void playNewGame(int gameId) {
         takeFirstTurn(gameId);
         playGameStartingWithBlue(gameId);
     }
 
+    /**
+     * Method called from playNewGame method that allows the first
+     * player to only take one turn on their first play.
+     * @param gameId
+     */
     private static void takeFirstTurn(int gameId) {
         printBoard(gameId);
         // First player gets 1 turn.
@@ -176,6 +182,10 @@ public class UI {
         System.out.println("\n" + controller.reportBoard(gameId));
     }
 
+    /**
+     * Method that allows a user to join a game, and to start playing the game
+     * based on who took the last turn.
+     */
     private static void joinGame() {
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
@@ -228,8 +238,8 @@ public class UI {
     }
 
     private static void seeLeaderboard() {
-
-
+        System.out.println(controller.getLeaderBoard());
+        menu();
     }
 
     private static void menu() {

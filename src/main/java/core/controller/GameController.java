@@ -1,7 +1,6 @@
 package core.controller;
 
 import core.game.GameManager;
-import core.user.User;
 
 public class GameController {
 
@@ -33,15 +32,20 @@ public class GameController {
         return gameManager.createNewGame(redPlayer, bluePlayer);
     }
 
-    public boolean hasPlayerRegistered(String playerName){
+    public boolean hasPlayerRegistered(String playerName) {
         return gameManager.checkIfUsersExist(playerName);
     }
 
-    public boolean registerNewPlayer(String nameOfNewUser){
+    public boolean registerNewPlayer(String nameOfNewUser) {
         return gameManager.createNewUser(nameOfNewUser);
     }
 
-    public String lastUserToMakeMove(int id){
+    public String getLeaderBoard() {
+        return gameManager.leaderboardToString();
+    }
+
+    public String lastUserToMakeMove( int id){
         return gameManager.getLastUserToMakeMove(id);
     }
+
 }

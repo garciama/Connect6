@@ -1,5 +1,4 @@
 package core.game;
-import core.user.User;
 import core.Color;
 
 public class Square {
