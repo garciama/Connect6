@@ -114,7 +114,18 @@ public class UI {
     private static void makeNewGame() {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
-        int gameId = controller.newGame(redPlayer, bluePlayer);
+        int gameId;
+        System.out.print("Enter a 0 to create a public game and a 1 for a private game");
+        Integer input = in.nextInt();
+        if (input == 0) {
+            gameId = controller.newPublicGame(redPlayer, bluePlayer);
+        } else if (input == 1) {
+            gameId = controller.newPrivateGame(redPlayer, bluePlayer);
+        } else {
+            System.out.println("You didn't type it in correctly so you get a public game");
+            gameId = controller.newPublicGame(redPlayer, bluePlayer);
+        }
+
 
         if (gameId == -7)
             menu();
