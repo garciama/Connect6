@@ -212,6 +212,8 @@ public class UI {
             bluePlayerTakeTurn(id);
             //TODO fix this
             // IF YOU WIN IN THE FIRST TURN THEN IT STILL ASKS SECOND PLAYER FOR THEIR MOVE
+            if (controller.checkForFinishedGame(id))
+                break;
             redPlayerTakeTurn(id);
         }
         System.out.println("Thank you for playing!\n");
@@ -223,6 +225,8 @@ public class UI {
             redPlayerTakeTurn(id);
             // TODO fix this
             // IF YOU WIN IN THE FIRST TURN THEN IT STILL ASKS SECOND PLAYER FOR THEIR MOVE
+            if (controller.checkForFinishedGame(id))
+                break;
             bluePlayerTakeTurn(id);
         }
         System.out.println("Thank you for playing!\n");
