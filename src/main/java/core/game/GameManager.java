@@ -219,6 +219,8 @@ public class GameManager{
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
             if (!g.gameIsFinished() && g.isPublic()) {
+                // TODO you should be able to see private games if you are a
+                // user involved in that game, either through being a player or being invited to see it
                 str.append(getGameInfo(g));
             }
         }
