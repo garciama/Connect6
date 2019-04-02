@@ -214,10 +214,10 @@ public class UI {
     private static void playGameStartingWithBlue(int id){
         while(!controller.checkForFinishedGame(id)) {
             bluePlayerTakeTurn(id);
-            //TODO fix this
-            // IF YOU WIN IN THE FIRST TURN THEN IT STILL ASKS SECOND PLAYER FOR THEIR MOVE
+
             if (controller.checkForFinishedGame(id))
                 break;
+
             redPlayerTakeTurn(id);
         }
         System.out.println("Thank you for playing!\n");
