@@ -103,7 +103,7 @@ public class gamePackageTest {
     public void testAWinUsingGameManager1() {
         gm.createNewUser("nick");
         gm.createNewUser("sam");
-        gm.createNewGame("nick", "sam");
+        gm.createNewGame("nick", "sam", true);
 
         gm.moveInGame(1, 0, 0, "nick");
         gm.moveInGame(1, 10, 0, "sam");
@@ -127,7 +127,7 @@ public class gamePackageTest {
     public void testAWinUsingGameManager2() {
         gm.createNewUser("nick");
         gm.createNewUser("sam");
-        gm.createNewGame("nick", "sam");
+        gm.createNewGame("nick", "sam", true);
 
         gm.moveInGame(1, 0, 0, "nick");
         gm.moveInGame(1, 10, 0, "sam");
@@ -180,7 +180,7 @@ public class gamePackageTest {
         gm.createNewUser("Sam");
         gm.createNewUser("Nick");
         String redPlayer = "Sam", bluePlayer = "Nick";
-        int id = gm.createNewGame(redPlayer, bluePlayer);
+        int id = gm.createNewGame(redPlayer, bluePlayer, true);
 
         for (int row = 0; row < 19; row++){
 
@@ -227,7 +227,7 @@ public class gamePackageTest {
         gm.createNewUser("red");
         gm.createNewUser("blue");
 
-        gm.createNewGame("red", "blue");
+        gm.createNewGame("red", "blue", true);
         assertEquals("1 red blue\n", gm.getAllGamesInProgress());
         assertEquals("", gm.getAllFinishedGames());
 
@@ -235,7 +235,7 @@ public class gamePackageTest {
         gm.createNewUser("red2");
         gm.createNewUser("blue2");
         // make a second game and make it be finished
-        gm.createNewGame("red2", "blue2");
+        gm.createNewGame("red2", "blue2", true);
         for (int i = 0; i < 6; i++)
             gm.moveInGame(2, 0, i, "red2");
 

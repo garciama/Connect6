@@ -36,13 +36,13 @@ public class GameManager{
      * @param blueName the second player in the game
      * @return the ID of the created game
      */
-    public int createNewGame(String redName, String blueName) {
+    public int createNewGame(String redName, String blueName, boolean isPublic) {
         gameIDCount++;
         if (!checkIfUsersExist(redName) || !checkIfUsersExist(blueName)) {
             System.err.println("This player doesn't exist! Create a new user first.");
             return -7;
         }
-        Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName));
+        Game g = new Game(gameIDCount, allUsers.get(redName), allUsers.get(blueName), isPublic);
         allGameMap.put(gameIDCount,g);
         return gameIDCount;
     }
@@ -226,7 +226,7 @@ public class GameManager{
     public String getAllGamesInProgress() {
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
-            if (!g.gameIsFinished()) {
+            if (!g.gameIsFinished() && g.isPublic()) {
                 str.append(getGameInfo(g));
             }
         }
@@ -241,7 +241,7 @@ public class GameManager{
     public String getAllFinishedGames() {
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
-            if (g.gameIsFinished()) {
+            if (g.gameIsFinished() && g.isPublic()) {
                 str.append(getGameInfo(g));
             }
         }

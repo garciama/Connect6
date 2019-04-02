@@ -28,9 +28,14 @@ public class GameController {
         return gameManager.getAllFinishedGames();
     }
 
-    public int newGame(String redPlayer, String bluePlayer) {
-        return gameManager.createNewGame(redPlayer, bluePlayer);
+    public int newPublicGame(String redPlayer, String bluePlayer) {
+        return gameManager.createNewGame(redPlayer, bluePlayer, true);
     }
+
+    public int newPrivateGame(String redPlayer, String bluePlayer) {
+        return gameManager.createNewGame(redPlayer, bluePlayer, false);
+    }
+
 
     public boolean hasPlayerRegistered(String playerName) {
         return gameManager.checkIfUsersExist(playerName);

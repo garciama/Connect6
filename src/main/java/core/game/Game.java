@@ -7,19 +7,20 @@ import java.util.ArrayList;
 public class Game {
 
     public int gameID;
-    private boolean publicOrPrivate; // TODO: have public or private be reflected in looking at list of games
+    private boolean isPublic; // TODO: have public or private be reflected in looking at list of games
     private boolean isFinished;
     private Board board;
     User redPlayer, bluePlayer;
     public ArrayList<Move> movesInGame;
 
-    public Game(int id, User redName, User blueName){
+    public Game(int id, User redName, User blueName, boolean isPublic){
         movesInGame = new ArrayList<>();
         this.gameID = id;
         board = new Board();
         redPlayer = redName;
         bluePlayer = blueName;
         isFinished = false;
+        this.isPublic = isPublic;
     }
 
 
@@ -99,6 +100,10 @@ public class Game {
 
     public String getBluePlayerName(){
         return bluePlayer.getName();
+    }
+
+    public boolean isPublic(){
+      return isPublic;
     }
 
 }
