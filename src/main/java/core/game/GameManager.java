@@ -284,4 +284,14 @@ public class GameManager{
         return lastUserToMakeMove;
     }
 
+    public String playerNameInGameRed(int id){
+        return allGameMap.get(id).getRedPlayerName();
+    }
+
+    public String playerNameInGameBlue(int id){
+        return allGameMap.get(id).getBluePlayerName();
+    }
+
+
+
 }

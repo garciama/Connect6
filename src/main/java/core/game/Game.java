@@ -93,4 +93,12 @@ public class Game {
         return lastMove.getOwner();
     }
 
+    public String getRedPlayerName(){
+        return redPlayer.getName();
+    }
+
+    public String getBluePlayerName(){
+        return bluePlayer.getName();
+    }
+
 }

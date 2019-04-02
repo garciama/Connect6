@@ -44,6 +44,14 @@ public class GameController {
         return gameManager.leaderboardToString();
     }
 
+    public String getUserNameRed(int id){
+        return gameManager.playerNameInGameRed(id);
+    }
+
+    public String getUserNameBlue(int id){
+        return gameManager.playerNameInGameBlue(id);
+    }
+
     public String lastUserToMakeMove( int id){
         return gameManager.getLastUserToMakeMove(id);
     }

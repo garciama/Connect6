@@ -189,6 +189,10 @@ public class UI {
     private static void joinGame() {
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
+
+        redPlayer = controller.getUserNameRed(gameID);
+        bluePlayer = controller.getUserNameBlue(gameID);
+
         if (controller.checkForFinishedGame(gameID)){
             System.out.println("Game already finished. Returning to main menu.");
             menu();
