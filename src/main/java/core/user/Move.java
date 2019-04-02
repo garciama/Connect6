@@ -27,8 +27,6 @@ public class Move {
         return date;
     }
 
-
-
     public String toString() {
         // TODO: update this when we figure out how we are keeping track of users
         String str = String.format("(%d, %d)", x, y);

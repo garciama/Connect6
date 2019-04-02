@@ -9,7 +9,7 @@ public class UI {
     static int yBlue;
     static int menuChoice;
     static Scanner in;
-    static String redPlayer, bluePlayer; // TODO: change this when we keep track of users better
+    static String redPlayer, bluePlayer;
     static GameController controller;
 
     public static void main(String[] args) {
@@ -200,10 +200,8 @@ public class UI {
     private static void joinGame() {
         System.out.println("Enter the ID of a game to join");
         int gameID = in.nextInt();
-
         redPlayer = controller.getUserNameRed(gameID);
         bluePlayer = controller.getUserNameBlue(gameID);
-
         if (controller.checkForFinishedGame(gameID)){
             System.out.println("Game already finished. Returning to main menu.");
             menu();
@@ -217,7 +215,6 @@ public class UI {
         else{
             playGameStartingWithRed(gameID);
         }
-
         System.out.println("Thank you for playing!\n");
         menu();
     }
@@ -225,10 +222,8 @@ public class UI {
     private static void playGameStartingWithBlue(int id){
         while(!controller.checkForFinishedGame(id)) {
             bluePlayerTakeTurn(id);
-
             if (controller.checkForFinishedGame(id))
                 break;
-
             redPlayerTakeTurn(id);
         }
         System.out.println("Thank you for playing!\n");
@@ -238,8 +233,6 @@ public class UI {
     private static void playGameStartingWithRed(int id){
         while(!controller.checkForFinishedGame(id)) {
             redPlayerTakeTurn(id);
-            // TODO fix this
-            // IF YOU WIN IN THE FIRST TURN THEN IT STILL ASKS SECOND PLAYER FOR THEIR MOVE
             if (controller.checkForFinishedGame(id))
                 break;
             bluePlayerTakeTurn(id);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Game {
 
     public int gameID;
-    private boolean isPublic; // TODO: have public or private be reflected in looking at list of games
+    private boolean isPublic;
     private boolean isFinished;
     private Board board;
     User redPlayer, bluePlayer;
@@ -23,10 +23,7 @@ public class Game {
         this.isPublic = isPublic;
     }
 
-
-    public String getBoard() {
-        return board.displayBoard();
-    }
+    public String getBoard() { return board.displayBoard(); }
 
     /**
      * Method that is called when a user attempts to make a move from the
@@ -79,9 +76,7 @@ public class Game {
         return true;
     }
 
-    public boolean gameIsFinished(){
-        return isFinished;
-    }
+    public boolean gameIsFinished(){ return isFinished; }
 
     /**
      * Method that checks the board for the last move and returns the
@@ -94,16 +89,10 @@ public class Game {
         return lastMove.getOwner();
     }
 
-    public String getRedPlayerName(){
-        return redPlayer.getName();
-    }
+    public String getRedPlayerName(){ return redPlayer.getName(); }
 
-    public String getBluePlayerName(){
-        return bluePlayer.getName();
-    }
+    public String getBluePlayerName(){ return bluePlayer.getName(); }
 
-    public boolean isPublic(){
-      return isPublic;
-    }
+    public boolean isPublic(){ return isPublic; }
 
 }

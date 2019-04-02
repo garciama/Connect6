@@ -27,19 +27,15 @@ public class User {
     public String getName(){
         return this.name;
     }
-
     public void addWin(){
         wins++;
     }
-
     public void addLoss(){
         losses++;
     }
-
     public void addTie(){
         ties++;
     }
-
     public int getScore() {
         return (3 * wins) + ties;
     }

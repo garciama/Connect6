@@ -26,9 +26,7 @@ public class GameManager{
         return allGameMap.get(gameID);
     }
 
-    public User getAUser(String username) {
-        return allUsers.get(username);
-    }
+    public User getAUser(String username) { return allUsers.get(username); }
 
     /**
      * Creates a new game with the 2 given users as long as they are valid and adds the new game to the map
@@ -52,9 +50,7 @@ public class GameManager{
      * @param playerName the name of the user being created
      * @return true if the user exists, false if not
      */
-    public boolean checkIfUsersExist(String playerName){
-        return (allUsers.containsKey(playerName));
-    }
+    public boolean checkIfUsersExist(String playerName){ return (allUsers.containsKey(playerName)); }
 
     /**
      * Creates a new user that can be used to play in a game and keeo track of wins, losses, etc.
@@ -193,9 +189,7 @@ public class GameManager{
      * Gets all the users the have been created
      * @return the map of all users
      */
-    public Map<String, User> getAllUsers(){
-        return allUsers;
-    }
+    public Map<String, User> getAllUsers(){ return allUsers; }
 
     /**
      * Returns the board as a 2-D array with its current state
@@ -214,9 +208,7 @@ public class GameManager{
      * @param gameID ID of the game status being checked
      * @return true if game if finished, false if still in progress
      */
-    public boolean checkForGameOver(int gameID) {
-        return allGameMap.get(gameID).gameIsFinished();
-    }
+    public boolean checkForGameOver(int gameID) { return allGameMap.get(gameID).gameIsFinished(); }
 
     /**
      * Loops through all of the games in allGameMap and if the game has not finished then that games information,
@@ -284,14 +276,8 @@ public class GameManager{
         return lastUserToMakeMove;
     }
 
-    public String playerNameInGameRed(int id){
-        return allGameMap.get(id).getRedPlayerName();
-    }
+    public String playerNameInGameRed(int id){ return allGameMap.get(id).getRedPlayerName(); }
 
-    public String playerNameInGameBlue(int id){
-        return allGameMap.get(id).getBluePlayerName();
-    }
-
-
+    public String playerNameInGameBlue(int id){ return allGameMap.get(id).getBluePlayerName(); }
 
 }
