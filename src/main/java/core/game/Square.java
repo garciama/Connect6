@@ -6,14 +6,14 @@ public class Square {
     private int yCoord;
     private Color color;
 
-    public Square(int x, int y){
+    public Square(int x, int y) {
         xCoord = x;
         yCoord = y;
         //Default color is black before anyone clicks the square
         color = Color.Black;
     }
 
-    public void changeColor(Color c){
+    public void changeColor(Color c) {
         this.color = c;
     }
 
@@ -28,7 +28,7 @@ public class Square {
         return color;
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 

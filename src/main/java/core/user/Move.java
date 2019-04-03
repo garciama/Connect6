@@ -34,6 +34,6 @@ public class Move {
         return str;
     }
 
-    public String getOwner(){ return owner.getName(); }
+    public String getOwner() { return owner.getName(); }
 
 }

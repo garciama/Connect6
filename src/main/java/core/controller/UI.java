@@ -115,7 +115,7 @@ public class UI {
         System.out.println("Enter -1 at any point to go back to the main menu");
         getUsers();
         int gameId;
-        System.out.print("Enter a 0 to create a public game and a 1 for a private game");
+        System.out.print("Enter a 0 to create a public game and a 1 for a private game: ");
         Integer input = in.nextInt();
         if (input == 0) {
             gameId = controller.newPublicGame(redPlayer, bluePlayer);
@@ -161,7 +161,7 @@ public class UI {
     }
 
     private static void bluePlayerTakeTurn(int gameId) {
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
@@ -202,12 +202,13 @@ public class UI {
         int gameID = in.nextInt();
         redPlayer = controller.getUserNameRed(gameID);
         bluePlayer = controller.getUserNameBlue(gameID);
-        if (controller.checkForFinishedGame(gameID)){
+        if (controller.checkForFinishedGame(gameID)) {
             System.out.println("Game already finished. Returning to main menu.");
             menu();
         }
         printBoard(gameID);
         //check to see who made last move, then start game with other player
+<<<<<<< HEAD
         String currentTurnUser = controller.userCurrentTurn(gameID);
 
         if(currentTurnUser.equals(redPlayer)){
@@ -216,6 +217,11 @@ public class UI {
                 playGameStartingWithBlue(gameID);
             }else
                 playGameStartingWithRed(gameID);
+=======
+        String lastUserToMakeMove = controller.lastUserToMakeMove(gameID);
+        if(lastUserToMakeMove.equals(redPlayer)) {
+            playGameStartingWithBlue(gameID);
+>>>>>>> 039b6f0a427b13db8aa3fcd8db872f9e662d28b6
         }
         else{
             if (controller.playerHasPutDownPiece(gameID, bluePlayer)) {
@@ -229,6 +235,7 @@ public class UI {
         menu();
     }
 
+<<<<<<< HEAD
     private static void putDownOnePiece(int id, String name){
         printBoard(id);
         // First player gets 1 turn.
@@ -245,6 +252,9 @@ public class UI {
     }
 
     private static void playGameStartingWithBlue(int id){
+=======
+    private static void playGameStartingWithBlue(int id) {
+>>>>>>> 039b6f0a427b13db8aa3fcd8db872f9e662d28b6
         while(!controller.checkForFinishedGame(id)) {
             bluePlayerTakeTurn(id);
             if (controller.checkForFinishedGame(id))
@@ -255,7 +265,7 @@ public class UI {
         menu();
     }
 
-    private static void playGameStartingWithRed(int id){
+    private static void playGameStartingWithRed(int id) {
         while(!controller.checkForFinishedGame(id)) {
             redPlayerTakeTurn(id);
             if (controller.checkForFinishedGame(id))

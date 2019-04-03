@@ -3,7 +3,7 @@ import core.user.User;
 
 import java.util.*;
 
-public class GameManager{
+public class GameManager {
 
     //counter to give to games as their ID, incremented after each game is created & assigned the int
     private int gameIDCount = 0;
@@ -26,6 +26,11 @@ public class GameManager{
         return allGameMap.get(gameID);
     }
 
+    /**
+     *
+     * @param username a string representation of a username
+     * @return the User object with that username
+     */
     public User getAUser(String username) { return allUsers.get(username); }
 
     /**
@@ -50,14 +55,14 @@ public class GameManager{
      * @param playerName the name of the user being created
      * @return true if the user exists, false if not
      */
-    public boolean checkIfUsersExist(String playerName){ return (allUsers.containsKey(playerName)); }
+    public boolean checkIfUsersExist(String playerName) { return (allUsers.containsKey(playerName)); }
 
     /**
      * Creates a new user that can be used to play in a game and keeo track of wins, losses, etc.
      * @param nameOfNewPlayer the unique name of the player being created
      * @return true if the player was successfully created, false if otherwise
      */
-    public boolean createNewUser(String nameOfNewPlayer){
+    public boolean createNewUser(String nameOfNewPlayer) {
         if (nameOfNewPlayer.length() > 12) {
             System.out.println("Error: Name too long!");
             return false;
@@ -72,7 +77,11 @@ public class GameManager{
         return false;
     }
 
-    public String leaderboardToString(){
+    /**
+     * Returns a string representation of the leader board sorted by users with the highest score
+     * @return a String representation of the leader board
+     */
+    public String leaderboardToString() {
         Map<String, User> sortedUserByScore = sortMap();
         return buildLeaderBoard(sortedUserByScore);
     }
@@ -110,12 +119,12 @@ public class GameManager{
         leaderboardSpaceAppend("Ties", rowTiesWidth, s, true);
         s.append("|\n");
         //Add 6 for | in between
-        for (int i = 0; i < total + 6; i++){
+        for (int i = 0; i < total + 6; i++) {
             s.append("-");
         }
         s.append("\n");
         //Now build the leaderboard string
-        for (String key: boardStrings.keySet()){
+        for (String key: boardStrings.keySet()) {
             String rowName = boardStrings.get(key).getName();
             String rowScore = Integer.toString(boardStrings.get(key).getScore());
             String rowWins = Integer.toString(boardStrings.get(key).getWins());
@@ -157,7 +166,7 @@ public class GameManager{
      * @param sb the StringBuilder to append to
      * @param secondHalf boolean to check if another space needs to be appended in special cases
      */
-    private void leaderboardSpaceAppend(String col, int width, StringBuilder sb, boolean secondHalf){
+    private void leaderboardSpaceAppend(String col, int width, StringBuilder sb, boolean secondHalf) {
         for (int i = 0; i < (width - col.length()) / 2; i++)
             sb.append(" ");
         //Append another space on second half for special cases
@@ -166,7 +175,7 @@ public class GameManager{
             sb.append(" ");
     }
 
-    private Map<String, User> sortMap(){
+    private Map<String, User> sortMap() {
         //Convert userScores to list
         List<Map.Entry<String, User>> list =
                 new LinkedList<>(allUsers.entrySet());
@@ -189,14 +198,14 @@ public class GameManager{
      * Gets all the users the have been created
      * @return the map of all users
      */
-    public Map<String, User> getAllUsers(){ return allUsers; }
+    public Map<String, User> getAllUsers() { return allUsers; }
 
     /**
      * Returns the board as a 2-D array with its current state
      * @param id ID of the game from which the board will be retreived
      * @return the baord state as a string and is easy to read
      */
-    public String getBoard(int id){
+    public String getBoard(int id) {
         if(!allGameMap.containsKey(id))
             return "no games found";
         else
@@ -219,6 +228,8 @@ public class GameManager{
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
             if (!g.gameIsFinished() && g.isPublic()) {
+                // TODO you should be able to see private games if you are a
+                // user involved in that game, either through being a player or being invited to see it
                 str.append(getGameInfo(g));
             }
         }
@@ -261,7 +272,7 @@ public class GameManager{
      * @param playerName name of the User making the move
      * @return true if move successfully made, false otherwise
      */
-    public boolean moveInGame(int ID, int x, int y, String playerName){
+    public boolean moveInGame(int ID, int x, int y, String playerName) {
         return allGameMap.get(ID).makeMove(x, y, playerName);
     }
 
@@ -276,12 +287,23 @@ public class GameManager{
         return lastUserToMakeMove;
     }
 
+
     public boolean hasPutDownPiece(int id, String name){
         return allGameMap.get(id).hasPutDownPiece(name);
     }
 
+    /**
+     * Returns the username of the red player in the game
+     * @param id ID of the game
+     * @return the name of the Red Player in the game
+     */
     public String playerNameInGameRed(int id){ return allGameMap.get(id).getRedPlayerName(); }
 
-    public String playerNameInGameBlue(int id){ return allGameMap.get(id).getBluePlayerName(); }
+    /**
+     * Returns the username of the blue player in the game
+     * @param id ID of the game
+     * @return the name of the Blue Player in the game
+     */
+    public String playerNameInGameBlue(int id) { return allGameMap.get(id).getBluePlayerName(); }
 
 }
