@@ -12,7 +12,7 @@ public class userPackageTest {
     User u2;
 
     @Before
-    public void initUser(){
+    public void initUser() {
         u1 = new User("test");
         u2 = new User("test1");
 
