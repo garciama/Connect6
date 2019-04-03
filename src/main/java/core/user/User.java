@@ -15,25 +15,25 @@ public class User {
         ties = 0;
     }
 
-    public int getWins(){
+    public int getWins() {
         return this.wins;
     }
-    public int getLosses(){
+    public int getLosses() {
         return this.losses;
     }
-    public int getTies(){
+    public int getTies() {
         return this.ties;
     }
-    public String getName(){
+    public String getName() {
         return this.name;
     }
-    public void addWin(){
+    public void addWin() {
         wins++;
     }
-    public void addLoss(){
+    public void addLoss() {
         losses++;
     }
-    public void addTie(){
+    public void addTie() {
         ties++;
     }
     public int getScore() {

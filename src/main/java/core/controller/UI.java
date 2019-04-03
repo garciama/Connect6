@@ -161,7 +161,7 @@ public class UI {
     }
 
     private static void bluePlayerTakeTurn(int gameId) {
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             getInputBluePlayer();
             while(!controller.makeMove(gameId, xBlue, yBlue, bluePlayer))
                 getInputBluePlayer();
@@ -202,14 +202,14 @@ public class UI {
         int gameID = in.nextInt();
         redPlayer = controller.getUserNameRed(gameID);
         bluePlayer = controller.getUserNameBlue(gameID);
-        if (controller.checkForFinishedGame(gameID)){
+        if (controller.checkForFinishedGame(gameID)) {
             System.out.println("Game already finished. Returning to main menu.");
             menu();
         }
         printBoard(gameID);
         //check to see who made last move, then start game with other player
         String lastUserToMakeMove = controller.lastUserToMakeMove(gameID);
-        if(lastUserToMakeMove.equals(redPlayer)){
+        if(lastUserToMakeMove.equals(redPlayer)) {
             playGameStartingWithBlue(gameID);
         }
         else{
@@ -219,7 +219,7 @@ public class UI {
         menu();
     }
 
-    private static void playGameStartingWithBlue(int id){
+    private static void playGameStartingWithBlue(int id) {
         while(!controller.checkForFinishedGame(id)) {
             bluePlayerTakeTurn(id);
             if (controller.checkForFinishedGame(id))
@@ -230,7 +230,7 @@ public class UI {
         menu();
     }
 
-    private static void playGameStartingWithRed(int id){
+    private static void playGameStartingWithRed(int id) {
         while(!controller.checkForFinishedGame(id)) {
             redPlayerTakeTurn(id);
             if (controller.checkForFinishedGame(id))

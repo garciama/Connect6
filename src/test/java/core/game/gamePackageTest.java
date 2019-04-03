@@ -16,7 +16,7 @@ public class gamePackageTest {
     GameManager gm;
 
     @Before
-    public void init(){
+    public void init() {
         b1 = new Board();
         s1 = new Square(5,10);
         s2 = new Square(2,4);
@@ -24,7 +24,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void checkHorizontalTest(){
+    public void checkHorizontalTest() {
         //horizontal success
         b1.squaresOnBoard[2][2].changeColor(Color.Red);
         b1.squaresOnBoard[3][2].changeColor(Color.Red);
@@ -44,7 +44,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void checkVerticalTest(){
+    public void checkVerticalTest() {
         //vertical success
         b1.squaresOnBoard[1][1].changeColor(Color.Red);
         b1.squaresOnBoard[1][2].changeColor(Color.Red);
@@ -65,7 +65,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void checkDiagonalLeftTest(){
+    public void checkDiagonalLeftTest() {
         //diagonal left success
         b1.squaresOnBoard[8][7].changeColor(Color.Red);
         b1.squaresOnBoard[7][8].changeColor(Color.Red);
@@ -78,7 +78,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void checkDiagonalRightTest(){
+    public void checkDiagonalRightTest() {
         //diagonal right success
         b1.squaresOnBoard[2][3].changeColor(Color.Red);
         b1.squaresOnBoard[3][4].changeColor(Color.Red);
@@ -91,7 +91,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void testIsWinning(){
+    public void testIsWinning() {
         b1.squaresOnBoard[13][13].changeColor(Color.Red);
         //assertFalse(b1.isWinning(13,13,b1.squaresOnBoard[13][13].getColor()));
         //assertTrue(b1.isWinning(2,3,b1.squaresOnBoard[2][3].getColor()));
@@ -176,13 +176,13 @@ public class gamePackageTest {
     //TODO: figure out how to test a tie.
 
     @Test
-    public void testTie(){
+    public void testTie() {
         gm.createNewUser("Sam");
         gm.createNewUser("Nick");
         String redPlayer = "Sam", bluePlayer = "Nick";
         int id = gm.createNewGame(redPlayer, bluePlayer, true);
 
-        for (int row = 0; row < 19; row++){
+        for (int row = 0; row < 19; row++) {
 
             if (row%2 == 0) {
                 for (int col = 0; col < 18; col += 4) {
@@ -206,7 +206,7 @@ public class gamePackageTest {
             }
         }
 
-        for (int row = 0; row < 19; row++){
+        for (int row = 0; row < 19; row++) {
             if (row%2 == 0)
                 gm.moveInGame(id, 18, row, redPlayer);
             else
@@ -256,7 +256,7 @@ public class gamePackageTest {
     }
 
     @Test
-    public void LeaderboardTest(){
+    public void LeaderboardTest() {
         gm.createNewUser("Sam");
         gm.createNewUser("Michael");
         gm.createNewUser("Walker");

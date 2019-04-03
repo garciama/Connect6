@@ -13,7 +13,7 @@ public class Game {
     User redPlayer, bluePlayer;
     public ArrayList<Move> movesInGame;
 
-    public Game(int id, User redName, User blueName, boolean isPublic){
+    public Game(int id, User redName, User blueName, boolean isPublic) {
         movesInGame = new ArrayList<>();
         this.gameID = id;
         board = new Board();
@@ -50,7 +50,7 @@ public class Game {
             System.out.println("Illegal move - square already taken");
             return false;
         }
-        if (board.isWinning()){
+        if (board.isWinning()) {
             if (redPlayer.getName().equals(playerName)) {
                 System.out.println(playerName + " has won! Game over.");
                 redPlayer.addWin();
@@ -65,7 +65,7 @@ public class Game {
             }
             isFinished = true;
         }
-        if (movesInGame.size() == (19*19)){
+        if (movesInGame.size() == (19*19)) {
             System.out.println("Tie! Game over.");
             redPlayer.addTie();
             bluePlayer.addTie();
@@ -76,23 +76,23 @@ public class Game {
         return true;
     }
 
-    public boolean gameIsFinished(){ return isFinished; }
+    public boolean gameIsFinished() { return isFinished; }
 
     /**
      * Method that checks the board for the last move and returns the
      * user's name.
      * @return User's name who made the last move.
      */
-    public String lastUserToMakeMove(){
+    public String lastUserToMakeMove() {
         int last = movesInGame.size() - 1;
         Move lastMove = movesInGame.get(last);
         return lastMove.getOwner();
     }
 
-    public String getRedPlayerName(){ return redPlayer.getName(); }
+    public String getRedPlayerName() { return redPlayer.getName(); }
 
-    public String getBluePlayerName(){ return bluePlayer.getName(); }
+    public String getBluePlayerName() { return bluePlayer.getName(); }
 
-    public boolean isPublic(){ return isPublic; }
+    public boolean isPublic() { return isPublic; }
 
 }
