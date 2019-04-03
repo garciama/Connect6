@@ -83,8 +83,12 @@ public class Game {
      * user's name.
      * @return User's name who made the last move.
      */
-<<<<<<< HEAD
     public String currentMoveUser(){
+
+        //If no moves have been made then it's red players turn.
+        if (movesInGame.size() == 0)
+            return redPlayer.getName();
+
         /*Red player goes first, so if red player has put down a piece,
         then it is blue players turn. */
         if (movesInGame.size() == 1 || movesInGame.size() == 2)
@@ -103,20 +107,19 @@ public class Game {
         return lastPiece.getOwner();
     }
 
-    public boolean hasPutDownPiece(String userName){
+    public boolean hasPutDownPiece(String userName) {
+        /*If the game was left before the first turn was made, then pretend
+        that the red player already put down a piece, so later they only get to put
+        down one. */
+        if (movesInGame.size() == 0)
+            return true;
+
         Move lastPiece = movesInGame.get(movesInGame.size() - 1);
 
         if (lastPiece.getOwner().equalsIgnoreCase(userName))
             return true;
 
         return false;
-
-=======
-    public String lastUserToMakeMove() {
-        int last = movesInGame.size() - 1;
-        Move lastMove = movesInGame.get(last);
-        return lastMove.getOwner();
->>>>>>> 039b6f0a427b13db8aa3fcd8db872f9e662d28b6
     }
 
     public String getRedPlayerName() { return redPlayer.getName(); }
