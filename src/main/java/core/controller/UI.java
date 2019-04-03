@@ -208,15 +208,40 @@ public class UI {
         }
         printBoard(gameID);
         //check to see who made last move, then start game with other player
-        String lastUserToMakeMove = controller.lastUserToMakeMove(gameID);
-        if(lastUserToMakeMove.equals(redPlayer)){
-            playGameStartingWithBlue(gameID);
+        String currentTurnUser = controller.userCurrentTurn(gameID);
+
+        if(currentTurnUser.equals(redPlayer)){
+            if (controller.playerHasPutDownPiece(gameID, redPlayer)) {
+                putDownOnePiece(gameID, redPlayer);
+                playGameStartingWithBlue(gameID);
+            }else
+                playGameStartingWithRed(gameID);
         }
         else{
-            playGameStartingWithRed(gameID);
+            if (controller.playerHasPutDownPiece(gameID, bluePlayer)) {
+                putDownOnePiece(gameID, bluePlayer);
+                playGameStartingWithRed(gameID);
+            }else
+                playGameStartingWithBlue(gameID);
         }
+
         System.out.println("Thank you for playing!\n");
         menu();
+    }
+
+    private static void putDownOnePiece(int id, String name){
+        printBoard(id);
+        // First player gets 1 turn.
+        if (name.equalsIgnoreCase(redPlayer)) {
+            getInputRedPlayer();
+            while (!controller.makeMove(id, xRed, yRed, redPlayer))
+                getInputRedPlayer();
+        }else if (name.equalsIgnoreCase(bluePlayer)){
+            getInputBluePlayer();
+            while (!controller.makeMove(id, xBlue, yBlue, bluePlayer))
+                getInputBluePlayer();
+        }
+        printBoard(id);
     }
 
     private static void playGameStartingWithBlue(int id){

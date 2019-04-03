@@ -48,10 +48,14 @@ public class GameController {
         return gameManager.leaderboardToString();
     }
 
+    public boolean playerHasPutDownPiece(int id, String name){
+        return gameManager.hasPutDownPiece(id, name);
+    }
+
     public String getUserNameRed(int id){ return gameManager.playerNameInGameRed(id); }
 
     public String getUserNameBlue(int id){ return gameManager.playerNameInGameBlue(id); }
 
-    public String lastUserToMakeMove( int id){ return gameManager.getLastUserToMakeMove(id); }
+    public String userCurrentTurn( int id){ return gameManager.getUserCurrentTurn(id); }
 
 }
