@@ -1,10 +1,8 @@
 package Network.Resources;
 
 import core.controller.GameController;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("menu")
@@ -15,15 +13,24 @@ public class MenuResource {
     private void buildController() {
         controller.registerNewPlayer("walker");
         controller.registerNewPlayer("sam");
+        controller.newPublicGame("walker", "sam");
     }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String get() {
+    public String getMenu() {
+        return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
+                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
+    }
+
+    @GET
+    @Path("board/{game_id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getBoard(@PathParam("game_id") String gameID) {
         buildController();
-        int gameID = controller.newPublicGame("walker", "sam");
-        String board = controller.reportBoard(gameID);
-        return gameID + " " + board;
+        int id = Integer.parseInt(gameID);
+        String board = controller.reportBoard(id);
+        return gameID + "/n" + board;
     }
 
     @POST
