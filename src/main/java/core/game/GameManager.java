@@ -281,10 +281,15 @@ public class GameManager {
      * @param id ID of game
      * @return name of User who made the last move in that game
      */
-    public String  getLastUserToMakeMove(int id) {
+    public String  getUserCurrentTurn(int id){
         Game g = allGameMap.get(id);
-        String lastUserToMakeMove = g.lastUserToMakeMove();
+        String lastUserToMakeMove = g.currentMoveUser();
         return lastUserToMakeMove;
+    }
+
+
+    public boolean hasPutDownPiece(int id, String name){
+        return allGameMap.get(id).hasPutDownPiece(name);
     }
 
     /**
@@ -292,7 +297,7 @@ public class GameManager {
      * @param id ID of the game
      * @return the name of the Red Player in the game
      */
-    public String playerNameInGameRed(int id) { return allGameMap.get(id).getRedPlayerName(); }
+    public String playerNameInGameRed(int id){ return allGameMap.get(id).getRedPlayerName(); }
 
     /**
      * Returns the username of the blue player in the game
