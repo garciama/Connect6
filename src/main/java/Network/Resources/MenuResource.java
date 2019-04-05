@@ -5,7 +5,7 @@ import core.controller.GameController;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("menu")
+@Path("game")
 public class MenuResource {
 
     GameController controller = new GameController();
@@ -17,6 +17,7 @@ public class MenuResource {
     }
 
     @GET
+    @Path("menu")
     @Produces(MediaType.TEXT_PLAIN)
     public String getMenu() {
         return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
@@ -30,7 +31,16 @@ public class MenuResource {
         buildController();
         int id = Integer.parseInt(gameID);
         String board = controller.reportBoard(id);
-        return gameID + "/n" + board;
+        return board;
+    }
+
+    @GET
+    @Path("inProgress")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getGamesInProgress() {
+        buildController();
+        String games = controller.seeInProgressGames();
+        return games;
     }
 
     @POST
