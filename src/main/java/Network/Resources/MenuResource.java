@@ -43,6 +43,22 @@ public class MenuResource {
         return games;
     }
 
+    @GET
+    @Path("completed")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getFinishedGames() {
+        buildController();
+        return controller.seeFinishedGames();
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getLeaderboard() {
+        buildController();
+        return controller.getLeaderBoard();
+    }
+
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public String post() {
