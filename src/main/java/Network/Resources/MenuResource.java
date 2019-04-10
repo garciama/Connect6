@@ -1,9 +1,16 @@
 package Network.Resources;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.controller.GameController;
 
 
 import javax.inject.Singleton;
+import com.google.gson.Gson;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -50,6 +57,7 @@ public class MenuResource {
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
+        System.out.println(username);
         controller.registerNewPlayer(username);
         String str = "user created successfully";
         Response res = Response.ok(str).build();
@@ -70,10 +78,15 @@ public class MenuResource {
         return controller.getLeaderBoard();
     }
 
+    //TODO: implement this correctly
     @PUT
     @Path("createGame")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response createGame(String redPlayer, String bluePlayer) {
+    public Response createGame(JSONArray players) {
+        JSONObject obj = players.getJSONObject(0);
+        String redPlayer = obj.getString("red");
+        System.out.println(redPlayer);
+        String bluePlayer = "";
         Response res;
         if(controller.hasPlayerRegistered(redPlayer) && controller.hasPlayerRegistered(bluePlayer)){
             controller.newPublicGame(redPlayer, bluePlayer);
