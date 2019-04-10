@@ -29,8 +29,13 @@ public class MenuResource {
     @Produces(MediaType.TEXT_PLAIN)
     public String getBoard(@PathParam("game_id") String gameID) {
         buildController();
-        int id = Integer.parseInt(gameID);
-        String board = controller.reportBoard(id);
+        String board;
+        try {
+            int id = Integer.parseInt(gameID);
+            board = controller.reportBoard(id);
+        } catch(Exception e) {
+            throw new WebApplicationException(404);
+        }
         return board;
     }
 
