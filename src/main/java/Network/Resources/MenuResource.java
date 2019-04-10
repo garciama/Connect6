@@ -2,15 +2,20 @@ package Network.Resources;
 
 import core.controller.GameController;
 
+
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+@Singleton
 @Path("game")
 public class MenuResource {
 
-    GameController controller = new GameController();
+    GameController controller;
 
-    private void buildController() {
+    public MenuResource() {
+        controller = new GameController();
         controller.registerNewPlayer("walker");
         controller.registerNewPlayer("sam");
         controller.newPublicGame("walker", "sam");
@@ -28,14 +33,8 @@ public class MenuResource {
     @Path("board/{game_id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getBoard(@PathParam("game_id") String gameID) {
-        buildController();
-        String board;
-        try {
-            int id = Integer.parseInt(gameID);
-            board = controller.reportBoard(id);
-        } catch(Exception e) {
-            throw new WebApplicationException(404);
-        }
+        int id = Integer.parseInt(gameID);
+        String board = controller.reportBoard(id);
         return board;
     }
 
@@ -43,16 +42,24 @@ public class MenuResource {
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
     public String getGamesInProgress() {
-        buildController();
         String games = controller.seeInProgressGames();
         return games;
+    }
+
+    @PUT
+    @Path("createUser")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createUser(String username) {
+        controller.registerNewPlayer(username);
+        String str = "user created successfully";
+        Response res = Response.ok(str).build();
+        return res;
     }
 
     @GET
     @Path("completed")
     @Produces(MediaType.TEXT_PLAIN)
     public String getFinishedGames() {
-        buildController();
         return controller.seeFinishedGames();
     }
 
@@ -60,14 +67,23 @@ public class MenuResource {
     @Path("leaderboard")
     @Produces(MediaType.TEXT_PLAIN)
     public String getLeaderboard() {
-        buildController();
         return controller.getLeaderBoard();
     }
 
-    @POST
+    @PUT
+    @Path("createGame")
     @Produces(MediaType.TEXT_PLAIN)
-    public String post() {
-        return "I received your POST";
+    public Response createGame(String redPlayer, String bluePlayer) {
+        Response res;
+        if(controller.hasPlayerRegistered(redPlayer) && controller.hasPlayerRegistered(bluePlayer)){
+            controller.newPublicGame(redPlayer, bluePlayer);
+            String str = "game created";
+            res = Response.ok(str).build();
+        }
+        else{
+            String str1 = "players not found, try again or create players";
+            res = Response.status(404).entity(str1).build();
+        }
+        return res;
     }
 }
-
