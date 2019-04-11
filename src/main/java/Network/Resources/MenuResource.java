@@ -78,7 +78,6 @@ public class MenuResource {
         return controller.getLeaderBoard();
     }
 
-    //TODO: implement this correctly
     @PUT
     @Path("createGame")
     @Consumes(MediaType.APPLICATION_JSON)

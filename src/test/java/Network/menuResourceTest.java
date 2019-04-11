@@ -45,15 +45,15 @@ public class menuResourceTest {
     }
 
     @Test
-    public void testPostGame() {
-        // The data to send with the POST
-        Entity data = Entity.entity("Some data", MediaType.TEXT_PLAIN);
-
+    public void testInProgress() {
         String response = client.target(HOST_URI)
-                .path("game")
+                .path("game/inProgress")
                 .request(MediaType.TEXT_PLAIN_TYPE)
-                .post(data, String.class);
+                .get(String.class); //Whatever response we get store in a string
+        String menu = "1 walker sam\n";
 
-        Assert.assertEquals("I received your POST", response);
+        Assert.assertEquals(menu, response);
     }
+
+
 }
