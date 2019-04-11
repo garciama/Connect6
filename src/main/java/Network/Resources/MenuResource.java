@@ -1,19 +1,34 @@
 package Network.Resources;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.controller.GameController;
+
+
+import javax.inject.Singleton;
+import com.google.gson.Gson;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+<<<<<<< HEAD
 //Think of a resource as a thing your game cares about.
 //assignment 5
 //create an arraylist of toDo objects > boolean done? String content of todo.
+=======
+@Singleton
+>>>>>>> d233cab6eb57db4f9010e3c880398a7610b4f342
 @Path("game")
 public class MenuResource {
 
-    GameController controller = new GameController();
+    GameController controller;
 
-    private void buildController() {
+    public MenuResource() {
+        controller = new GameController();
         controller.registerNewPlayer("walker");
         controller.registerNewPlayer("sam");
         controller.newPublicGame("walker", "sam");
@@ -31,7 +46,6 @@ public class MenuResource {
     @Path("board/{game_id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String getBoard(@PathParam("game_id") String gameID) {
-        buildController();
         int id = Integer.parseInt(gameID);
         String board = controller.reportBoard(id);
         return board;
@@ -41,13 +55,14 @@ public class MenuResource {
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
     public String getGamesInProgress() {
-        buildController();
         String games = controller.seeInProgressGames();
         return games;
     }
 
-    @POST
+    @PUT
+    @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
+<<<<<<< HEAD
     public String post() {
 
 
@@ -56,4 +71,48 @@ public class MenuResource {
         return "I received your POST";
 
     }
+=======
+    public Response createUser(String username) {
+        System.out.println(username);
+        controller.registerNewPlayer(username);
+        String str = "user created successfully";
+        Response res = Response.ok(str).build();
+        return res;
+    }
+
+    @GET
+    @Path("completed")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getFinishedGames() {
+        return controller.seeFinishedGames();
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getLeaderboard() {
+        return controller.getLeaderBoard();
+    }
+
+    @PUT
+    @Path("createGame")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createGame(String players) {
+        JSONObject obj = new JSONObject(players);
+        String redPlayer = obj.getString("red");
+        String bluePlayer = obj.getString("blue");
+        Response res;
+        if(controller.hasPlayerRegistered(redPlayer) && controller.hasPlayerRegistered(bluePlayer)){
+            controller.newPublicGame(redPlayer, bluePlayer);
+            String str = "game created";
+            res = Response.ok(str).build();
+        }
+        else{
+            String str1 = "players not found, try again or create players";
+            res = Response.status(404).entity(str1).build();
+        }
+        return res;
+    }
+>>>>>>> d233cab6eb57db4f9010e3c880398a7610b4f342
 }

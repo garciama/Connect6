@@ -14,7 +14,8 @@ dependencies {
     compile 'org.glassfish.jersey.inject:jersey-hk2:2.28'
     compile 'javax.activation:activation:1.1.1'
     compile 'javax.xml:jaxb-api:2.1'
-
+    implementation 'com.google.code.gson:gson:2.8.5'
+    compile 'org.json:json:20171018'
 
     testImplementation 'junit:junit:4.12'
 
