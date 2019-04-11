@@ -1,5 +1,7 @@
 package Network.Main;
 
+import Network.ModelGateway;
+import core.controller.GameController;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -13,10 +15,15 @@ public class Main {
     public static final String URI = "http://0.0.0.0/";
 
     public static final String[] RESOURCES_PACKAGES = {"Network.Resources"};
+    public static GameController controller;
 
     public static void main(String [] args){
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         startServer();
     }
+
 
     //in here create new controller and set it
 
