@@ -38,7 +38,6 @@ public class MenuResource {
         if (!ModelGateway.getController().registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }
-
         String str = "user created successfully";
         Response res = Response.ok(str).build();
         return res;
@@ -73,7 +72,7 @@ public class MenuResource {
         String games = ModelGateway.getController().seeInProgressGames();
         return games;
     }
-    
+
 
     @GET
     @Path("completed")
