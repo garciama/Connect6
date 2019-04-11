@@ -81,12 +81,12 @@ public class MenuResource {
     //TODO: implement this correctly
     @PUT
     @Path("createGame")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response createGame(JSONArray players) {
-        JSONObject obj = players.getJSONObject(0);
+    public Response createGame(String players) {
+        JSONObject obj = new JSONObject(players);
         String redPlayer = obj.getString("red");
-        System.out.println(redPlayer);
-        String bluePlayer = "";
+        String bluePlayer = obj.getString("blue");
         Response res;
         if(controller.hasPlayerRegistered(redPlayer) && controller.hasPlayerRegistered(bluePlayer)){
             controller.newPublicGame(redPlayer, bluePlayer);
