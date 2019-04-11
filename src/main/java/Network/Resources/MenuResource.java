@@ -1,5 +1,7 @@
 package Network.Resources;
 
+import Network.ModelGateway;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import core.controller.GameController;
 import com.google.gson.Gson;
 import org.json.JSONObject;
@@ -14,60 +16,32 @@ import javax.ws.rs.core.Response;
 @Path("menu")
 public class MenuResource {
 
-    //dont store this anyway
-    GameController controller;
-
     public MenuResource() {
-        controller = new GameController();
-        controller.registerNewPlayer("walker");
-        controller.registerNewPlayer("sam");
-        controller.newPublicGame("walker", "sam");
+        ModelGateway.getController().registerNewPlayer("walker");
+        ModelGateway.getController().registerNewPlayer("sam");
+        ModelGateway.getController().newPublicGame("walker", "sam");
     }
 
     @GET
-    @Path("menu")
     @Produces(MediaType.TEXT_PLAIN)
     public String getMenu() {
         return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
                 " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
     }
 
-    @GET
-    @Path("inProgress")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getGamesInProgress() {
-        String games = controller.seeInProgressGames();
-        return games;
-    }
-
-
     @PUT
-    @Path("menu/createUser")
+    @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
         System.out.println(username);
 
-        if (!controller.registerNewPlayer(username)){
+        if (!ModelGateway.getController().registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }
 
         String str = "user created successfully";
         Response res = Response.ok(str).build();
         return res;
-    }
-
-    @GET
-    @Path("menu/completed")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getFinishedGames() {
-        return controller.seeFinishedGames();
-    }
-
-    @GET
-    @Path("menu/leaderboard")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getLeaderboard() {
-        return controller.getLeaderBoard();
     }
 
     @PUT
@@ -79,8 +53,9 @@ public class MenuResource {
         String redPlayer = obj.getString("red");
         String bluePlayer = obj.getString("blue");
         Response res;
-        if(controller.hasPlayerRegistered(redPlayer) && controller.hasPlayerRegistered(bluePlayer)){
-            controller.newPublicGame(redPlayer, bluePlayer);
+
+        if(ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
+            ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
             String str = "game created";
             res = Response.ok(str).build();
         }
@@ -90,6 +65,31 @@ public class MenuResource {
         }
         return res;
     }
+
+    @GET
+    @Path("inProgress")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getGamesInProgress() {
+        String games = ModelGateway.getController().seeInProgressGames();
+        return games;
+    }
+    
+
+    @GET
+    @Path("completed")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getFinishedGames() {
+        return ModelGateway.getController().seeFinishedGames();
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getLeaderboard() {
+        return ModelGateway.getController().getLeaderBoard();
+    }
+
+
 
 
 }
