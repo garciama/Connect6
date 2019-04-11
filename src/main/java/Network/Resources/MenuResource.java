@@ -1,21 +1,13 @@
 package Network.Resources;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import core.controller.GameController;
-
-
-import javax.inject.Singleton;
 import com.google.gson.Gson;
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Singleton
 @Path("game")
 public class MenuResource {
 
@@ -34,15 +26,6 @@ public class MenuResource {
     public String getMenu() {
         return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
                 " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
-    }
-
-    @GET
-    @Path("board/{game_id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getBoard(@PathParam("game_id") String gameID) {
-        int id = Integer.parseInt(gameID);
-        String board = controller.reportBoard(id);
-        return board;
     }
 
     @GET
@@ -98,4 +81,6 @@ public class MenuResource {
         }
         return res;
     }
+
+
 }
