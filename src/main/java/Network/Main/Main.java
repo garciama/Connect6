@@ -18,6 +18,8 @@ public class Main {
         startServer();
     }
 
+    //in here create new controller and set it
+
 
     public static HttpServer startServer() {
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();

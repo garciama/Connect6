@@ -15,16 +15,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-<<<<<<< HEAD
 //Think of a resource as a thing your game cares about.
 //assignment 5
 //create an arraylist of toDo objects > boolean done? String content of todo.
-=======
 @Singleton
->>>>>>> d233cab6eb57db4f9010e3c880398a7610b4f342
 @Path("game")
 public class MenuResource {
 
+    //dont store this anyway
     GameController controller;
 
     public MenuResource() {
@@ -43,52 +41,38 @@ public class MenuResource {
     }
 
     @GET
-    @Path("board/{game_id}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getBoard(@PathParam("game_id") String gameID) {
-        int id = Integer.parseInt(gameID);
-        String board = controller.reportBoard(id);
-        return board;
-    }
-
-    @GET
-    @Path("inProgress")
+    @Path("menu/inProgress")
     @Produces(MediaType.TEXT_PLAIN)
     public String getGamesInProgress() {
         String games = controller.seeInProgressGames();
         return games;
     }
 
+
     @PUT
-    @Path("createUser")
+    @Path("menu/createUser")
     @Produces(MediaType.TEXT_PLAIN)
-<<<<<<< HEAD
-    public String post() {
-
-
-        //controller.registerNewPlayer();
-
-        return "I received your POST";
-
-    }
-=======
     public Response createUser(String username) {
         System.out.println(username);
-        controller.registerNewPlayer(username);
+
+        if (!controller.registerNewPlayer(username)){
+            throw new WebApplicationException(400);
+        }
+
         String str = "user created successfully";
         Response res = Response.ok(str).build();
         return res;
     }
 
     @GET
-    @Path("completed")
+    @Path("menu/completed")
     @Produces(MediaType.TEXT_PLAIN)
     public String getFinishedGames() {
         return controller.seeFinishedGames();
     }
 
     @GET
-    @Path("leaderboard")
+    @Path("menu/leaderboard")
     @Produces(MediaType.TEXT_PLAIN)
     public String getLeaderboard() {
         return controller.getLeaderBoard();
@@ -114,5 +98,4 @@ public class MenuResource {
         }
         return res;
     }
->>>>>>> d233cab6eb57db4f9010e3c880398a7610b4f342
 }
