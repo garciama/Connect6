@@ -1,6 +1,7 @@
 package Network;
 
 import Network.Main.Main;
+import com.google.gson.Gson;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -11,6 +12,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
+import java.util.Map;
 
 public class menuResourceTest {
 
@@ -35,7 +38,7 @@ public class menuResourceTest {
     @Test
     public void testGetGameMenu() {
         String response = client.target(HOST_URI)
-                .path("game/menu")
+                .path("menu")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
         String menu = "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
@@ -47,7 +50,7 @@ public class menuResourceTest {
     @Test
     public void testInProgress() {
         String response = client.target(HOST_URI)
-                .path("game/inProgress")
+                .path("menu/inProgress")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
         String menu = "1 walker sam\n";
@@ -58,7 +61,7 @@ public class menuResourceTest {
     @Test
     public void testFinished() {
         String response = client.target(HOST_URI)
-                .path("game/completed")
+                .path("menu/completed")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
         String menu = "";
@@ -69,10 +72,15 @@ public class menuResourceTest {
     @Test
     public void testLeaderboard() {
         String response = client.target(HOST_URI)
-                .path("game/leaderboard")
+                .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-        String menu = "1 walker sam\n";
+        String menu = "-----------------------------------------------------------\n" +
+                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
+                "-----------------------------------------------------------\n" +
+                "|    sam     |     0     |    0     |    0     |    0     |\n" +
+                "|   walker   |     0     |    0     |    0     |    0     |\n" +
+                "-----------------------------------------------------------";
 
         Assert.assertEquals(menu, response);
     }
@@ -83,8 +91,8 @@ public class menuResourceTest {
         Entity data = Entity.entity("newUser", MediaType.TEXT_PLAIN);
 
         String response = client.target(HOST_URI)
-                .path("game/createUser")
-                .request(MediaType.APPLICATION_JSON)
+                .path("menu/createUser")
+                .request(MediaType.TEXT_PLAIN)
                 .put(data, String.class);
 
         Assert.assertEquals("user created successfully", response);
@@ -92,7 +100,15 @@ public class menuResourceTest {
 
     @Test
     public void testCreateGame() {
+        // The data to send with the PUT
+        Entity data = Entity.entity("{\"red\":walker,\"blue\":\"sam\"}", MediaType.APPLICATION_JSON);
 
+        String response = client.target(HOST_URI)
+                .path("menu/createGame")
+                .request(MediaType.TEXT_PLAIN)
+                .put(data, String.class);
+
+        Assert.assertEquals("game created", response);
     }
 
 }

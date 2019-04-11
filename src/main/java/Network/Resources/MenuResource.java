@@ -25,7 +25,6 @@ public class MenuResource {
     }
 
     @GET
-    @Path("menu")
     @Produces(MediaType.TEXT_PLAIN)
     public String getMenu() {
         return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
@@ -42,29 +41,26 @@ public class MenuResource {
 
 
     @PUT
-    @Path("menu/createUser")
+    @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
-        System.out.println(username);
-
         if (!controller.registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }
-
         String str = "user created successfully";
         Response res = Response.ok(str).build();
         return res;
     }
 
     @GET
-    @Path("menu/completed")
+    @Path("completed")
     @Produces(MediaType.TEXT_PLAIN)
     public String getFinishedGames() {
         return controller.seeFinishedGames();
     }
 
     @GET
-    @Path("menu/leaderboard")
+    @Path("leaderboard")
     @Produces(MediaType.TEXT_PLAIN)
     public String getLeaderboard() {
         return controller.getLeaderBoard();
