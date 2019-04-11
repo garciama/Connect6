@@ -5,6 +5,9 @@ import core.controller.GameController;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+//Think of a resource as a thing your game cares about.
+//assignment 5
+//create an arraylist of toDo objects > boolean done? String content of todo.
 @Path("game")
 public class MenuResource {
 
@@ -44,14 +47,13 @@ public class MenuResource {
     }
 
     @POST
-    @Path("")
     @Produces(MediaType.TEXT_PLAIN)
     public String post() {
 
 
         //controller.registerNewPlayer();
 
-        return "User successfully created! Returning to menu...";
+        return "I received your POST";
 
     }
 }
