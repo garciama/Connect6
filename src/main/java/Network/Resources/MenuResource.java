@@ -1,18 +1,11 @@
 package Network.Resources;
 
 import Network.ModelGateway;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import core.controller.GameController;
-import com.google.gson.Gson;
 import org.json.JSONObject;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//Think of a resource as a thing your game cares about.
-//assignment 5
-//create an arraylist of toDo objects > boolean done? String content of todo.
 @Path("menu")
 public class MenuResource {
 
@@ -33,8 +26,6 @@ public class MenuResource {
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
-        System.out.println(username);
-
         if (!ModelGateway.getController().registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }

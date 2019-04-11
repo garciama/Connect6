@@ -1,7 +1,5 @@
 package Network;
 
-import Network.Main.Main;
-import com.google.gson.Gson;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -12,8 +10,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
-import java.util.HashMap;
-import java.util.Map;
 
 public class menuResourceTest {
 

@@ -3,6 +3,7 @@ package Network;
 import core.controller.GameController;
 
 public class ModelGateway {
+
     private static GameController controller;
 
     public static void setController(GameController c){
@@ -12,6 +13,5 @@ public class ModelGateway {
     public static GameController getController(){
         return controller;
     }
-
 
 }
