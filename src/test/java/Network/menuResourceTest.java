@@ -55,5 +55,44 @@ public class menuResourceTest {
         Assert.assertEquals(menu, response);
     }
 
+    @Test
+    public void testFinished() {
+        String response = client.target(HOST_URI)
+                .path("game/completed")
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .get(String.class); //Whatever response we get store in a string
+        String menu = "";
+
+        Assert.assertEquals(menu, response);
+    }
+
+    @Test
+    public void testLeaderboard() {
+        String response = client.target(HOST_URI)
+                .path("game/leaderboard")
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .get(String.class); //Whatever response we get store in a string
+        String menu = "1 walker sam\n";
+
+        Assert.assertEquals(menu, response);
+    }
+
+    @Test
+    public void testCreateUser() {
+        // The data to send with the PUT
+        Entity data = Entity.entity("newUser", MediaType.TEXT_PLAIN);
+
+        String response = client.target(HOST_URI)
+                .path("game/createUser")
+                .request(MediaType.APPLICATION_JSON)
+                .put(data, String.class);
+
+        Assert.assertEquals("user created successfully", response);
+    }
+
+    @Test
+    public void testCreateGame() {
+
+    }
 
 }

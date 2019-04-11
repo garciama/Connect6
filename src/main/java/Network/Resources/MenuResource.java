@@ -1,14 +1,7 @@
 package Network.Resources;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import core.controller.GameController;
-
-
-import javax.inject.Singleton;
 import com.google.gson.Gson;
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -18,8 +11,7 @@ import javax.ws.rs.core.Response;
 //Think of a resource as a thing your game cares about.
 //assignment 5
 //create an arraylist of toDo objects > boolean done? String content of todo.
-@Singleton
-@Path("game")
+@Path("menu")
 public class MenuResource {
 
     //dont store this anyway
@@ -41,7 +33,7 @@ public class MenuResource {
     }
 
     @GET
-    @Path("menu/inProgress")
+    @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
     public String getGamesInProgress() {
         String games = controller.seeInProgressGames();
@@ -98,4 +90,6 @@ public class MenuResource {
         }
         return res;
     }
+
+
 }
