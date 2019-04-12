@@ -38,4 +38,32 @@ public class GameResource {
     }
 
 
+    @GET
+    @Path("joinGame{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String joinGame(@PathParam("id") String idNumber){
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+
+        if( !ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        return "Game Joined!";
+
+    }
+
+    @PUT
+    @Path("makeMove{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String makeMove(@PathParam("id") String idNumber, String xAndY){
+
+        return "";
+    }
+
 }

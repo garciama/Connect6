@@ -306,4 +306,5 @@ public class GameManager {
      */
     public String playerNameInGameBlue(int id) { return allGameMap.get(id).getBluePlayerName(); }
 
+    public boolean checkGameExists(int id){ return (allGameMap.containsKey(id)); }
 }
