@@ -1,8 +1,6 @@
 package Network.Resources;
 
 import Network.ModelGateway;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -21,7 +19,6 @@ public class GameResource {
         String redPlayer = obj.getString("red");
         String bluePlayer = obj.getString("blue");
         Response res;
-
         if(ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
             ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
             String str = "game created";
@@ -34,28 +31,23 @@ public class GameResource {
         return res;
     }
 
-
     @GET
-    @Path("joinGame{id}")
+    @Path("joinGame/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public String joinGame(@PathParam("id") String idNumber){
         int id = -1;
-
         try {
             id = Integer.parseInt(idNumber);
         } catch( NumberFormatException e ) {
             throw new WebApplicationException(404);
         }
-
         if( !ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
-
-
         return "Game Joined!";
     }
 
     @PUT
-    @Path("makeMove{id}")
+    @Path("makeMove/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     /*data will contain an x coordinate, y coordinate and name.
@@ -63,63 +55,54 @@ public class GameResource {
       For some reason doesn't work with curl? Works fine with Postman
       Could maybe put username in URL??
      */
-    public String makeMove(@PathParam("id") String idNumber, String data){
+    public Response makeMove(@PathParam("id") String idNumber, String data){
         int id = -1;
-
+        Response res;
         try {
             id = Integer.parseInt(idNumber);
         } catch( NumberFormatException e ) {
             throw new WebApplicationException(404);
         }
-
         if (!ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
-        
-
         JSONObject obj = new JSONObject(data);
         String xStr = obj.getString("x");
         String yStr = obj.getString("y");
         String userName = obj.getString("name");
-
         int x = -1;
         int y = -1;
-
         try {
             x = Integer.parseInt(xStr);
             y = Integer.parseInt(yStr);
         } catch (NumberFormatException e){
             throw new WebApplicationException(400);
         }
-
         if (x < 0 || x > 18 || y < 0 || y > 18)
             throw new WebApplicationException(400);
-
         if (!ModelGateway.getController().hasPlayerRegistered(userName))
             throw new WebApplicationException(400);
-
-
-        if (!ModelGateway.getController().makeMove(id, x, y, userName))
-            return "Invalid Move";
-
+        if (!ModelGateway.getController().makeMove(id, x, y, userName)) {
+            String invalid = "Invalid Move";
+            res = Response.status(400).entity(invalid).build();
+        }else{
+            String valid = "move made";
+            res = Response.ok(valid).build();
+        }
         //System.out.println(ModelGateway.getController().reportBoard(id));
-
-        return "";
+        return res;
     }
 
     @GET
-    @Path("getBoard{id}")
+    @Path("getBoard/{id}")
     public String getGameBoard(@PathParam("id") String idNumber){
         int id = -1;
-
         try {
             id = Integer.parseInt(idNumber);
         } catch( NumberFormatException e ) {
             throw new WebApplicationException(404);
         }
-
         if (!ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
-
         return ModelGateway.getController().reportBoard(id);
     }
 
