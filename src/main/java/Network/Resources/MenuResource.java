@@ -21,13 +21,14 @@ public class MenuResource {
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
-        System.out.println(username);
 
+        Response res;
         if (!ModelGateway.getController().registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }
+
         String str = "user created successfully";
-        Response res = Response.ok(str).build();
+        res = Response.ok(str).build();
         return res;
     }
 
