@@ -3,14 +3,24 @@ package Network.Resources;
 import Network.ModelGateway;
 import org.json.JSONObject;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Path("menu/game")
 public class GameResource {
+    @PUT
+    @Path("createUser")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createUser(String username) {
+        if (!ModelGateway.getController().registerNewPlayer(username)){
+            throw new WebApplicationException(400);
+        }
+        String str = "user created successfully";
+        Response res = Response.ok(str).build();
+        return res;
+    }
+
     @PUT
     @Path("createGame")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,4 +42,5 @@ public class GameResource {
         }
         return res;
     }
+
 }

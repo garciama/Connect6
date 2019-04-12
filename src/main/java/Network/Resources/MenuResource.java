@@ -22,20 +22,6 @@ public class MenuResource {
                 " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
     }
 
-    @PUT
-    @Path("createUser")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response createUser(String username) {
-        if (!ModelGateway.getController().registerNewPlayer(username)){
-            throw new WebApplicationException(400);
-        }
-        String str = "user created successfully";
-        Response res = Response.ok(str).build();
-        return res;
-    }
-
-
-
     @GET
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
