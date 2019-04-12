@@ -1,18 +1,37 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+<<<<<<< HEAD
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.google.gson.Gson;
+=======
+>>>>>>> 23c2c026d2830c3e6c494cf4bfd3d1269acacc33
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+<<<<<<< HEAD
 
 @Path("game")
 public class GameResource {
 
+=======
+@Path("menu/game")
+public class GameResource {
+    @PUT
+    @Path("createUser")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createUser(String username) {
+        if (!ModelGateway.getController().registerNewPlayer(username)){
+            throw new WebApplicationException(400);
+        }
+        String str = "user created successfully";
+        Response res = Response.ok(str).build();
+        return res;
+    }
+>>>>>>> 23c2c026d2830c3e6c494cf4bfd3d1269acacc33
 
     @PUT
     @Path("createGame")
@@ -33,6 +52,7 @@ public class GameResource {
             String str1 = "players not found, try again or create players";
             res = Response.status(404).entity(str1).build();
         }
+<<<<<<< HEAD
 
         return res;
     }
@@ -66,4 +86,9 @@ public class GameResource {
         return "";
     }
 
+=======
+        return res;
+    }
+
+>>>>>>> 23c2c026d2830c3e6c494cf4bfd3d1269acacc33
 }
