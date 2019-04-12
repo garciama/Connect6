@@ -6,10 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 23c2c026d2830c3e6c494cf4bfd3d1269acacc33
 @Path("menu")
 public class MenuResource {
 
@@ -20,7 +17,6 @@ public class MenuResource {
                 " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
     }
 
-<<<<<<< HEAD
     @PUT
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
@@ -36,8 +32,6 @@ public class MenuResource {
     }
 
 
-=======
->>>>>>> 23c2c026d2830c3e6c494cf4bfd3d1269acacc33
     @GET
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
