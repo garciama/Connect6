@@ -53,7 +53,7 @@ public class menuResourceTest {
                 .path("menu/inProgress")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-        String menu = "1 walker sam\n";
+        String menu = "1 Sam Nick\n";
 
         Assert.assertEquals(menu, response);
     }
@@ -104,11 +104,15 @@ public class menuResourceTest {
         Entity data = Entity.entity("{\"red\":walker,\"blue\":\"sam\"}", MediaType.APPLICATION_JSON);
 
         String response = client.target(HOST_URI)
-                .path("menu/createGame")
+                .path("game/createGame")
                 .request(MediaType.TEXT_PLAIN)
                 .put(data, String.class);
 
         Assert.assertEquals("game created", response);
+
+        //System.out.println(ModelGateway.getController().seeInProgressGames());
+
+
     }
 
 }
