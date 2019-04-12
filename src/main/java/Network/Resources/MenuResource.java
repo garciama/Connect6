@@ -9,12 +9,6 @@ import javax.ws.rs.core.Response;
 @Path("menu")
 public class MenuResource {
 
-    public MenuResource() {
-        ModelGateway.getController().registerNewPlayer("walker");
-        ModelGateway.getController().registerNewPlayer("sam");
-        ModelGateway.getController().newPublicGame("walker", "sam");
-    }
-
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getMenu() {
@@ -43,7 +37,6 @@ public class MenuResource {
         String redPlayer = obj.getString("red");
         String bluePlayer = obj.getString("blue");
         Response res;
-
         if(ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
             ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
             String str = "game created";
