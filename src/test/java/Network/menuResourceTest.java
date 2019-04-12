@@ -18,14 +18,10 @@ public class menuResourceTest {
     private static final String HOST_URI = "http://localhost:6969/";
     private static HttpServer server;
     private static Client client;
-    private static GameController controller;
 
     // This starts the server and creates the client object once before all tests in this class
     @BeforeClass  //run before the class is even created.
     public static void startServer() {
-        controller = new GameController();
-        ModelGateway.setController(controller);
-
         server = Network.Main.Main.startServer();
         client = ClientBuilder.newClient();
     }

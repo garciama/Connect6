@@ -58,9 +58,69 @@ public class GameResource {
     @Path("makeMove{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String makeMove(@PathParam("id") String idNumber, String xAndY){
+    /*data will contain an x coordinate, y coordinate and name.
+      Json eg. "{"x": "5", "y": "7", "name": "Sam"}"
+      For some reason doesn't work with curl? Works fine with Postman
+      Could maybe put username in URL??
+     */
+    public String makeMove(@PathParam("id") String idNumber, String data){
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+        
+
+        JSONObject obj = new JSONObject(data);
+        String xStr = obj.getString("x");
+        String yStr = obj.getString("y");
+        String userName = obj.getString("name");
+
+        int x = -1;
+        int y = -1;
+
+        try {
+            x = Integer.parseInt(xStr);
+            y = Integer.parseInt(yStr);
+        } catch (NumberFormatException e){
+            throw new WebApplicationException(400);
+        }
+
+        if (x < 0 || x > 18 || y < 0 || y > 18)
+            throw new WebApplicationException(400);
+
+        if (!ModelGateway.getController().hasPlayerRegistered(userName))
+            throw new WebApplicationException(400);
+
+
+        if (!ModelGateway.getController().makeMove(id, x, y, userName))
+            return "Invalid Move";
+
+        //System.out.println(ModelGateway.getController().reportBoard(id));
 
         return "";
+    }
+
+    @GET
+    @Path("getBoard{id}")
+    public String getGameBoard(@PathParam("id") String idNumber){
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        return ModelGateway.getController().reportBoard(id);
     }
 
 }
