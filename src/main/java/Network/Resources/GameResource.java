@@ -1,29 +1,20 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("menu/game")
+
+@Path("game")
 public class GameResource {
-    @PUT
-    @Path("createUser")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response createUser(String username) {
-        if (!ModelGateway.getController().registerNewPlayer(username)){
-            throw new WebApplicationException(400);
-        }
-        String str = "user created successfully";
-        Response res = Response.ok(str).build();
-        return res;
-    }
 
     @PUT
     @Path("createGame")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response createGame(String players) {
         JSONObject obj = new JSONObject(players);
@@ -41,6 +32,35 @@ public class GameResource {
             res = Response.status(404).entity(str1).build();
         }
         return res;
+    }
+
+
+    @GET
+    @Path("joinGame{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String joinGame(@PathParam("id") String idNumber){
+        int id = -1;
+
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+
+        if( !ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+
+        return "Game Joined!";
+    }
+
+    @PUT
+    @Path("makeMove{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String makeMove(@PathParam("id") String idNumber, String xAndY){
+
+        return "";
     }
 
 }

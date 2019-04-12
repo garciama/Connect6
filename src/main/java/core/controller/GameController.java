@@ -58,4 +58,6 @@ public class GameController {
 
     public String userCurrentTurn( int id){ return gameManager.getUserCurrentTurn(id); }
 
+    public boolean checkIfGameExists(int id){ return gameManager.checkGameExists(id); }
+
 }

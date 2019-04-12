@@ -18,17 +18,14 @@ public class Main {
     public static GameController controller;
 
     public static void main(String [] args){
-        controller = new GameController();
-        ModelGateway.setController(controller);
-
         startServer();
     }
 
 
-    //in here create new controller and set it
-
-
     public static HttpServer startServer() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();
         final ResourceConfig config = new ResourceConfig().packages(RESOURCES_PACKAGES);
         return GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
