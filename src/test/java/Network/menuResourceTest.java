@@ -13,6 +13,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
+//Maybe restart server for each test.
 public class menuResourceTest {
 
     private static final String HOST_URI = "http://localhost:6969/";
