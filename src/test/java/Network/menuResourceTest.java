@@ -1,5 +1,6 @@
 package Network;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import core.controller.GameController;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.AfterClass;
@@ -19,6 +20,7 @@ public class menuResourceTest {
     private static final String HOST_URI = "http://localhost:6969/";
     private static HttpServer server;
     private static Client client;
+    private static GameController controller;
 
     // This starts the server and creates the client object once before all tests in this class
     @BeforeClass  //run before the class is even created.
@@ -48,6 +50,9 @@ public class menuResourceTest {
 
     @Test
     public void testInProgress() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         ModelGateway.getController().registerNewPlayer("Sam");
         ModelGateway.getController().registerNewPlayer("Nick");
         ModelGateway.getController().newPublicGame("Sam", "Nick");
@@ -59,34 +64,53 @@ public class menuResourceTest {
         String menu = "1 Sam Nick\n";
 
         Assert.assertEquals(menu, response);
+
+        ModelGateway.getController().registerNewPlayer("Michael");
+        ModelGateway.getController().newPublicGame("Michael", "Sam");
+
+         response = client.target(HOST_URI)
+                .path("menu/inProgress")
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .get(String.class); //Whatever response we get store in a string
+         menu = "1 Sam Nick\n2 Michael Sam\n";
+
+        Assert.assertEquals(menu, response);
     }
 
     @Test
     public void testFinished() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         ModelGateway.getController().registerNewPlayer("Michael");
         ModelGateway.getController().registerNewPlayer("San");
         ModelGateway.getController().newPublicGame("Michael", "San");
-        ModelGateway.getController().makeMove(2, 1,1,"Michael");
-        ModelGateway.getController().makeMove(2, 2,2,"Michael");
-        ModelGateway.getController().makeMove(2, 3,3,"Michael");
-        ModelGateway.getController().makeMove(2, 4,4,"Michael");
-        ModelGateway.getController().makeMove(2, 5,5,"Michael");
-        ModelGateway.getController().makeMove(2, 6,6,"Michael");
+        ModelGateway.getController().makeMove(1, 1,1,"Michael");
+        ModelGateway.getController().makeMove(1, 2,2,"Michael");
+        ModelGateway.getController().makeMove(1, 3,3,"Michael");
+        ModelGateway.getController().makeMove(1, 4,4,"Michael");
+        ModelGateway.getController().makeMove(1, 5,5,"Michael");
+        ModelGateway.getController().makeMove(1, 6,6,"Michael");
 
 
         String response = client.target(HOST_URI)
                 .path("menu/completed")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-        System.out.println(response);
 
-        String expected = "2 Michael San\n";
+        String expected = "1 Michael San\n";
 
         Assert.assertEquals(expected, response);
     }
 
     @Test
     public void testLeaderboard() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
+        ModelGateway.getController().registerNewPlayer("Michael");
+        ModelGateway.getController().registerNewPlayer("San");
+
         String response = client.target(HOST_URI)
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
@@ -94,21 +118,42 @@ public class menuResourceTest {
         String menu = "-----------------------------------------------------------\n" +
                 "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
                 "-----------------------------------------------------------\n" +
+                "|  Michael   |     0     |    0     |    0     |    0     |\n" +
+                "|    San     |     0     |    0     |    0     |    0     |\n" +
+                "-----------------------------------------------------------";
+
+        Assert.assertEquals(menu, response);
+
+        ModelGateway.getController().newPublicGame("Michael", "San");
+        ModelGateway.getController().makeMove(1, 1,1,"Michael");
+        ModelGateway.getController().makeMove(1, 2,2,"Michael");
+        ModelGateway.getController().makeMove(1, 3,3,"Michael");
+        ModelGateway.getController().makeMove(1, 4,4,"Michael");
+        ModelGateway.getController().makeMove(1, 5,5,"Michael");
+        ModelGateway.getController().makeMove(1, 6,6,"Michael");
+
+         response = client.target(HOST_URI)
+                .path("menu/leaderboard")
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .get(String.class); //Whatever response we get store in a string
+         menu = "-----------------------------------------------------------\n" +
+                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
+                "-----------------------------------------------------------\n" +
                 "|  Michael   |     3     |    1     |    0     |    0     |\n" +
-                "|    Sam     |     0     |    0     |    0     |    0     |\n" +
-                "|  testing   |     0     |    0     |    0     |    0     |\n" +
-                "|  newUser   |     0     |    0     |    0     |    0     |\n" +
-                "|    Nick    |     0     |    0     |    0     |    0     |\n" +
                 "|    San     |     0     |    0     |    1     |    0     |\n" +
                 "-----------------------------------------------------------";
 
         Assert.assertEquals(menu, response);
+
     }
 
     @Test
     public void testCreateUser() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         // The data to send with the PUT
-        Entity data = Entity.entity("testing", MediaType.TEXT_PLAIN);
+        Entity data = Entity.entity("Testing", MediaType.TEXT_PLAIN);
 
         String response = client.target(HOST_URI)
                 .path("menu/createUser")
@@ -116,20 +161,23 @@ public class menuResourceTest {
                 .put(data, String.class);
 
         Assert.assertEquals("user created successfully", response);
-        Assert.assertTrue(ModelGateway.getController().hasPlayerRegistered("newUser"));
+        Assert.assertTrue(ModelGateway.getController().hasPlayerRegistered("Testing"));
     }
 
     @Test(expected = WebApplicationException.class)
     public void testCreateUser2(){
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
         Entity data = Entity.entity("newUser", MediaType.TEXT_PLAIN);
 
-        String response = client.target(HOST_URI)
+            client.target(HOST_URI)
                 .path("menu/createUser")
                 .request(MediaType.TEXT_PLAIN)
                 .put(data, String.class);
 
         //Try to register a user with the same name
-         response = client.target(HOST_URI)
+            client.target(HOST_URI)
                 .path("menu/createUser")
                 .request(MediaType.TEXT_PLAIN)
                 .put(data, String.class);
@@ -139,23 +187,5 @@ public class menuResourceTest {
     }
 
 
-//    @Test
-//    public void testCreateGame() {
-//        controller.registerNewPlayer("walker");
-//        controller.registerNewPlayer("sam");
-//        // The data to send with the PUT
-//        Entity data = Entity.entity("{\"red\":\"walker\",\"blue\":\"sam\"}", MediaType.APPLICATION_JSON);
-//
-//        String response = client.target(HOST_URI)
-//                .path("game/createGame")
-//                .request(MediaType.TEXT_PLAIN)
-//                .put(data, String.class);
-//
-//        Assert.assertEquals("game created", response);
-//
-//        //System.out.println(ModelGateway.getController().seeInProgressGames());
-//
-//
-//    }
 
 }

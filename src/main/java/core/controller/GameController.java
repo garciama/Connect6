@@ -1,6 +1,8 @@
 package core.controller;
 
 import core.game.GameManager;
+import core.user.Move;
+import java.util.List;
 
 public class GameController {
 
@@ -59,5 +61,8 @@ public class GameController {
     public String userCurrentTurn( int id){ return gameManager.getUserCurrentTurn(id); }
 
     public boolean checkIfGameExists(int id){ return gameManager.checkGameExists(id); }
+
+    public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
+
 
 }

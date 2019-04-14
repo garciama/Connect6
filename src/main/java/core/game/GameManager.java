@@ -1,4 +1,5 @@
 package core.game;
+import core.user.Move;
 import core.user.User;
 
 import java.util.*;
@@ -307,4 +308,6 @@ public class GameManager {
     public String playerNameInGameBlue(int id) { return allGameMap.get(id).getBluePlayerName(); }
 
     public boolean checkGameExists(int id){ return (allGameMap.containsKey(id)); }
+
+    public List<Move> getMovesInGame(int id) { return allGameMap.get(id).getMoves(); }
 }

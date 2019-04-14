@@ -3,6 +3,7 @@ import core.Color;
 import core.user.User;
 import core.user.Move;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -127,5 +128,7 @@ public class Game {
     public String getBluePlayerName() { return bluePlayer.getName(); }
 
     public boolean isPublic() { return isPublic; }
+
+    public List<Move> getMoves(){ return movesInGame; }
 
 }
