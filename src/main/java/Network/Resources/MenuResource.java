@@ -21,27 +21,22 @@ public class MenuResource {
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
-
         Response res;
         if (!ModelGateway.getController().registerNewPlayer(username)){
             throw new WebApplicationException(400);
         }
-
         String str = "user created successfully";
         res = Response.ok(str).build();
         return res;
     }
 
-
     @GET
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
     public String getGamesInProgress() {
-
         String games = ModelGateway.getController().seeInProgressGames();
         return games;
     }
-
 
     @GET
     @Path("completed")
@@ -56,7 +51,5 @@ public class MenuResource {
     public String getLeaderboard() {
         return ModelGateway.getController().getLeaderBoard();
     }
-
-
 
 }
