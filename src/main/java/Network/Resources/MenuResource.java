@@ -1,7 +1,6 @@
 package Network.Resources;
 
 import Network.ModelGateway;
-import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
