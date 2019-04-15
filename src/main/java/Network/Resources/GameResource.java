@@ -53,6 +53,14 @@ public class GameResource {
             return res;
         }
 
+        if (!ModelGateway.getController().checkForFinishedGame(id)){
+            response = "Game " + id + " is already finsihed.";
+            res = Response.status(400).entity(response).build();
+            return res;
+        }
+
+        
+
         response = "Game " + id + " joined!";
         res = Response.ok(response).build();
         return res;
