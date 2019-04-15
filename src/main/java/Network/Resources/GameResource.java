@@ -65,8 +65,6 @@ public class GameResource {
     @Produces(MediaType.TEXT_PLAIN)
     /*data will contain an x coordinate, y coordinate and name.
       Json eg. "{"x": "5", "y": "7", "name": "Sam"}"
-      For some reason doesn't work with curl? Works fine with Postman
-      Could maybe put username in URL??
      */
     public Response makeMove(@PathParam("id") String idNumber, String data){
         int id = -1;

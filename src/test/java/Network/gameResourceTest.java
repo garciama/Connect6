@@ -19,7 +19,6 @@ public class gameResourceTest {
     private static Client client;
     private static GameController controller;
 
-
     // This starts the server and creates the client object once before all tests in this class
     @BeforeClass  //run before the class is even created.
     public static void startServer() {
@@ -33,7 +32,6 @@ public class gameResourceTest {
         if( client != null ) client.close();
         if( server != null ) server.shutdown();
     }
-
 
     @Test
     public void testCreateGame() {
@@ -71,7 +69,7 @@ public class gameResourceTest {
         after = ModelGateway.getController().seeInProgressGames();
         Assert.assertEquals("1 Walker Sam\n2 Walker Nick\n", after);
 
-        }
+    }
 
 
     @Test(expected = WebApplicationException.class)
@@ -283,9 +281,5 @@ public class gameResourceTest {
 
 
     }
-
-
-
-
 
 }
