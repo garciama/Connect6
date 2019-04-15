@@ -5,7 +5,6 @@ import core.controller.GameController;
 import core.user.Move;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.*;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

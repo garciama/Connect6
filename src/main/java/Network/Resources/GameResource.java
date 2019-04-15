@@ -2,7 +2,6 @@ package Network.Resources;
 
 import Network.ModelGateway;
 import org.json.JSONObject;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -63,9 +62,8 @@ public class GameResource {
     @Path("makeMove/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    /*data will contain an x coordinate, y coordinate and name.
-      Json eg. "{"x": "5", "y": "7", "name": "Sam"}"
-     */
+    /* data will contain an x coordinate, y coordinate and name.
+      Json eg '{"x": "5", "y": "7", "name": "Sam"}' */
     public Response makeMove(@PathParam("id") String idNumber, String data){
         int id = -1;
         Response res;
