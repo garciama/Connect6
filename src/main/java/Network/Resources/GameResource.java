@@ -89,6 +89,12 @@ public class GameResource {
         String yStr = obj.getString("y");
         String userName = obj.getString("name");
 
+        if (!ModelGateway.getController().userCurrentTurn(id).equalsIgnoreCase(userName)){
+            response = "it is not your turn";
+            res = Response.status(403).entity(response).build();
+            return res;
+        }
+
         int x = -1;
         int y = -1;
 
