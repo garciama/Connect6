@@ -1,5 +1,6 @@
-package Network;
+package Network.Resources;
 
+import Network.ModelGateway;
 import core.controller.GameController;
 import core.user.Move;
 import org.glassfish.grizzly.http.server.HttpServer;
