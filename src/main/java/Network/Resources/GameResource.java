@@ -68,7 +68,6 @@ public class GameResource {
             res = Response.status(400).entity(response).build();
             return res;
         }
-<<<<<<< HEAD
         //Now we now the game exists and is in progress.
 
 //        String redName;
@@ -97,8 +96,6 @@ public class GameResource {
             res = Response.status(403).entity(response).build();
             return res;
         }
-=======
->>>>>>> c08aba9cae5e2d56ceeb17933a74cc42ba554fe8
 
         response = "Game " + id + " joined!";
         res = Response.ok(response).build();
@@ -197,12 +194,14 @@ public class GameResource {
         }
         if (!ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
+
         List<Move> moves = ModelGateway.getController().getMovesInGame(id);
         String [] ls = new String[moves.size()];
-        for(int i=0; i<moves.size(); i++){
+
+        for(int i = 0; i < moves.size(); i++){
             int x = moves.get(i).getX();
             int y = moves.get(i).getY();
-            String name = moves.get(i).getOwner();
+            String name = moves.get(i).getOwnerName();
             String res = x + "," + y + "," + name;
             ls[i] = res;
         }

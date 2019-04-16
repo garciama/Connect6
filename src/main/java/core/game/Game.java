@@ -13,7 +13,6 @@ public class Game {
     private Board board;
     User redPlayer, bluePlayer;
     public ArrayList<Move> movesInGame;
-    private User currentTurnUser;
 
     public Game(int id, User redName, User blueName, boolean isPublic) {
         movesInGame = new ArrayList<>();
@@ -89,14 +88,12 @@ public class Game {
 
         //If no moves have been made then it's red players turn.
         if (movesInGame.size() == 0) {
-            currentTurnUser = redPlayer;
             return redPlayer.getName();
         }
 
         /*Red player goes first, so if red player has put down a piece,
         then it is blue players turn. */
         if (movesInGame.size() == 1 || movesInGame.size() == 2) {
-            currentTurnUser = bluePlayer;
             return bluePlayer.getName();
         }
 
@@ -107,18 +104,12 @@ public class Game {
 
         //if last two pieces are same, then it is the other players turn
         if (lastPiece.getOwnerName().equalsIgnoreCase(secondToLastPiece.getOwnerName())) {
-            currentTurnUser = thirdToLastPiece.getOwner();
             return thirdToLastPiece.getOwnerName();
         }
 
         //if the last two pieces aren't the same that means that the first two pieces are the same
-        currentTurnUser = lastPiece.getOwner();
         return lastPiece.getOwnerName();
     }
-
-    public User getCurrentTurnUser(){ return  currentTurnUser; }
-
-    public void setCurrentTurnUser(User u){ currentTurnUser = u; }
 
     public boolean hasPutDownPiece(String userName) {
         /*If the game was left before the first turn was made, then pretend
