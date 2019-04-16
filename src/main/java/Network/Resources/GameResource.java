@@ -33,11 +33,14 @@ public class GameResource {
     @GET
     @Path("joinGame/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response joinGame(@PathParam("id") String idNumber){
+    public Response joinGame(@PathParam("id") String idNumber, String data){
         Response res;
         int id = -1;
 
         String response;
+
+        JSONObject obj = new JSONObject(data);
+        String userName = obj.getString("name");
 
         try {
             id = Integer.parseInt(idNumber);
@@ -54,12 +57,38 @@ public class GameResource {
         }
 
         if (!ModelGateway.getController().checkForFinishedGame(id)){
-            response = "Game " + id + " is already finsihed.";
+            response = "Game " + id + " is already finished.";
             res = Response.status(400).entity(response).build();
             return res;
         }
+        //Now we now the game exists and is in progress.
 
-        
+//        String redName;
+//        String blueName;
+
+        //Check to make sure the user joining the game is either the red or blue player in the game
+//        if (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName)) {
+//            redName = userName;
+//            blueName = ModelGateway.getController().getUserNameBlue(id);
+//        }
+//        else if (ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName)){
+//            blueName = userName;
+//            redName = ModelGateway.getController().getUserNameRed(id);
+//        }
+//        else{
+//            response = "You aren't part of this game.";
+//            res = Response.status(403).entity(response).build();
+//            return res;
+//        }
+
+        //If the username passed in isn't the username of the red player in the game or the blue player,
+        //throw a 403 forbidden.
+        if (!(ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
+            ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
+            response = "You aren't part of this game.";
+            res = Response.status(403).entity(response).build();
+            return res;
+        }
 
         response = "Game " + id + " joined!";
         res = Response.ok(response).build();
@@ -96,6 +125,14 @@ public class GameResource {
         String xStr = obj.getString("x");
         String yStr = obj.getString("y");
         String userName = obj.getString("name");
+
+        if (! (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
+            ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
+            response = "You aren't part of this game";
+            res = Response.status(403).entity(response).build();
+            return res;
+        }
+
 
         if (!ModelGateway.getController().userCurrentTurn(id).equalsIgnoreCase(userName)){
             response = "it is not your turn";

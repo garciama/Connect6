@@ -27,7 +27,9 @@ public class Move {
         return str;
     }
 
-    public String getOwner() { return owner.getName(); }
+    public String getOwnerName() { return owner.getName(); }
+
+    public User getOwner() { return owner; }
 
     public int getX() {
         return this.x;
