@@ -225,14 +225,14 @@ public class GameResource {
     private class SquareInfo {
         int x;
         int y;
-        Color c;
+        Color color;
     }
 
     private class BoardInfo {
-        List<SquareInfo> allSquares = new ArrayList<SquareInfo>();
+        List<SquareInfo> Board = new ArrayList<SquareInfo>();
 
         public void addSquareInfo(SquareInfo newObject){
-            allSquares.add(newObject);
+            Board.add(newObject);
         }
     }
 
