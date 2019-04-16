@@ -1,5 +1,4 @@
 package core.user;
-import core.game.Square;
 
 import java.util.Date;
 
@@ -36,7 +35,5 @@ public class Move {
     }
 
     public int getY() { return this.y; }
-
-
 
 }
