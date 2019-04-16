@@ -64,5 +64,4 @@ public class GameController {
 
     public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
 
-
 }

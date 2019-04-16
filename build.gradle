@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClassName = "core.controller.UI"
+    mainClassName = "Network.Main.Main"
 }
 
 dependencies {

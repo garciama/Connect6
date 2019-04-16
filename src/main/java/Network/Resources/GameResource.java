@@ -1,6 +1,13 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.google.gson.Gson;
+import core.user.Move;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -58,8 +65,6 @@ public class GameResource {
             res = Response.status(400).entity(response).build();
             return res;
         }
-
-        
 
         response = "Game " + id + " joined!";
         res = Response.ok(response).build();
@@ -150,8 +155,19 @@ public class GameResource {
         }
         if (!ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
-
-        return ModelGateway.getController().reportBoard(id);
+        List<Move> moves = ModelGateway.getController().getMovesInGame(id);
+        String [] ls = new String[moves.size()];
+        for(int i=0; i<moves.size(); i++){
+            int x = moves.get(i).getX();
+            int y = moves.get(i).getY();
+            String name = moves.get(i).getOwner();
+            String res = x + "," + y + "," + name;
+            ls[i] = res;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("Board", ls);
+        Gson gson = new Gson();
+        return gson.toJson(map);
     }
 
 }

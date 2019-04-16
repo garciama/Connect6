@@ -1,5 +1,4 @@
 package core.user;
-import core.Color;
 
 public class User {
 
