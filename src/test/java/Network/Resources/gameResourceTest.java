@@ -87,7 +87,7 @@ public class gameResourceTest {
 
     }
 
-    @Test
+    /*@Test
     public void joinGameTest(){
         controller = new GameController();
         ModelGateway.setController(controller);
@@ -113,7 +113,7 @@ public class gameResourceTest {
                 .get(String.class);
 
         Assert.assertEquals("Game 2 joined!", response);
-    }
+    }*/
 
     @Test(expected = WebApplicationException.class)
     public void joinGameTest2(){
