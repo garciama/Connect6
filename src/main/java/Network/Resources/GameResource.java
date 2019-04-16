@@ -70,24 +70,6 @@ public class GameResource {
         }
         //Now we now the game exists and is in progress.
 
-//        String redName;
-//        String blueName;
-
-        //Check to make sure the user joining the game is either the red or blue player in the game
-//        if (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName)) {
-//            redName = userName;
-//            blueName = ModelGateway.getController().getUserNameBlue(id);
-//        }
-//        else if (ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName)){
-//            blueName = userName;
-//            redName = ModelGateway.getController().getUserNameRed(id);
-//        }
-//        else{
-//            response = "You aren't part of this game.";
-//            res = Response.status(403).entity(response).build();
-//            return res;
-//        }
-
         //If the username passed in isn't the username of the red player in the game or the blue player,
         //throw a 403 forbidden.
         if (!(ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
