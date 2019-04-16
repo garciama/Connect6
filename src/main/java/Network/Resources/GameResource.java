@@ -2,8 +2,11 @@ package Network.Resources;
 
 import Network.ModelGateway;
 import com.google.gson.Gson;
+import core.Color;
+import core.game.Board;
 import core.user.Move;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -178,19 +181,41 @@ public class GameResource {
             throw new WebApplicationException(404);
 
         List<Move> moves = ModelGateway.getController().getMovesInGame(id);
-        String [] ls = new String[moves.size()];
+        BoardInfo newBoardInfo = new BoardInfo();
+
 
         for(int i = 0; i < moves.size(); i++){
             int x = moves.get(i).getX();
             int y = moves.get(i).getY();
-            String name = moves.get(i).getOwnerName();
-            String res = x + "," + y + "," + name;
-            ls[i] = res;
+            Color c;
+            SquareInfo newSquareInfo = new SquareInfo();
+            if ( ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(moves.get(i).getOwnerName())) {
+                c = Color.Red;
+            } else
+                c = Color.Blue;
+
+            newSquareInfo.x = x;
+            newSquareInfo.y = y;
+            newSquareInfo.c = c;
+            newBoardInfo.addSquareInfo(newSquareInfo);
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("Board", ls);
+
         Gson gson = new Gson();
-        return gson.toJson(map);
+        return gson.toJson(newBoardInfo);
+    }
+
+    private class SquareInfo {
+        int x;
+        int y;
+        Color c;
+    }
+
+    private class BoardInfo {
+        List<SquareInfo> allSquares = new ArrayList<SquareInfo>();
+
+        public void addSquareInfo(SquareInfo newObject){
+            allSquares.add(newObject);
+        }
     }
 
 }
