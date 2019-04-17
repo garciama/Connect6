@@ -1,4 +1,3 @@
-
 /*
  *   Place client application Javascript code here.
  */
@@ -19,19 +18,19 @@ var buttonClickEvent = function(e) {
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     fetch("/hello", { method: "GET"} )
         .then( function(response) {
-              let el = document.getElementById("response-area");
-              if( ! response.ok ) {
-                  el.innerText = "Error code: " + response.status;
-                  el.style.fontWeight = "bold";
-                  el.style.color = "red";
-              } else {
-                  response.text().then( function(value) {
-                      el.innerText = "Response: " + value;
-                      el.style.color = "green";
-                      el.style.fontWeight = "bold";
-                  });
-              }
-            });
+            let el = document.getElementById("response-area");
+            if( ! response.ok ) {
+                el.innerText = "Error code: " + response.status;
+                el.style.fontWeight = "bold";
+                el.style.color = "red";
+            } else {
+                response.text().then( function(value) {
+                    el.innerText = "Response: " + value;
+                    el.style.color = "green";
+                    el.style.fontWeight = "bold";
+                });
+            }
+        });
 };
 
 var drawBoard = function() {
