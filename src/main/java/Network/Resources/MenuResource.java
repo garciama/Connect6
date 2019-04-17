@@ -1,9 +1,15 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.google.gson.Gson;
+import core.user.User;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 @Path("menu")
@@ -46,9 +52,46 @@ public class MenuResource {
 
     @GET
     @Path("leaderboard")
-    @Produces(MediaType.TEXT_PLAIN)
     public String getLeaderboard() {
-        return ModelGateway.getController().getLeaderBoard();
+
+        LeaderBoardInfo leaderboard = new LeaderBoardInfo();
+
+        Map<String, User> allUsers = ModelGateway.getController().getUsers();
+
+        for( String key : allUsers.keySet()){
+            User row = allUsers.get(key);
+
+            UserInfoRow newUser = new UserInfoRow(row.getName(), row.getScore(), row.getWins(),
+                                    row.getLosses(), row.getTies());
+            leaderboard.addUserInfo(newUser);
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(leaderboard);
+    }
+
+    private class LeaderBoardInfo {
+        List<UserInfoRow> leaderboardRows = new ArrayList<>();
+
+        public void addUserInfo(UserInfoRow newObject){
+            leaderboardRows.add(newObject);
+        }
+    }
+
+    private class UserInfoRow {
+        String name;
+        int score;
+        int wins;
+        int losses;
+        int ties;
+
+        UserInfoRow(String newName, int newScore, int newWins, int newLosses, int newTies){
+            name = newName;
+            score = newScore;
+            wins = newWins;
+            losses = newLosses;
+            ties = newTies;
+        }
     }
 
 }
