@@ -1,9 +1,8 @@
-
 /*
  *   Place client application Javascript code here.
  */
 
-var main = function() {
+let main = function () {
     // Draw some shapes to the canvas
     drawBoard();
 
@@ -13,28 +12,30 @@ var main = function() {
     btn.addEventListener("click", buttonClickEvent);
 };
 
-var buttonClickEvent = function(e) {
+let buttonClickEvent = function (e) {
     // Send a GET request to the server and display response in the
     // "response-area" span element.  For details about the fetch function
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    fetch("/hello", { method: "GET"} )
-        .then( function(response) {
-              let el = document.getElementById("response-area");
-              if( ! response.ok ) {
-                  el.innerText = "Error code: " + response.status;
-                  el.style.fontWeight = "bold";
-                  el.style.color = "red";
-              } else {
-                  response.text().then( function(value) {
-                      el.innerText = "Response: " + value;
-                      el.style.color = "green";
-                      el.style.fontWeight = "bold";
-                  });
-              }
-            });
+    fetch("/hello", {method: "GET"})
+        .then(function (response) {
+            let el = document.getElementById("response-area");
+            if (!response.ok) {
+                el.innerText = "Error code: " + response.status;
+                el.style.fontWeight = "bold";
+                el.style.color = "red";
+            } else {
+                response.text().then(function (value) {
+                    el.innerText = "Response: " + value;
+                    el.style.color = "green";
+                    el.style.fontWeight = "bold";
+                });
+            }
+        });
 };
 
-var drawBoard = function() {
+
+let drawBoard = function () {
+    "use strict";
     let canvas = document.getElementById("board-canvas");
 
     let ctx = canvas.getContext("2d");
