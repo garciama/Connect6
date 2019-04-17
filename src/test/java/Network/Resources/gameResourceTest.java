@@ -87,7 +87,7 @@ public class gameResourceTest {
 
     }
 
-    /*@Test
+    @Test
     public void joinGameTest(){
         controller = new GameController();
         ModelGateway.setController(controller);
@@ -96,10 +96,12 @@ public class gameResourceTest {
         ModelGateway.getController().registerNewPlayer("Michael");
         ModelGateway.getController().newPublicGame("Sam", "Michael");
 
+        Entity data = Entity.entity("{\"name\":\"Sam\"}", MediaType.APPLICATION_JSON);
+
         String response = client.target(HOST_URI)
                 .path("game/joinGame/1")
                 .request(MediaType.TEXT_PLAIN)
-                .get(String.class);
+                .post(data, String.class);
 
         Assert.assertEquals("Game 1 joined!", response);
 
@@ -107,13 +109,16 @@ public class gameResourceTest {
         ModelGateway.getController().registerNewPlayer("San");
         ModelGateway.getController().newPublicGame("Nick", "San");
 
-         response = client.target(HOST_URI)
+        data = Entity.entity("{\"name\":\"Nick\"}", MediaType.APPLICATION_JSON);
+
+
+        response = client.target(HOST_URI)
                  .path("game/joinGame/2")
                 .request(MediaType.TEXT_PLAIN)
-                .get(String.class);
+                .post(data, String.class);
 
         Assert.assertEquals("Game 2 joined!", response);
-    }*/
+    }
 
     @Test(expected = WebApplicationException.class)
     public void joinGameTest2(){
@@ -169,7 +174,7 @@ public class gameResourceTest {
         Assert.assertEquals(1, moves.size());
         Assert.assertEquals(5, moves.get(0).getX());
         Assert.assertEquals(12, moves.get(0).getY());
-        Assert.assertEquals("Sam", moves.get(0).getOwner());
+        Assert.assertEquals("Sam", moves.get(0).getOwnerName());
     }
 
     @Test(expected = WebApplicationException.class)
@@ -269,6 +274,7 @@ public class gameResourceTest {
 
         //make a move to change the board state
         ModelGateway.getController().makeMove(1, 5, 5, "Sam");
+        ModelGateway.getController().makeMove(1, 4,4,"Walker");
 
          response = client.target(HOST_URI)
                 .path("game/getBoard/1")
@@ -277,7 +283,8 @@ public class gameResourceTest {
 
          //We can see that using our get request it displays the board with the new move made on it.
         System.out.println(response);
-        Assert.assertEquals("{\"Board\":[\"5,5,Sam\"]}", response);
+        Assert.assertEquals("{\"Board\":[{\"x\":5,\"y\":5,\"color\":\"Red\"}," +
+                "{\"x\":4,\"y\":4,\"color\":\"Blue\"}]}", response);
 
 
     }

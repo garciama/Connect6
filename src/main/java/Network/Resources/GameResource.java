@@ -3,14 +3,9 @@ package Network.Resources;
 import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.Color;
-import core.game.Board;
 import core.user.Move;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -40,7 +35,7 @@ public class GameResource {
         return res;
     }
 
-    @GET
+    @POST
     @Path("joinGame/{id}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response joinGame(@PathParam("id") String idNumber, String data){
