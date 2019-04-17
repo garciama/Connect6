@@ -120,12 +120,6 @@ public class menuResourceTest {
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-<<<<<<< HEAD
-=======
-        String menu = "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}," +
-                "{\"name\":\"Michael\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}]}";
->>>>>>> ff08b6a150c62f01e7c8712a6931eb12042a67bd
-
 
         String expected =
                 "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0},{\"name\":\"Michael\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}]}";
@@ -145,12 +139,6 @@ public class menuResourceTest {
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-<<<<<<< HEAD
-=======
-         menu = "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":1,\"ties\":0}," +
-                 "{\"name\":\"Michael\",\"score\":3,\"wins\":1,\"losses\":0,\"ties\":0}]}";
->>>>>>> ff08b6a150c62f01e7c8712a6931eb12042a67bd
-
 
         expected =
                 "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":1,\"ties\":0},{\"name\":\"Michael\",\"score\":3,\"wins\":1,\"losses\":0,\"ties\":0}]}";
