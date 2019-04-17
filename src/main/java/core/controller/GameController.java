@@ -2,7 +2,10 @@ package core.controller;
 
 import core.game.GameManager;
 import core.user.Move;
+import core.user.User;
+
 import java.util.List;
+import java.util.Map;
 
 public class GameController {
 
@@ -63,4 +66,9 @@ public class GameController {
     public boolean checkIfGameExists(int id){ return gameManager.checkGameExists(id); }
 
     public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
+<<<<<<< HEAD
+=======
+
+    public Map<String, User> getUsers() { return gameManager.getAllUsers(); }
+>>>>>>> 6fb0bc38b5cc102b5ed5f76c3e423baf09a2d043
 }
