@@ -68,8 +68,8 @@ public class userPackageTest {
     public void testGetOwner() {
         Move move = new Move(0,0,u1);
         Move move2 = new Move(1,1,u2);
-        assertEquals("test", move.getOwner());
-        assertEquals("test1", move2.getOwner());
+        assertEquals("test", move.getOwnerName());
+        assertEquals("test1", move2.getOwnerName());
     }
 
     @Test
