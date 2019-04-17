@@ -1,8 +1,13 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import core.controller.GameController;
+import jdk.nashorn.internal.parser.*;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -12,6 +17,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import java.util.Iterator;
 
 //Maybe restart server for each test.
 public class menuResourceTest {
@@ -114,14 +120,13 @@ public class menuResourceTest {
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-        String menu = "-----------------------------------------------------------\n" +
-                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
-                "-----------------------------------------------------------\n" +
-                "|  Michael   |     0     |    0     |    0     |    0     |\n" +
-                "|    San     |     0     |    0     |    0     |    0     |\n" +
-                "-----------------------------------------------------------";
 
-        Assert.assertEquals(menu, response);
+
+        String expected =
+                "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0},{\"name\":\"Michael\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}]}";
+
+
+        Assert.assertEquals(expected, response);
 
         ModelGateway.getController().newPublicGame("Michael", "San");
         ModelGateway.getController().makeMove(1, 1,1,"Michael");
@@ -131,18 +136,17 @@ public class menuResourceTest {
         ModelGateway.getController().makeMove(1, 5,5,"Michael");
         ModelGateway.getController().makeMove(1, 6,6,"Michael");
 
-         response = client.target(HOST_URI)
+        response = client.target(HOST_URI)
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-         menu = "-----------------------------------------------------------\n" +
-                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
-                "-----------------------------------------------------------\n" +
-                "|  Michael   |     3     |    1     |    0     |    0     |\n" +
-                "|    San     |     0     |    0     |    1     |    0     |\n" +
-                "-----------------------------------------------------------";
 
-        Assert.assertEquals(menu, response);
+
+        expected =
+                "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":1,\"ties\":0},{\"name\":\"Michael\",\"score\":3,\"wins\":1,\"losses\":0,\"ties\":0}]}";
+
+
+        Assert.assertEquals(expected, response);
 
     }
 
