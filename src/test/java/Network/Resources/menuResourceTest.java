@@ -114,12 +114,8 @@ public class menuResourceTest {
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-        String menu = "-----------------------------------------------------------\n" +
-                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
-                "-----------------------------------------------------------\n" +
-                "|  Michael   |     0     |    0     |    0     |    0     |\n" +
-                "|    San     |     0     |    0     |    0     |    0     |\n" +
-                "-----------------------------------------------------------";
+        String menu = "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}," +
+                "{\"name\":\"Michael\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}]}";
 
         Assert.assertEquals(menu, response);
 
@@ -135,12 +131,8 @@ public class menuResourceTest {
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
-         menu = "-----------------------------------------------------------\n" +
-                "|    Name    |   Score   |   Wins   |  Losses  |   Ties   |\n" +
-                "-----------------------------------------------------------\n" +
-                "|  Michael   |     3     |    1     |    0     |    0     |\n" +
-                "|    San     |     0     |    0     |    1     |    0     |\n" +
-                "-----------------------------------------------------------";
+         menu = "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":1,\"ties\":0}," +
+                 "{\"name\":\"Michael\",\"score\":3,\"wins\":1,\"losses\":0,\"ties\":0}]}";
 
         Assert.assertEquals(menu, response);
 
