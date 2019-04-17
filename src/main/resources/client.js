@@ -2,7 +2,7 @@
  *   Place client application Javascript code here.
  */
 
-let main = function () {
+var main = function() {
     // Draw some shapes to the canvas
     drawBoard();
 
@@ -12,19 +12,19 @@ let main = function () {
     btn.addEventListener("click", buttonClickEvent);
 };
 
-let buttonClickEvent = function (e) {
+var buttonClickEvent = function(e) {
     // Send a GET request to the server and display response in the
     // "response-area" span element.  For details about the fetch function
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    fetch("/hello", {method: "GET"})
-        .then(function (response) {
+    fetch("/hello", { method: "GET"} )
+        .then( function(response) {
             let el = document.getElementById("response-area");
-            if (!response.ok) {
+            if( ! response.ok ) {
                 el.innerText = "Error code: " + response.status;
                 el.style.fontWeight = "bold";
                 el.style.color = "red";
             } else {
-                response.text().then(function (value) {
+                response.text().then( function(value) {
                     el.innerText = "Response: " + value;
                     el.style.color = "green";
                     el.style.fontWeight = "bold";
@@ -33,9 +33,7 @@ let buttonClickEvent = function (e) {
         });
 };
 
-
-let drawBoard = function () {
-    "use strict";
+var drawBoard = function() {
     let canvas = document.getElementById("board-canvas");
 
     let ctx = canvas.getContext("2d");
