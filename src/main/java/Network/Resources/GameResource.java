@@ -206,15 +206,13 @@ public class GameResource {
             int x = moves.get(i).getX();
             int y = moves.get(i).getY();
             Color c;
-            SquareInfo newSquareInfo = new SquareInfo();
+
             if ( ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(moves.get(i).getOwnerName())) {
                 c = Color.Red;
             } else
                 c = Color.Blue;
 
-            newSquareInfo.x = x;
-            newSquareInfo.y = y;
-            newSquareInfo.c = c;
+            SquareInfo newSquareInfo = new SquareInfo(x, y, c);
             newBoardInfo.addSquareInfo(newSquareInfo);
         }
 
@@ -226,10 +224,16 @@ public class GameResource {
         int x;
         int y;
         Color color;
+
+        SquareInfo(int newX, int newY, Color newColor){
+            x = newX;
+            y = newY;
+            color = newColor;
+        }
     }
 
     private class BoardInfo {
-        List<SquareInfo> Board = new ArrayList<SquareInfo>();
+        List<SquareInfo> Board = new ArrayList<>();
 
         public void addSquareInfo(SquareInfo newObject){
             Board.add(newObject);

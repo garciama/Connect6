@@ -2,7 +2,10 @@ package core.controller;
 
 import core.game.GameManager;
 import core.user.Move;
+import core.user.User;
+
 import java.util.List;
+import java.util.Map;
 
 public class GameController {
 
@@ -64,4 +67,5 @@ public class GameController {
 
     public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
 
+    public Map<String, User> getUsers() { return gameManager.getAllUsers(); }
 }
