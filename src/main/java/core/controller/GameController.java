@@ -63,5 +63,4 @@ public class GameController {
     public boolean checkIfGameExists(int id){ return gameManager.checkGameExists(id); }
 
     public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
-
 }
