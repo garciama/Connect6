@@ -1,13 +1,8 @@
 package Network.Resources;
 
 import Network.ModelGateway;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import core.controller.GameController;
-import jdk.nashorn.internal.parser.*;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -17,7 +12,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
-import java.util.Iterator;
 
 //Maybe restart server for each test.
 public class menuResourceTest {
