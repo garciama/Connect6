@@ -1,6 +1,8 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.google.gson.Gson;
+import core.Color;
 import core.controller.GameController;
 import core.user.Move;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -267,24 +269,31 @@ public class gameResourceTest {
                 .request(MediaType.TEXT_PLAIN)
                 .get(String.class);
 
-        //Honestly, the best way to test this is to just print it and look at it.
-        System.out.println(response);
-
         Assert.assertEquals("{\"Board\":[]}", response);
 
         //make a move to change the board state
-        ModelGateway.getController().makeMove(1, 5, 5, "Sam");
-        ModelGateway.getController().makeMove(1, 4,4,"Walker");
+        ModelGateway.getController().makeMove(1, 5, 12, "Sam");
+        ModelGateway.getController().makeMove(1, 4,7,"Walker");
 
          response = client.target(HOST_URI)
                 .path("game/getBoard/1")
                 .request(MediaType.TEXT_PLAIN)
                 .get(String.class);
 
-         //We can see that using our get request it displays the board with the new move made on it.
-        System.out.println(response);
-        Assert.assertEquals("{\"Board\":[{\"x\":5,\"y\":5,\"color\":\"Red\"}," +
-                "{\"x\":4,\"y\":4,\"color\":\"Blue\"}]}", response);
+        Gson gson = new Gson();
+        GameResource.BoardInfo squares = gson.fromJson(response, GameResource.BoardInfo.class);
+
+        Assert.assertEquals(5, squares.getBoardSquares().get(0).getX());
+        Assert.assertEquals(12, squares.getBoardSquares().get(0).getY());
+        //Red because Sam, who made this move, was created as red player in the game.
+        Assert.assertEquals(Color.Red, squares.getBoardSquares().get(0).getColor());
+
+        Assert.assertEquals(4, squares.getBoardSquares().get(1).getX());
+        Assert.assertEquals(7, squares.getBoardSquares().get(1).getY());
+        Assert.assertEquals(Color.Blue, squares.getBoardSquares().get(1).getColor());
+
+
+
 
 
     }
