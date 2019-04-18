@@ -54,9 +54,9 @@ form		{ text-align:           left;
 .ngbutton:hover{background-color: #A42828;
                    color: white;}
 
-.jgbutton{color: #C33DCD;}
-.jgbutton:hover{background-color: #C33DCD;
-                   color: white;}
+.jgbutton{color: #C33DCD; }
+.jgbutton:hover{ background-color: #C33DCD;
+                 color: white; }
 
 .ipbutton{color: #ED9237;}
 .ipbutton:hover{background-color: #ED9237;
