@@ -5,6 +5,7 @@
         Connect6
     </title>
 
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="client.css">
     <meta charset="UTF-8">
     <title>Game Client</title>
@@ -15,38 +16,94 @@
     </style>
 </head>
 
-<header>Welcome to Connect6</header>
+<body>
+
+    <header>Welcome to Connect6</header>
+    <hr/>
+
+    <nav>
+
+        <form>
+            Username:
+            <input type ="text" username="name">
+            <i class="fa fa-user-plus" aria-hidden="true"></i><br><br>
+            <input type ="submit" value="Create Account">
+        </form>
 
 
-<p>
-    <button id="createUserButton">Create a user</button>
-</p>
+        <button class="btn leaderboard" id ="leaderboardButton">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            Leaderboard</button>
+        <!--<button class="btn inpgames" id = "inprogressButton">In Progress Games</button> -->
+        <button class="btn compgames" id = "completedButton">
+            <i class="fa fa-check-square" aria-hidden="true"></i>
+            Completed Games</button>
 
-<p>
-    <button id="createNewGameButton">Create a new game</button>
-</p>
 
-<p>
-    <button id="seeGamesInProgressButton"><a href="menu/inProgress">See games in progress</button>
-</p>
+    </nav>
+    <hr>
+    <br>
 
-<p>
-    <button id="joinGameButton">Join a game</button>
-</p>
+    <article class="col">
+        <br/>
+        <img src = "connect6.jpg" alt = "Connect6" class = "connect6image"/>
+        <br/>
+        <b>Challenge someone to a one on one match!</b>
+        <br/>
+        Play a game of classic Connect6 on a 19 x 19 board.
+        <br/><br/>
+        <button id="createNewGameButton" class="btn ngbutton">
+            <i class="fa fa-play" aria-hidden="true"></i>
+            Create a new game
+        </button>
 
-<p>
-    <button id="seeCompletedGamesButton">See list of completed games</button>
-</p>
 
-<p>
-    <button id="seeLeaderboardButton"><a href="menu/leaderboard">See leaderboard</a></button>
-</p>
+        <br/><br/>
+    </article>
 
-<!-- Load the javascript for the client application -->
-<script src="/client/client.js"></script>
+    <article class="col">
+        <br/>
+        <img src = "arrow.jpg" alt = "Arrow" class = "arrowimage"/>
+        <br/>
+        <b>Join a game!</b>
+        <br/>
+        Rejoin any in-progress matches you are in.
+        <br/><br/>
+        <button class="btn jgbutton" id="joinGameButton" >
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            Join
+        </button>
+
+
+        <br/><br/>
+    </article>
+
+    <article class="col">
+        <br/>
+        <img src = "popcorn.png" alt = "Popcorn" class = "popcornimage"/>
+        <br/>
+        <b>Watch someone else play!</b>
+        <br/>
+        View live games as they're being played.
+        <br/><br>
+        <button class="btn ipbutton" id="inProgressButton" >
+            <i class="fa fa-binoculars" aria-hidden="true"></i>
+            Watch</button>
+
+        <br/><br/>
+    </article>
+
+    <!-- Load the javascript for the client application -->
+    <script src="/client/client.js"></script>
+
+    <footer>
+        Cunning Coders™ 👀👌🔥🔥🔥
+        <br>
+        <a href="https://gitlab.cs.plu.edu/390-2019-cunningcoders/gameproject" class="githublink">
+            <i class="fa fa-git" aria-hidden="true"></i></a>
+        <i>Members:</i> Sam Driver, Walker Lavoy, Nick Sundvall, Michael Garcia, San Nge
+    </footer>
 
 </body>
-<footer>
-    <p>Cunning Coders™ 👀👌🔥🔥🔥</p>
-</footer>
+
 </html>
