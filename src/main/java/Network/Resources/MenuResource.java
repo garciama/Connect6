@@ -69,15 +69,19 @@ public class MenuResource {
         return gson.toJson(leaderboard);
     }
 
-    private class LeaderBoardInfo {
-        List<UserInfoRow> leaderboardRows = new ArrayList<>();
+    public class LeaderBoardInfo {
+        private List<UserInfoRow> leaderboardRows = new ArrayList<>();
 
         public void addUserInfo(UserInfoRow newObject){
             leaderboardRows.add(newObject);
         }
+
+        public List<UserInfoRow> getRows(){
+            return leaderboardRows;
+        }
     }
 
-    private class UserInfoRow {
+    public class UserInfoRow {
         String name;
         int score;
         int wins;

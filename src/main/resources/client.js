@@ -4,11 +4,11 @@
 
 var main = function() {
     // Draw some shapes to the canvas
-    drawBoard();
+    //drawBoard();
 
     // As an example, we'll make a request to the server when the button is clicked
     // and display the results in the HTML page.
-    let btn = document.getElementById("example-button");
+    let btn = document.getElementById("seeLeaderboardButton");
     btn.addEventListener("click", buttonClickEvent);
 };
 
@@ -16,9 +16,9 @@ var buttonClickEvent = function(e) {
     // Send a GET request to the server and display response in the
     // "response-area" span element.  For details about the fetch function
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-    fetch("/hello", { method: "GET"} )
+    fetch("/menu/leaderboard", { method: "GET"} )
         .then( function(response) {
-            let el = document.getElementById("response-area");
+            let el = document.getElementById("leaderboard-area");
             if( ! response.ok ) {
                 el.innerText = "Error code: " + response.status;
                 el.style.fontWeight = "bold";

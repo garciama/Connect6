@@ -1,6 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<lang="en">
 <head>
+    <title>
+        Connect6
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="client.css">
     <meta charset="UTF-8">
     <title>Game Client</title>
     <style>
@@ -9,10 +14,8 @@
         }
     </style>
 </head>
-<body>
 
-
-<p>Welcome to Connect 6</p>
+<header>Welcome to Connect6</header>
 
 
 <p>
@@ -24,7 +27,7 @@
 </p>
 
 <p>
-    <button id="seeGamesInProgressButton"><a href="menu/inProgress">See games in progress</button>
+    <button id="seeGamesInProgressButton"><a href="menu/inProgress">See games in progress</a></button>
 </p>
 
 <p>
@@ -36,7 +39,11 @@
 </p>
 
 <p>
-    <button id="seeLeaderboardButton"><a href="menu/leaderboard">See leaderboard</a></button>
+    <button id="seeLeaderboardButton">See Leaderboard</button>
+</p>
+
+<p>
+    Leaderboard: <span id="leaderboard-area"></span>
 </p>
 
 <!-- Load the javascript for the client application -->

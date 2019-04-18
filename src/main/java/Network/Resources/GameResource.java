@@ -197,24 +197,28 @@ public class GameResource {
         return gson.toJson(newBoardInfo);
     }
 
-    private class SquareInfo {
-        int x;
-        int y;
-        Color color;
+    public class SquareInfo {
+        private int x;
+        private int y;
+        private Color color;
 
         SquareInfo(int newX, int newY, Color newColor){
             x = newX;
             y = newY;
             color = newColor;
         }
+        public int getX() { return x; }
+        public int getY() { return y; }
+        public Color getColor() {return color; }
     }
 
-    private class BoardInfo {
-        List<SquareInfo> Board = new ArrayList<>();
+    public class BoardInfo {
+        private List<SquareInfo> Board = new ArrayList<>();
 
         public void addSquareInfo(SquareInfo newObject){
             Board.add(newObject);
         }
+        public List<SquareInfo> getBoardSquares(){ return Board; }
     }
 
 }

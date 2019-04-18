@@ -1,6 +1,7 @@
 package Network.Resources;
 
 import Network.ModelGateway;
+import com.google.gson.Gson;
 import core.controller.GameController;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.AfterClass;
@@ -12,6 +13,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+
 
 //Maybe restart server for each test.
 public class menuResourceTest {
@@ -108,38 +110,58 @@ public class menuResourceTest {
         ModelGateway.setController(controller);
 
         ModelGateway.getController().registerNewPlayer("Michael");
-        ModelGateway.getController().registerNewPlayer("San");
+        ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().registerNewPlayer("Nick");
+        ModelGateway.getController().registerNewPlayer("Sam");
 
         String response = client.target(HOST_URI)
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
 
-        String expected =
-                "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0},{\"name\":\"Michael\",\"score\":0,\"wins\":0,\"losses\":0,\"ties\":0}]}";
+        Gson gson = new Gson();
+        MenuResource.LeaderBoardInfo rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
+        Assert.assertEquals("Nick", rows.getRows().get(0).name);
+        Assert.assertEquals(0, rows.getRows().get(0).score);
+        Assert.assertEquals(0, rows.getRows().get(0).wins);
+        Assert.assertEquals(0, rows.getRows().get(0).losses);
 
-        Assert.assertEquals(expected, response);
+        //Now after someone wins a game, check the json response again.
+        ModelGateway.getController().getUsers().get("Walker").addWin();
+        ModelGateway.getController().getUsers().get("Walker").addWin();
 
-        ModelGateway.getController().newPublicGame("Michael", "San");
-        ModelGateway.getController().makeMove(1, 1,1,"Michael");
-        ModelGateway.getController().makeMove(1, 2,2,"Michael");
-        ModelGateway.getController().makeMove(1, 3,3,"Michael");
-        ModelGateway.getController().makeMove(1, 4,4,"Michael");
-        ModelGateway.getController().makeMove(1, 5,5,"Michael");
-        ModelGateway.getController().makeMove(1, 6,6,"Michael");
+        ModelGateway.getController().getUsers().get("Michael").addWin();
+
+        ModelGateway.getController().getUsers().get("Sam").addWin();
+        ModelGateway.getController().getUsers().get("Sam").addWin();
+        ModelGateway.getController().getUsers().get("Sam").addWin();
+
 
         response = client.target(HOST_URI)
                 .path("menu/leaderboard")
                 .request(MediaType.TEXT_PLAIN_TYPE)
                 .get(String.class); //Whatever response we get store in a string
 
-        expected =
-                "{\"leaderboardRows\":[{\"name\":\"San\",\"score\":0,\"wins\":0,\"losses\":1,\"ties\":0},{\"name\":\"Michael\",\"score\":3,\"wins\":1,\"losses\":0,\"ties\":0}]}";
+        System.out.println(response);
 
+        rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
-        Assert.assertEquals(expected, response);
+        //And we can also see that the json object is in order from lowest to highest score
+        Assert.assertEquals("Sam", rows.getRows().get(3).name);
+        Assert.assertEquals(9, rows.getRows().get(3).score);
+        Assert.assertEquals(3, rows.getRows().get(3).wins);
+        Assert.assertEquals(0, rows.getRows().get(3).losses);
 
+        Assert.assertEquals("Walker", rows.getRows().get(2).name);
+        Assert.assertEquals(6, rows.getRows().get(2).score);
+        Assert.assertEquals(2, rows.getRows().get(2).wins);
+        Assert.assertEquals(0, rows.getRows().get(2).losses);
+
+        Assert.assertEquals("Michael", rows.getRows().get(1).name);
+        Assert.assertEquals(3, rows.getRows().get(1).score);
+        Assert.assertEquals(1, rows.getRows().get(1).wins);
+        Assert.assertEquals(0, rows.getRows().get(1).losses);
     }
 
     @Test
