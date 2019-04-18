@@ -28,7 +28,7 @@ nav			{ background-color:		white;
 
 footer      { color:                black;
               height:               60px;
-              position:             relative;
+              position:             absolute;
               bottom:               0;
               width:                100%;
               text-align:           center;
