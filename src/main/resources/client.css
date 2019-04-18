@@ -28,7 +28,7 @@ nav			{ background-color:		white;
 
 footer      { color:                black;
               height:               60px;
-              position:             absolute;
+              position:             relative;
               bottom:               0;
               width:                100%;
               text-align:           center;
@@ -79,11 +79,12 @@ form		{ text-align:           left;
                }
 article		{ font-family:			"Hind Vadodara", sans-serif;
               border-radius:		20px;
+              width:               31.9%;
               color:				white;
               padding:				10px 10px 10px 10px;
               position:             bottom: 50;}
 
-article.col	{ width:				607px;
+article.col	{
 			  height:				250px;
 			  border:				thin solid black;
 			  padding:				10px 10px 10px 10px;
