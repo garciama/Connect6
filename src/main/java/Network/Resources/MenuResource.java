@@ -3,6 +3,8 @@ package Network.Resources;
 import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.user.User;
+import org.json.JSONObject;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,12 +23,18 @@ public class MenuResource {
                 " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
     }
 
-    @PUT
+    @POST
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
+
+        System.out.println(username);
+        JSONObject obj = new JSONObject(username);
+        String name = obj.getString("name");
+        System.out.println(name);
+
         Response res;
-        if (!ModelGateway.getController().registerNewPlayer(username)){
+        if (!ModelGateway.getController().registerNewPlayer(name)){
             throw new WebApplicationException(400);
         }
         String str = "user created successfully";

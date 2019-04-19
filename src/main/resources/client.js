@@ -8,17 +8,41 @@ var main = function() {
 
     // As an example, we'll make a request to the server when the button is clicked
     // and display the results in the HTML page.
-    let btn = document.getElementById("seeLeaderboardButton");
-    btn.addEventListener("click", buttonClickEvent);
+    let btn = document.getElementById("createUserButton");
+    btn.addEventListener("click", createAccEvent);
+
+    let btn2 = document.getElementById("leaderboardButton");
+    btn2.addEventListener("click", buttonClickEvent);
+};
+
+var createAccEvent = function(e){
+    var name = {name: document.getElementById("uname").value};
+    console.log(name);
+
+    fetch("menu/createUser", {method: "POST", body: JSON.stringify(name)} )
+        .then( function(response){
+            let el = document.getElementById("create-user-area");
+            if (!response.ok){
+                el.innerText = "Error code: " + response.status;
+                el.style.fontWeight = "bold";
+                el.style.color = "red";
+            } else {
+                response.text().then( function(value) {
+                el.innerText = "Response: " + value;
+                el.style.color = "green";
+                el.style.fontWeight = "bold";
+                });
+            }
+        });
 };
 
 var buttonClickEvent = function(e) {
     // Send a GET request to the server and display response in the
-    // "response-area" span element.  For details about the fetch function
+    // "leaderboard-response-area" span element.  For details about the fetch function
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     fetch("/menu/leaderboard", { method: "GET"} )
         .then( function(response) {
-            let el = document.getElementById("leaderboard-area");
+            let el = document.getElementById("leaderboard-response-area");
             if( ! response.ok ) {
                 el.innerText = "Error code: " + response.status;
                 el.style.fontWeight = "bold";

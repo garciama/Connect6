@@ -6,13 +6,119 @@
     </title>
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="client.css">
+
     <meta charset="UTF-8">
     <title>Game Client</title>
     <style>
         #board-canvas {
             border: 1px solid black;
         }
+
+        html, body 	{ font-family:			Lucida Grande;
+			          font-size:			15px;
+			          color:				white;
+			          padding:				5px;
+			          margin:				2px;
+			          background-color:		#E8C49B; }
+
+        header		{ text-align:			center;
+                      font-family:			"Alegreya Sans SC";
+                      font-weight:			bold;
+                      color:				white;
+                      font-size:			100px;
+                      background-image: 	url();
+                      border-radius:		5px;
+                      padding:				30px 20px 30px 20px;
+                      margin-bottom:		1px;
+                      text-shadow:			1px 1px 4px #000000; }
+
+        nav			{ background-color:		white;
+                      border-radius:		9px;
+                      padding:				10px 10px 10px 10px;
+                      margin-bottom:		1px;
+                      text-align:          right;
+                      color:               black;
+                      }
+
+
+        footer      { color:                black;
+                      height:               60px;
+                      position:             absolute;
+                      bottom:               0;
+                      width:                100%;
+                      text-align:           center;
+                      clear:                both;
+                      background-color:     white;
+                      border-radius:        9px;
+
+                    }
+
+        form		{ text-align:           left;
+                      vertical-align:       middle;
+                    }
+
+
+        .btn        { border:                 none;
+                      background-color:       inherit;
+                      padding:                7px 14px;
+                      font-size:              16px;
+                      cursor:                 pointer;
+                      display:                inline-block;
+                    }
+
+        .ngbutton{color: #A42828;}
+        .ngbutton:hover{background-color: #A42828;
+                           color: white;}
+
+        .jgbutton{color: #C33DCD;}
+        .jgbutton:hover{background-color: #C33DCD;
+                           color: white;}
+
+        .ipbutton{color: #ED9237;}
+        .ipbutton:hover{background-color: #ED9237;
+                           color: white;}
+
+        .leaderboard {color: green; }
+        .leaderboard:hover{background-color: #4CAF50;
+                           color: white;}
+
+        .inpgames {color: red; }
+        .inpgames:hover{background-color: #A42828;
+                           color: white;}
+
+        .compgames {color: dodgerblue;}
+        .compgames:hover{background-color: #2196F3;
+                         color: white;}
+
+        .connect6image{ height: 60%;
+                        width: 60%;
+                       }
+        article		{ font-family:			sans-serif;
+                     border-radius:		20px;
+                     width:               31.5%;
+                     color:				white;
+                     padding:				10px 10px 10px 10px;
+                     position:             bottom: 50;}
+
+        article.col	{
+		        	 height:				250px;
+			        border:				thin solid black;
+			        padding:				10px 10px 10px 10px;
+			        float:                left;
+		        	color:                black;
+			        text-align:           center;
+		        	background-color:    white;
+			  }
+
+        .popcornimage{height: 60%; }
+
+        .arrowimage{ height: 60%;
+                 width:  60%;}
+
+        .githublink{float: left;
+                    padding-left: 10px;
+                    padding-top: 4px;
+                    padding-bottom: 7px;}
     </style>
 </head>
 
@@ -24,11 +130,14 @@
     <nav>
         <form>
             Username:
-            <input type ="text" username="name">
+            <input type ="text" username="name" id="uname">
             <i class="fa fa-user-plus" aria-hidden="true"></i><br><br>
-            <input type ="submit" value="Create Account">
+            <input type ="submit" value="Create Account" id ="createUserButton">
+            <span id="create-user-area"></span>
         </form>
 
+
+        <span id="leaderboard-response-area"></span>
 
         <button class="btn leaderboard" id ="leaderboardButton">
             <i class="fa fa-bar-chart" aria-hidden="true"></i>
@@ -37,15 +146,14 @@
         <button class="btn compgames" id = "completedButton">
             <i class="fa fa-check-square" aria-hidden="true"></i>
             Completed Games</button>
-
-
     </nav>
-    <hr>
-    <br>
+
+    <hr><br>
 
     <article class="col">
         <br/>
-        <img src = "connect6.jpg" alt = "Connect6" class = "connect6image"/>
+        <img src = "https://bit.ly/2VUTWe2"
+             alt = "Connect6" class = "connect6image"/>
         <br/>
         <b>Challenge someone to a one on one match!</b>
         <br/>
@@ -62,7 +170,8 @@
 
     <article class="col">
         <br/>
-        <img src = "arrow.jpg" alt = "Arrow" class = "arrowimage"/>
+        <img src = "http://worldartsme.com/images/curved-arrow-clipart-1.jpg"
+             alt = "Arrow" class = "arrowimage"/>
         <br/>
         <b>Join a game!</b>
         <br/>
@@ -79,7 +188,8 @@
 
     <article class="col">
         <br/>
-        <img src = "popcorn.png" alt = "Popcorn" class = "popcornimage"/>
+        <img src = "http://clipart-library.com/data_images/209793.png"
+             alt = "Popcorn" class = "popcornimage"/>
         <br/>
         <b>Watch someone else play!</b>
         <br/>
@@ -92,9 +202,6 @@
         <br/><br/>
     </article>
 
-    <!-- Load the javascript for the client application -->
-    <script src="/client/client.js"></script>
-
     <footer>
         Cunning Coders™ 👀👌🔥🔥🔥
         <br>
@@ -103,6 +210,8 @@
         <i>Members:</i> Sam Driver, Walker Lavoy, Nick Sundvall, Michael Garcia, San Nge
     </footer>
 
+    <!-- Load the javascript for the client application -->
+    <script src="/client/client.js"></script>
 </body>
 
 </html>

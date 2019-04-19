@@ -55,8 +55,7 @@ form		{ text-align:           left;
 .ngbutton:hover{background-color: #A42828;
                    color: white;}
 
-.jgbutton{color: #C33DCD;
-         position:  absolute;}
+.jgbutton{color: #C33DCD;}
 .jgbutton:hover{background-color: #C33DCD;
                    color: white;}
 
@@ -79,7 +78,7 @@ form		{ text-align:           left;
 .connect6image{ height: 60%;
                 width: 60%;
                }
-article		{ font-family:			"Hind Vadodara", sans-serif;
+article		{ font-family:			sans-serif;
               border-radius:		20px;
               width:               31.5%;
               color:				white;
@@ -98,8 +97,8 @@ article.col	{
 
 .popcornimage{height: 60%; }
 
-.arrowimage{height: 49%;
-            width:  49%;}
+.arrowimage{ height: 60%;
+            width:  60%;}
 
 .githublink{float: left;
             padding-left: 10px;
