@@ -38,18 +38,6 @@ public class menuResourceTest {
     }
 
     @Test
-    public void testGetGameMenu() {
-        String response = client.target(HOST_URI)
-                .path("menu")
-                .request(MediaType.TEXT_PLAIN_TYPE)
-                .get(String.class); //Whatever response we get store in a string
-        String menu = "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
-                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
-
-        Assert.assertEquals(menu, response);
-    }
-
-    @Test
     public void testInProgress() {
         controller = new GameController();
         ModelGateway.setController(controller);

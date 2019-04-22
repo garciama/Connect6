@@ -4,7 +4,6 @@ import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.user.User;
 import org.json.JSONObject;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,13 +14,6 @@ import java.util.Map;
 
 @Path("menu")
 public class MenuResource {
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getMenu() {
-        return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
-                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
-    }
 
     @POST
     @Path("createUser")
@@ -40,6 +32,7 @@ public class MenuResource {
         return res;
     }
 
+    //TODO: create a JSON object to return
     @GET
     @Path("inProgress")
     @Produces(MediaType.TEXT_PLAIN)
