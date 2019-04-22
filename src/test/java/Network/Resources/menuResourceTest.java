@@ -170,14 +170,14 @@ public class menuResourceTest {
         ModelGateway.setController(controller);
 
         // The data to send with the PUT
-        Entity data = Entity.entity("Testing", MediaType.TEXT_PLAIN);
+        Entity data = Entity.entity("{\"name\":\"Testing\"}", MediaType.APPLICATION_JSON);
 
         String response = client.target(HOST_URI)
                 .path("menu/createUser")
                 .request(MediaType.TEXT_PLAIN)
-                .put(data, String.class);
+                .post(data, String.class);
 
-        Assert.assertEquals("user created successfully", response);
+        Assert.assertEquals("User Created Successfully", response);
         Assert.assertTrue(ModelGateway.getController().hasPlayerRegistered("Testing"));
     }
 
