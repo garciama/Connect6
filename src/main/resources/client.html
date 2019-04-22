@@ -10,10 +10,6 @@
     <meta charset="UTF-8">
     <title>Game Client</title>
     <style>
-        #board-canvas {
-            border: 1px solid black;
-        }
-
         html, body 	{ font-family:			Lucida Grande;
 			          font-size:			15px;
 			          color:				white;
@@ -38,6 +34,7 @@
                       margin-bottom:		1px;
                       text-align:          right;
                       color:               black;
+                      width:               100%;
                       }
 
 
@@ -93,10 +90,10 @@
         .connect6image{ height: 60%;
                         width: 60%;
                        }
-        article		{ font-family:			sans-serif;
-                     border-radius:		20px;
-                     width:               31.5%;
-                     color:				white;
+        article		{font-family:			sans-serif;
+                     border-radius:		    20px;
+                     width:                31.5%;
+                     color:				    white;
                      padding:				10px 10px 10px 10px;
                      position:             bottom: 50;}
 
@@ -119,6 +116,10 @@
                     padding-left: 10px;
                     padding-top: 4px;
                     padding-bottom: 7px;}
+
+        .leaderBoard-canvas{ overflow: allow;
+
+                            }
     </style>
 </head>
 
@@ -150,7 +151,7 @@
 
     <hr><br>
 
-    <article class="col">
+    <article class="col" id="art1">
         <br/>
         <img src = "https://bit.ly/2VUTWe2"
              alt = "Connect6" class = "connect6image"/>
@@ -168,7 +169,7 @@
         <br/><br/>
     </article>
 
-    <article class="col">
+    <article class="col" id="art2">
         <br/>
         <img src = "http://worldartsme.com/images/curved-arrow-clipart-1.jpg"
              alt = "Arrow" class = "arrowimage"/>
@@ -186,7 +187,7 @@
         <br/><br/>
     </article>
 
-    <article class="col">
+    <article class="col" id="art3">
         <br/>
         <img src = "http://clipart-library.com/data_images/209793.png"
              alt = "Popcorn" class = "popcornimage"/>
@@ -201,6 +202,9 @@
 
         <br/><br/>
     </article>
+
+    <canvas id="leaderBoard-canvas" width="1200"></canvas>
+
 
     <footer>
         Cunning Coders™ 👀👌🔥🔥🔥
