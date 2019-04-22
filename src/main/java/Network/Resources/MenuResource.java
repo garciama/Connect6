@@ -28,16 +28,14 @@ public class MenuResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
 
-        System.out.println(username);
         JSONObject obj = new JSONObject(username);
         String name = obj.getString("name");
-        System.out.println(name);
 
         Response res;
         if (!ModelGateway.getController().registerNewPlayer(name)){
             throw new WebApplicationException(400);
         }
-        String str = "user created successfully";
+        String str = "User Created Successfully";
         res = Response.ok(str).build();
         return res;
     }

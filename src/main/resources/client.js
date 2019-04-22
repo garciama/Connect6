@@ -12,23 +12,30 @@ var main = function() {
     btn.addEventListener("click", createAccEvent);
 
     let btn2 = document.getElementById("leaderboardButton");
-    btn2.addEventListener("click", buttonClickEvent);
+    btn2.addEventListener("click", leaderBoardEvent);
+
+
 };
 
 var createAccEvent = function(e){
+    e.preventDefault();
     var name = {name: document.getElementById("uname").value};
-    console.log(name);
 
     fetch("menu/createUser", {method: "POST", body: JSON.stringify(name)} )
         .then( function(response){
             let el = document.getElementById("create-user-area");
             if (!response.ok){
+                if (response.status == 400){
+                    el.innerText = "User Already Exists"
+                    el.style.color = "red";
+                } else {
                 el.innerText = "Error code: " + response.status;
                 el.style.fontWeight = "bold";
                 el.style.color = "red";
+                }
             } else {
                 response.text().then( function(value) {
-                el.innerText = "Response: " + value;
+                el.innerText = value;
                 el.style.color = "green";
                 el.style.fontWeight = "bold";
                 });
@@ -36,7 +43,7 @@ var createAccEvent = function(e){
         });
 };
 
-var buttonClickEvent = function(e) {
+var leaderBoardEvent = function(e) {
     // Send a GET request to the server and display response in the
     // "leaderboard-response-area" span element.  For details about the fetch function
     // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
@@ -52,9 +59,16 @@ var buttonClickEvent = function(e) {
                     el.innerText = "Response: " + value;
                     el.style.color = "green";
                     el.style.fontWeight = "bold";
+
+                    drawLeaderBoard(value);
                 });
             }
         });
+
+};
+
+var drawLeaderBoard = function(jsonLeaderBoard){
+
 };
 
 var drawBoard = function() {
