@@ -3,13 +3,49 @@
  */
 
 var main = function() {
-    let btn = document.getElementById("createUserButton");
-    btn.addEventListener("click", createAccEvent);
+    // Draw some shapes to the canvas
+    //drawBoard();
 
-    let btn2 = document.getElementById("leaderboardButton");
-    btn2.addEventListener("click", leaderBoardEvent);
+    // As an example, we'll make a request to the server when the button is clicked
+    // and display the results in the HTML page.
+    let createUserButton = document.getElementById("createUserButton");
+    createUserButton.addEventListener("click", createAccEvent);
+
+    let seeLeaderboardButton = document.getElementById("leaderboardButton");
+    seeLeaderboardButton.addEventListener("click", leaderBoardEvent);
+
+    let createGameButton = document.getElementById("submitUsersForNewGameButton");
+    createGameButton.addEventListener("click", createNewGameEvent);
 
 
+};
+
+var createNewGameEvent = function() {
+   // hideMenu();
+
+    let user1 = document.getElementById("user1").value;
+    let user2 = document.getElementById("user2").value;
+
+    let json = {
+        red: user1,
+        blue: user2
+    };
+
+    fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
+        .then(function (response) {
+            if (response.status == 404) {
+                // user not found, indicate this to user
+                console.log("user not found");
+            }
+            else if (!response.ok) {
+                // shouldn't see this ever i think maybe
+                console.log("broke");
+            } else {
+                // probably want to show the board to the user then, because they just made a game and want to play
+                // their move
+                console.log("game created successfully")
+            }
+    });
 };
 
 var createAccEvent = function(e){
@@ -39,6 +75,9 @@ var createAccEvent = function(e){
 };
 
 var leaderBoardEvent = function(e) {
+    // Send a GET request to the server and display response in the
+    // "leaderboard-response-area" span element.  For details about the fetch function
+    // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     fetch("/menu/leaderboard", { method: "GET"} )
         .then( function(response) {
             let el = document.getElementById("leaderboard-response-area");
