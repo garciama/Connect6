@@ -3,7 +3,6 @@ package core.controller;
 import core.game.GameManager;
 import core.user.Move;
 import core.user.User;
-
 import java.util.List;
 import java.util.Map;
 

@@ -48,22 +48,33 @@ public class menuResourceTest {
 
         String response = client.target(HOST_URI)
                 .path("menu/inProgress")
-                .request(MediaType.TEXT_PLAIN_TYPE)
+                .request(MediaType.APPLICATION_JSON)
                 .get(String.class); //Whatever response we get store in a string
-        String menu = "1 Sam Nick\n";
 
-        Assert.assertEquals(menu, response);
+        Gson gson = new Gson();
+        MenuResource.GameInfoList inProgGames = gson.fromJson(response, MenuResource.GameInfoList.class);
+
+        Assert.assertEquals(1, inProgGames.getGameInfos().get(0).getId());
+        Assert.assertEquals("Sam", inProgGames.getGameInfos().get(0).getRedPlayer());
+        Assert.assertEquals("Nick", inProgGames.getGameInfos().get(0).getBluePlayer());
+
 
         ModelGateway.getController().registerNewPlayer("Michael");
         ModelGateway.getController().newPublicGame("Michael", "Sam");
 
          response = client.target(HOST_URI)
                 .path("menu/inProgress")
-                .request(MediaType.TEXT_PLAIN_TYPE)
+                .request(MediaType.APPLICATION_JSON)
                 .get(String.class); //Whatever response we get store in a string
-         menu = "1 Sam Nick\n2 Michael Sam\n";
 
-        Assert.assertEquals(menu, response);
+        inProgGames = gson.fromJson(response, MenuResource.GameInfoList.class);
+
+        Assert.assertEquals(1, inProgGames.getGameInfos().get(0).getId());
+        Assert.assertEquals("Sam", inProgGames.getGameInfos().get(0).getRedPlayer());
+        Assert.assertEquals("Nick", inProgGames.getGameInfos().get(0).getBluePlayer());
+        Assert.assertEquals(2, inProgGames.getGameInfos().get(1).getId());
+        Assert.assertEquals("Michael", inProgGames.getGameInfos().get(1).getRedPlayer());
+        Assert.assertEquals("Sam", inProgGames.getGameInfos().get(1).getBluePlayer());
     }
 
     @Test
@@ -84,12 +95,16 @@ public class menuResourceTest {
 
         String response = client.target(HOST_URI)
                 .path("menu/completed")
-                .request(MediaType.TEXT_PLAIN_TYPE)
+                .request(MediaType.APPLICATION_JSON)
                 .get(String.class); //Whatever response we get store in a string
 
-        String expected = "1 Michael San\n";
+        Gson gson = new Gson();
+        MenuResource.GameInfoList finGames = gson.fromJson(response, MenuResource.GameInfoList.class);
 
-        Assert.assertEquals(expected, response);
+        Assert.assertEquals(1, finGames.getGameInfos().get(0).getId());
+        Assert.assertEquals("Michael", finGames.getGameInfos().get(0).getRedPlayer());
+        Assert.assertEquals("San", finGames.getGameInfos().get(0).getBluePlayer());
+
     }
 
     @Test
@@ -110,10 +125,10 @@ public class menuResourceTest {
         Gson gson = new Gson();
         MenuResource.LeaderBoardInfo rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
-        Assert.assertEquals("Nick", rows.getRows().get(0).name);
-        Assert.assertEquals(0, rows.getRows().get(0).score);
-        Assert.assertEquals(0, rows.getRows().get(0).wins);
-        Assert.assertEquals(0, rows.getRows().get(0).losses);
+        Assert.assertEquals("Nick", rows.getRows().get(0).getName());
+        Assert.assertEquals(0, rows.getRows().get(0).getScore());
+        Assert.assertEquals(0, rows.getRows().get(0).getWins());
+        Assert.assertEquals(0, rows.getRows().get(0).getLosses());
 
         //Now after someone wins a game, check the json response again.
         ModelGateway.getController().getUsers().get("Walker").addWin();
@@ -136,20 +151,20 @@ public class menuResourceTest {
         rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
         //And we can also see that the json object is in order from lowest to highest score
-        Assert.assertEquals("Sam", rows.getRows().get(3).name);
-        Assert.assertEquals(9, rows.getRows().get(3).score);
-        Assert.assertEquals(3, rows.getRows().get(3).wins);
-        Assert.assertEquals(0, rows.getRows().get(3).losses);
+        Assert.assertEquals("Sam", rows.getRows().get(3).getName());
+        Assert.assertEquals(9, rows.getRows().get(3).getScore());
+        Assert.assertEquals(3, rows.getRows().get(3).getWins());
+        Assert.assertEquals(0, rows.getRows().get(3).getLosses());
 
-        Assert.assertEquals("Walker", rows.getRows().get(2).name);
-        Assert.assertEquals(6, rows.getRows().get(2).score);
-        Assert.assertEquals(2, rows.getRows().get(2).wins);
-        Assert.assertEquals(0, rows.getRows().get(2).losses);
+        Assert.assertEquals("Walker", rows.getRows().get(2).getName());
+        Assert.assertEquals(6, rows.getRows().get(2).getScore());
+        Assert.assertEquals(2, rows.getRows().get(2).getWins());
+        Assert.assertEquals(0, rows.getRows().get(2).getLosses());
 
-        Assert.assertEquals("Michael", rows.getRows().get(1).name);
-        Assert.assertEquals(3, rows.getRows().get(1).score);
-        Assert.assertEquals(1, rows.getRows().get(1).wins);
-        Assert.assertEquals(0, rows.getRows().get(1).losses);
+        Assert.assertEquals("Michael", rows.getRows().get(1).getName());
+        Assert.assertEquals(3, rows.getRows().get(1).getScore());
+        Assert.assertEquals(1, rows.getRows().get(1).getWins());
+        Assert.assertEquals(0, rows.getRows().get(1).getLosses());
     }
 
     @Test
