@@ -7,11 +7,7 @@ var yLoc;
 var headerHeight;
 
 var main = function() {
-    // Draw some shapes to the canvas
-    //drawBoard();
 
-    // As an example, we'll make a request to the server when the button is clicked
-    // and display the results in the HTML page.
     let createUserButton = document.getElementById("createUserButton");
     createUserButton.addEventListener("click", createAccEvent);
 
@@ -20,7 +16,6 @@ var main = function() {
 
     let createGameButton = document.getElementById("submitUsersForNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
-
 
 };
 
@@ -40,17 +35,40 @@ var createNewGameEvent = function() {
             if (response.status == 404) {
                 // user not found, indicate this to user
                 console.log("user not found");
-            }
-            else if (!response.ok) {
+            } else if (!response.ok) {
                 // shouldn't see this ever i think maybe
                 console.log("broke");
             } else {
                 // probably want to show the board to the user then, because they just made a game and want to play
                 // their move
                 console.log("game created successfully")
+                drawGameBoard();
             }
     });
 };
+
+var drawGameBoard = function () {
+    hideMenuAndNavAndFooter();
+    let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+    gameBoard.width = 1000;
+    gameBoard.height = 532;
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(375, 0, 532, 532);
+
+    for(var i = 0; i < 19; i++){
+        ctx.moveTo(i * 28 + 375, 0);
+        ctx.lineTo(i * 28 + 375, 532);
+        ctx.stroke();
+        ctx.moveTo(375, i  * 28);
+        ctx.lineTo(907, i * 28);
+        ctx.stroke();
+    }
+
+
+}
 
 var createAccEvent = function(e){
     e.preventDefault();
@@ -99,10 +117,17 @@ var leaderBoardEvent = function(e) {
 
 };
 
+var hideMenuAndNavAndFooter = function () {
+    hideMenu();
+    document.getElementById("footer").style.display = 'none';
+    document.getElementById("nav").style.display = 'none';
+}
+
 var hideMenu = function(){
     document.getElementById("art1").style.display = 'none';
     document.getElementById("art2").style.display = 'none';
     document.getElementById("art3").style.display = 'none';
+    document.getElementById("createGameGetUsers").style.display = 'none';
 };
 
 var drawLeaderBoard = function(jsonLeaderBoard){
@@ -114,8 +139,6 @@ var drawLeaderBoard = function(jsonLeaderBoard){
 
     let w = leaderBoard.width;
     let h = leaderBoard.height;
-
-
 
     let rows = (JSON.parse(jsonLeaderBoard)).leaderboardRows;
 

@@ -53,6 +53,10 @@
         form		{ text-align:           left;
                       vertical-align:       middle;
                     }
+        gameBord-canvas     { padding: 0;
+                            margin: auto;
+                            display: block;
+                            position: center;}
 
         leaderboard-canvas  { margin: 0;
                               overflow: hidden;
@@ -130,7 +134,7 @@
     <header>Welcome to Connect6</header>
     <hr/>
 
-    <nav>
+    <nav id="nav">
         <form>
             Username:
             <input type ="text" username="name" id="uname">
@@ -152,6 +156,9 @@
     </nav>
 
     <hr><br>
+
+    <canvas id="gameBoard-canvas"></canvas>
+
 
     <article class="col" id="art1">
         <br/>
@@ -222,12 +229,13 @@
     <canvas id="leaderBoard-canvas"></canvas>
 
 
-    <footer>
+
+    <footer id="footer">
         Cunning Coders™ 👀👌🔥🔥🔥
         <br>
         <a href="https://gitlab.cs.plu.edu/390-2019-cunningcoders/gameproject" class="githublink">
             <i class="fa fa-git" aria-hidden="true"></i></a>
-        <i>Members:</i> Sam Driver, Walker Lavoy, Nick Sundvall, Michael Garcia, San Nge
+        <i>Members:</i> Sam Driver, Walker LaVoy, Nick Sundvall, Michael Garcia, San Nge
     </footer>
 
     <!-- Load the javascript for the client application -->
