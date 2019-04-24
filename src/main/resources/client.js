@@ -20,8 +20,6 @@ var main = function() {
 };
 
 var createNewGameEvent = function() {
-   // hideMenu();
-
     let user1 = document.getElementById("user1").value;
     let user2 = document.getElementById("user2").value;
 
@@ -67,8 +65,36 @@ var drawGameBoard = function () {
         ctx.stroke();
     }
 
+    gameBoard.addEventListener('click', function(evt) {
+        var mousePos = getMousePosition(gameBoard, evt);
+        var gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
+        /*gridLocation.addEventListener('click', function(evt) {
+            var clicked = evt.target;
+            clicked.style.background = "black";
+            clicked.setAttribute('fill', 'red');
+        }, false)*/
+        console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
+    }, false);
+
 
 }
+
+function getMousePosition(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return { x: evt.clientX-rect.left, y: evt.clientY-rect.top};
+}
+
+function getGridLocation(posX, posY, gridSize) {
+    var cellRow = Math.floor(posY / gridSize);
+    var cellCol = Math.floor((posX-375) / gridSize);
+    return {row: cellRow, column: cellCol};
+}
+
+/*function changeColor(evt) {
+    var clicked = evt.target;
+    clicked.style.background = "black";
+    clicked.setAttribute('fill', 'red');
+}*/
 
 var createAccEvent = function(e){
     e.preventDefault();
