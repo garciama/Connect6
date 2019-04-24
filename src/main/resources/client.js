@@ -135,7 +135,7 @@ var drawLeaderBoard = function(jsonLeaderBoard){
     let leaderBoard = document.getElementById("leaderBoard-canvas");
     let ctx = leaderBoard.getContext("2d");
     leaderBoard.width = 1500;
-    leaderBoard.height = 500;
+    leaderBoard.height = 750;
 
     let w = leaderBoard.width;
     let h = leaderBoard.height;
@@ -147,33 +147,74 @@ var drawLeaderBoard = function(jsonLeaderBoard){
     yLoc += (headerHeight/2) + 12;
     var rowsLength = rows.length;
     var colWidth = w/6;
-    for (var i = 0; i < rowsLength; i++){
-
-        ctx.fillStyle = "white";
-        ctx.fillRect(2, yLoc - 15, w - 10, (yLoc - 15));
-
-        ctx.fillStyle = "black";
-        ctx.fillText(i, xLoc, yLoc);
-        ctx.fillText(rows[i].name, xLoc + colWidth, yLoc);
-        ctx.fillText(rows[i].score, xLoc + 2*colWidth, yLoc);
-        yLoc += 6;
-
-        if (i < rowsLength - 1){
-           ctx.beginPath();
-           ctx.moveTo(2, yLoc);
-           ctx.lineTo(w - 10, yLoc);
-            ctx.stroke();
-        }
-
-       yLoc += 15;
-    }
-    //Move the yLoc back up after the loop.
-    yLoc += -15;
 
     ctx.lineWidth = "2";
     ctx.strokeStyle = "gray";
-    ctx.rect(2,2, w - 10, yLoc);
-    ctx.stroke();
+    for (var i = 0; i < rowsLength; i++){
+
+        //draw the white background bar by bar
+        ctx.fillStyle = "white";
+        ctx.fillRect(2, yLoc - 15, w - 10, 21 );
+
+        ctx.fillStyle = "black";
+        ctx.fillText(i+1, xLoc, yLoc);
+        ctx.fillText(rows[i].name, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].score, xLoc + 2*colWidth, yLoc);
+        ctx.fillText(rows[i].wins, xLoc + 3*colWidth, yLoc);
+        ctx.fillText(rows[i].losses, xLoc + 4*colWidth, yLoc);
+        ctx.fillText(rows[i].ties, xLoc + 5*colWidth, yLoc);
+
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "gray";
+
+
+        ctx.moveTo(xLoc + (colWidth/2)+10, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2)+10, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2)+colWidth + 10, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2)+colWidth + 10, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2)+ 2*colWidth + 10, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2)+ 2*colWidth + 10, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2)+ 3*colWidth + 10, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2)+ 3*colWidth + 10, yLoc + 6);
+        ctx.stroke();
+
+         ctx.moveTo(xLoc + (colWidth/2)+ 4*colWidth + 10, yLoc - 15);
+         ctx.lineTo(xLoc + (colWidth/2)+ 4*colWidth + 10, yLoc + 6);
+         ctx.stroke();
+
+
+        //Draw left vertical line
+        ctx.moveTo(2, yLoc - 15);
+        ctx.lineTo(2, yLoc + 6);
+        ctx.stroke();
+
+        //Draw the right vertical line
+        ctx.moveTo(w - 8, yLoc - 15);
+        ctx.lineTo(w - 8, yLoc + 6);
+        ctx.stroke();
+
+        yLoc += 6;
+
+        //Draw the horizontal lines between rows
+        ctx.beginPath();
+        ctx.moveTo(2, yLoc);
+        ctx.lineTo(w - 8, yLoc);
+        ctx.stroke();
+
+       yLoc += 15;
+    }
+
+
+    //Move the yLoc back up after the loop.
+    yLoc += -15;
+
 };
 
 var drawLeaderBoardHeader = function(canvas){
@@ -213,8 +254,6 @@ var drawLeaderBoardHeader = function(canvas){
         ctx.fillText("Wins", xLoc + 3*colWidth, yLoc);
         ctx.fillText("Losses", xLoc + 4*colWidth, yLoc);
         ctx.fillText("Ties", xLoc + 5*colWidth, yLoc);
-
-
 
 };
 
