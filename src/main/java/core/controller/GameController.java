@@ -68,4 +68,6 @@ public class GameController {
     public List<Move> getMovesInGame(int id) { return gameManager.getMovesInGame(id); }
 
     public Map<String, User> getUsers() { return gameManager.getAllUsers(); }
+
+    public Map<String, User> getSortedByScore(){ return  gameManager.getSortedUsers(); }
 }

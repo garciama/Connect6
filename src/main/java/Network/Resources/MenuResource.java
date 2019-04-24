@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -54,10 +55,10 @@ public class MenuResource {
 
         LeaderBoardInfo leaderboard = new LeaderBoardInfo();
 
-        Map<String, User> allUsers = ModelGateway.getController().getUsers();
+        Map<String, User> sortedUsers = ModelGateway.getController().getSortedByScore();
 
-        for( String key : allUsers.keySet()){
-            User row = allUsers.get(key);
+        for( String key : sortedUsers.keySet()){
+            User row = sortedUsers.get(key);
 
             UserInfoRow newUser = new UserInfoRow(row.getName(), row.getScore(), row.getWins(),
                                     row.getLosses(), row.getTies());

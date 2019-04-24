@@ -195,6 +195,9 @@ public class GameManager {
         return sortedUserMap;
     }
 
+    public Map<String, User> getSortedUsers(){
+        return sortMap();
+    }
     /**
      * Gets all the users the have been created
      * @return the map of all users

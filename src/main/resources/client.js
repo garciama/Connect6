@@ -2,6 +2,10 @@
  *   Place client application Javascript code here.
  */
 
+var xLoc;
+var yLoc;
+var headerHeight;
+
 var main = function() {
     // Draw some shapes to the canvas
     //drawBoard();
@@ -71,34 +75,94 @@ var hideMenu = function(){
 };
 
 var drawLeaderBoard = function(jsonLeaderBoard){
+
     let leaderBoard = document.getElementById("leaderBoard-canvas");
-
-
     let ctx = leaderBoard.getContext("2d");
+    leaderBoard.width = 1500;
+    leaderBoard.height = 500;
+
     let w = leaderBoard.width;
     let h = leaderBoard.height;
 
-    // Clear the canvas with a background color
-       ctx.fillStyle = "rgb(10,200,10)";
-       ctx.fillRect(0, 0, w, h);
 
-       // Draw a few shapes to the canvas.  For a list of available drawing methods
-       // see:  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-       ctx.fillStyle = "black";
 
-       // Wall
-       ctx.strokeRect(75, 140, 150, 110);
+    let rows = (JSON.parse(jsonLeaderBoard)).leaderboardRows;
 
-       // Door
-       ctx.fillRect(130, 190, 40, 60);
+    drawLeaderBoardHeader(leaderBoard);
 
-       // Roof
-       ctx.beginPath();
-       ctx.moveTo(50, 140);
-       ctx.lineTo(150, 60);
-       ctx.lineTo(250, 140);
-       ctx.closePath();
-       ctx.stroke();
+    yLoc += (headerHeight/2) + 12;
+    var rowsLength = rows.length;
+    var colWidth = w/6;
+    for (var i = 0; i < rowsLength; i++){
+
+        ctx.fillStyle = "white";
+        ctx.fillRect(2, yLoc - 15, w - 10, (yLoc - 15));
+
+        ctx.fillStyle = "black";
+        ctx.fillText(i, xLoc, yLoc);
+        ctx.fillText(rows[i].name, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].score, xLoc + 2*colWidth, yLoc);
+        yLoc += 6;
+
+        if (i < rowsLength - 1){
+           ctx.beginPath();
+           ctx.moveTo(2, yLoc);
+           ctx.lineTo(w - 10, yLoc);
+            ctx.stroke();
+        }
+
+       yLoc += 15;
+    }
+    //Move the yLoc back up after the loop.
+    yLoc += -15;
+
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "gray";
+    ctx.rect(2,2, w - 10, yLoc);
+    ctx.stroke();
 };
+
+var drawLeaderBoardHeader = function(canvas){
+    ctx = canvas.getContext("2d");
+    let w = canvas.width;
+    let h = canvas.height;
+
+    ctx.lineWidth = "5";
+    ctx.fillStyle = "white";
+    headerHeight = 50;
+    ctx.fillRect( 2, 2, w - 10, headerHeight );
+
+    ctx.strokeStyle = "gray";
+    ctx.lineWidth = "3";
+    ctx.rect(2, 2, w - 10, headerHeight);
+    ctx.stroke();
+
+    ctx.lineWidth = "2";
+    var colWidth = w/6;
+    for (var i = 0; i < w - 10; i+= colWidth){
+        ctx.beginPath();
+        if (i != 0){
+            ctx.moveTo(i, 2);
+            ctx.lineTo(i, headerHeight);
+            ctx.stroke();
+        }
+    }
+
+    xLoc = (colWidth/2) - 10;
+    yLoc = 30;
+
+        ctx.font = "14px Sans SC"
+        ctx.fillStyle = "black";
+        ctx.fillText("Rank", xLoc, yLoc);
+        ctx.fillText("Name", xLoc + colWidth, yLoc);
+        ctx.fillText("Score", xLoc + 2*colWidth, yLoc);
+        ctx.fillText("Wins", xLoc + 3*colWidth, yLoc);
+        ctx.fillText("Losses", xLoc + 4*colWidth, yLoc);
+        ctx.fillText("Ties", xLoc + 5*colWidth, yLoc);
+
+
+
+};
+
 
 document.addEventListener("DOMContentLoaded", main);

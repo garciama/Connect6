@@ -25,8 +25,20 @@ public class Main {
         controller = new GameController();
         ModelGateway.setController(controller);
 
-//        ModelGateway.getController().registerNewPlayer("Sam");
-//        ModelGateway.getController().registerNewPlayer("Nick");
+        ModelGateway.getController().registerNewPlayer("Sam");
+        ModelGateway.getController().registerNewPlayer("Nick");
+        ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().getUsers().get("Sam").addWin();
+        ModelGateway.getController().getUsers().get("Sam").addWin();
+        ModelGateway.getController().getUsers().get("Walker").addLoss();
+        ModelGateway.getController().getUsers().get("Nick").addLoss();
+        ModelGateway.getController().getUsers().get("Nick").addWin();
+        ModelGateway.getController().getUsers().get("Walker").addLoss();
+
+
+
+
+
 //        ModelGateway.getController().newPublicGame("Sam", "Nick");
 
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();
