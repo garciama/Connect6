@@ -1,4 +1,5 @@
 package core.game;
+
 import core.Color;
 import core.user.User;
 import core.user.Move;

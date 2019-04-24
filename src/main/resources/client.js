@@ -12,13 +12,44 @@ var main = function() {
 
     // As an example, we'll make a request to the server when the button is clicked
     // and display the results in the HTML page.
-    let btn = document.getElementById("createUserButton");
-    btn.addEventListener("click", createAccEvent);
+    let createUserButton = document.getElementById("createUserButton");
+    createUserButton.addEventListener("click", createAccEvent);
 
-    let btn2 = document.getElementById("leaderboardButton");
-    btn2.addEventListener("click", leaderBoardEvent);
+    let seeLeaderboardButton = document.getElementById("leaderboardButton");
+    seeLeaderboardButton.addEventListener("click", leaderBoardEvent);
+
+    let createGameButton = document.getElementById("submitUsersForNewGameButton");
+    createGameButton.addEventListener("click", createNewGameEvent);
 
 
+};
+
+var createNewGameEvent = function() {
+   // hideMenu();
+
+    let user1 = document.getElementById("user1").value;
+    let user2 = document.getElementById("user2").value;
+
+    let json = {
+        red: user1,
+        blue: user2
+    };
+
+    fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
+        .then(function (response) {
+            if (response.status == 404) {
+                // user not found, indicate this to user
+                console.log("user not found");
+            }
+            else if (!response.ok) {
+                // shouldn't see this ever i think maybe
+                console.log("broke");
+            } else {
+                // probably want to show the board to the user then, because they just made a game and want to play
+                // their move
+                console.log("game created successfully")
+            }
+    });
 };
 
 var createAccEvent = function(e){
