@@ -125,7 +125,7 @@ public class menuResourceTest {
         Gson gson = new Gson();
         MenuResource.LeaderBoardInfo rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
-        Assert.assertEquals("Nick", rows.getRows().get(0).getName());
+        Assert.assertEquals("Sam", rows.getRows().get(0).getName());
         Assert.assertEquals(0, rows.getRows().get(0).getScore());
         Assert.assertEquals(0, rows.getRows().get(0).getWins());
         Assert.assertEquals(0, rows.getRows().get(0).getLosses());
@@ -151,19 +151,19 @@ public class menuResourceTest {
         rows = gson.fromJson(response, MenuResource.LeaderBoardInfo.class);
 
         //And we can also see that the json object is in order from lowest to highest score
-        Assert.assertEquals("Sam", rows.getRows().get(3).getName());
-        Assert.assertEquals(9, rows.getRows().get(3).getScore());
-        Assert.assertEquals(3, rows.getRows().get(3).getWins());
+        Assert.assertEquals("Nick", rows.getRows().get(3).getName());
+        Assert.assertEquals(0, rows.getRows().get(3).getScore());
+        Assert.assertEquals(0, rows.getRows().get(3).getWins());
         Assert.assertEquals(0, rows.getRows().get(3).getLosses());
 
-        Assert.assertEquals("Walker", rows.getRows().get(2).getName());
-        Assert.assertEquals(6, rows.getRows().get(2).getScore());
-        Assert.assertEquals(2, rows.getRows().get(2).getWins());
+        Assert.assertEquals("Michael", rows.getRows().get(2).getName());
+        Assert.assertEquals(3, rows.getRows().get(2).getScore());
+        Assert.assertEquals(1, rows.getRows().get(2).getWins());
         Assert.assertEquals(0, rows.getRows().get(2).getLosses());
 
-        Assert.assertEquals("Michael", rows.getRows().get(1).getName());
-        Assert.assertEquals(3, rows.getRows().get(1).getScore());
-        Assert.assertEquals(1, rows.getRows().get(1).getWins());
+        Assert.assertEquals("Walker", rows.getRows().get(1).getName());
+        Assert.assertEquals(6, rows.getRows().get(1).getScore());
+        Assert.assertEquals(2, rows.getRows().get(1).getWins());
         Assert.assertEquals(0, rows.getRows().get(1).getLosses());
     }
 
