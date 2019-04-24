@@ -5,6 +5,10 @@
 var xLoc;
 var yLoc;
 var headerHeight;
+var gameID;
+var redPlayer;
+var bluePlayer;
+var gridLocation;
 
 var main = function() {
 
@@ -23,6 +27,9 @@ var createNewGameEvent = function() {
     let user1 = document.getElementById("user1").value;
     let user2 = document.getElementById("user2").value;
 
+    redPlayer = user1;
+    bluePlayer = user2;
+
     let json = {
         red: user1,
         blue: user2
@@ -31,16 +38,18 @@ var createNewGameEvent = function() {
     fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
         .then(function (response) {
             if (response.status == 404) {
-                // user not found, indicate this to user
+                // TODO: write this to the page directly
                 console.log("user not found");
             } else if (!response.ok) {
                 // shouldn't see this ever i think maybe
                 console.log("broke");
             } else {
-                // probably want to show the board to the user then, because they just made a game and want to play
-                // their move
-                console.log("game created successfully")
+                response.text().then( function(value) {
+                console.log("id: " + value);
+                gameID = value;
                 drawGameBoard();
+
+                });
             }
     });
 };
@@ -53,7 +62,7 @@ var drawGameBoard = function () {
     gameBoard.width = 1000;
     gameBoard.height = 532;
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#bf912f";
     ctx.fillRect(375, 0, 532, 532);
 
     for(var i = 0; i < 19; i++){
@@ -67,8 +76,9 @@ var drawGameBoard = function () {
 
     gameBoard.addEventListener('click', function(evt) {
         var mousePos = getMousePosition(gameBoard, evt);
-        var gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-        /*gridLocation.addEventListener('click', function(evt) {
+        gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
+        placePieceEvent(redPlayer);
+            /*gridLocation.addEventListener('click', function(evt) {
             var clicked = evt.target;
             clicked.style.background = "black";
             clicked.setAttribute('fill', 'red');
@@ -76,20 +86,56 @@ var drawGameBoard = function () {
         console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
     }, false);
 
+};
 
-}
+var playGame = function(){
+
+
+};
+
+
 
 function getMousePosition(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return { x: evt.clientX-rect.left, y: evt.clientY-rect.top};
-}
+};
 
 function getGridLocation(posX, posY, gridSize) {
     var cellRow = Math.floor(posY / gridSize);
     var cellCol = Math.floor((posX-375) / gridSize);
     return {row: cellRow, column: cellCol};
-}
+};
 
+var placePieceEvent = function(nameVal){
+    let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+    var xVal = gridLocation.column;
+    var yVal = gridLocation.row;
+
+    let data = {
+        x: xVal,
+        y: yVal,
+        name: nameVal
+    };
+
+    console.log(xVal + " " + yVal);
+
+    fetch("game/makeMove/" + gameID , {method: "PUT", headers:{"Content-Type": "application/json"}, body: JSON.stringify(data)} )
+            .then( function(response){
+                if (!response.ok){
+                    console.log("can't make move " + response.status);
+                    return false;
+                } else {
+                    response.text().then( function(value) {
+                    //specify error to user
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(375 + (xVal * 28), (yVal *28), 28, 28);
+                    console.log(value);
+                    return true;
+                    });
+                }
+            });
+};
 /*function changeColor(evt) {
     var clicked = evt.target;
     clicked.style.background = "black";

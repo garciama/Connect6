@@ -53,7 +53,7 @@ public class gameResourceTest {
                 .request(MediaType.TEXT_PLAIN)
                 .put(data, String.class);
 
-        Assert.assertEquals("game created", response);
+        Assert.assertEquals("1", response);
 
         String after = ModelGateway.getController().seeInProgressGames();
         Assert.assertEquals("1 Walker Sam\n", after);

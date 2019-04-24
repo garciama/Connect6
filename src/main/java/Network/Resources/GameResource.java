@@ -2,6 +2,7 @@ package Network.Resources;
 
 import Network.ModelGateway;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import core.Color;
 import core.user.Move;
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ public class GameResource {
         String bluePlayer = obj.getString("blue");
         Response res;
         if(ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
-            ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
-            String str = "game created";
+           int id = ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
+            String str = Integer.toString(id);
             res = Response.ok(str).build();
         }
         else{
@@ -109,9 +110,10 @@ public class GameResource {
         }
 
         JSONObject obj = new JSONObject(data);
-        String xStr = obj.getString("x");
-        String yStr = obj.getString("y");
+        int x = obj.getInt("x");
+        int y = obj.getInt("y");
         String userName = obj.getString("name");
+
 
         if (! (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
             ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
@@ -124,19 +126,6 @@ public class GameResource {
         if (!ModelGateway.getController().userCurrentTurn(id).equalsIgnoreCase(userName)){
             response = "it is not your turn";
             res = Response.status(403).entity(response).build();
-            return res;
-        }
-
-        int x = -1;
-        int y = -1;
-
-        try {
-            x = Integer.parseInt(xStr);
-            y = Integer.parseInt(yStr);
-        } catch (NumberFormatException e){
-            //If invalid number format entered in Json
-            response = "invalid x or y value";
-            res = Response.status(404).entity(response).build();
             return res;
         }
 
@@ -157,6 +146,7 @@ public class GameResource {
             res = Response.status(400).entity(response).build();
             return res;
         }
+
 
         response = "move made";
         res = Response.ok(response).build();
@@ -219,6 +209,7 @@ public class GameResource {
             Board.add(newObject);
         }
         public List<SquareInfo> getBoardSquares(){ return Board; }
+
     }
 
 }
