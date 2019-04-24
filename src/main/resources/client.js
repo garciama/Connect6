@@ -110,7 +110,7 @@ var drawLeaderBoard = function(jsonLeaderBoard){
     let leaderBoard = document.getElementById("leaderBoard-canvas");
     let ctx = leaderBoard.getContext("2d");
     leaderBoard.width = 1500;
-    leaderBoard.height = 500;
+    leaderBoard.height = 750;
 
     let w = leaderBoard.width;
     let h = leaderBoard.height;
