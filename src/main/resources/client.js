@@ -20,13 +20,9 @@ var main = function() {
 
     let createGameButton = document.getElementById("createNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
-    //TODO: not the actual join game button, just used for testing loadGameBoard
-    let joinGameButton = document.getElementById("joinGameButton");
-    joinGameButton.addEventListener("click", loadGameBoard);
 
     let joinGameButton = document.getElementById("joinGameButton");
-    createGameButton.addEventListener("click", joinGameEvent);
-
+    joinGameButton.addEventListener("click", joinGameEvent);
 
 };
 
@@ -62,8 +58,6 @@ var createNewGameEvent = function() {
     redPlayer = user1;
     bluePlayer = user2;
 
-    console.log(redPlayer);
-
     let json = {
         red: user1,
         blue: user2
@@ -90,6 +84,9 @@ var createNewGameEvent = function() {
 
 var joinGameEvent = function(e){
     hideMenu();
+    let username = document.getElementById("joinName").value;
+    console.log(username);
+
 
 };
 
