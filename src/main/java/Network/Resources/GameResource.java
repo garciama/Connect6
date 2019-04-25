@@ -187,6 +187,7 @@ public class GameResource {
         return gson.toJson(newBoardInfo);
     }
 
+
     public class SquareInfo {
         private int x;
         private int y;

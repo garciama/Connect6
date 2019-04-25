@@ -18,8 +18,12 @@ var main = function() {
     let seeLeaderboardButton = document.getElementById("leaderboardButton");
     seeLeaderboardButton.addEventListener("click", leaderBoardEvent);
 
-    let createGameButton = document.getElementById("submitUsersForNewGameButton");
+    let createGameButton = document.getElementById("createNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
+
+    let joinGameButton = document.getElementById("joinGameButton");
+    createGameButton.addEventListener("click", joinGameEvent);
+
 
 };
 
@@ -29,6 +33,8 @@ var createNewGameEvent = function() {
 
     redPlayer = user1;
     bluePlayer = user2;
+
+    console.log(redPlayer);
 
     let json = {
         red: user1,
@@ -52,6 +58,11 @@ var createNewGameEvent = function() {
                 });
             }
     });
+};
+
+var joinGameEvent = function(e){
+    hideMenu();
+
 };
 
 var drawGameBoard = function () {
@@ -89,7 +100,6 @@ var drawGameBoard = function () {
 };
 
 var playGame = function(){
-
 
 };
 
@@ -199,7 +209,6 @@ var hideMenu = function(){
     document.getElementById("art1").style.display = 'none';
     document.getElementById("art2").style.display = 'none';
     document.getElementById("art3").style.display = 'none';
-    document.getElementById("createGameGetUsers").style.display = 'none';
 };
 
 var drawLeaderBoard = function(jsonLeaderBoard){
@@ -225,7 +234,7 @@ var drawLeaderBoard = function(jsonLeaderBoard){
     for (var i = 0; i < rowsLength; i++){
 
         //draw the white background bar by bar
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#d1f7a5";
         ctx.fillRect(2, yLoc - 15, w - 10, 21 );
 
         ctx.fillStyle = "black";
