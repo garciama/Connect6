@@ -28,24 +28,24 @@ var main = function() {
 
 };
 
-var loadGameBoard = function(board) {
+var loadGameBoard = function(id) {
     let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     //TODO: make the this is the right path param
-    fetch("game/getBoard/1", {method: "GET"})
+    fetch("game/getBoard/" + id, {method: "GET"})
         .then(function (response) {
             if (!response.ok){
                 console.log("error in loadGameBoard");
             }else{
-                drawGameBoard();
                 response.text().then(function (value) {
                     //TODO: loop thru to fill each cell
                     let board = (JSON.parse(value)).Board;
+                    drawGameBoard();
                     let xVal = board[0].x;
                     let yVal = board[0].y;
                     let color = board[0].color;
-                    console.log(xVal + " " + yVal + " " +  color);
-                    ctx.fillStyle = "red";
+                    console.log("in load: " + xVal + " " + yVal + " " +  color);
+                    ctx.fillStyle = color;
                     ctx.fillRect(375 + (xVal * 28), (yVal *28), 28, 28);
                 })
             }
@@ -195,7 +195,8 @@ var drawMyGames = function(myGamesJSON){
              mousePos.y >= 50 && mousePos.y <= 50 + (21 * rowsLength)){
                    gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21, rowsLength);
             //call joingame get
-               console.log("Row: " + gridLocation.row + " Col: " + gridLocation.column);
+               console.log("Row: " + gridLocation.row + " Col: " + gridLocation.column + " id: " + rows[gridLocation.row].id);
+               loadGameBoard(rows[gridLocation.row].id);
             }
         }, false);
 };
