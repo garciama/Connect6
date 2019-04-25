@@ -38,19 +38,23 @@ var loadGameBoard = function(id) {
                 console.log("error in loadGameBoard");
             }else{
                 response.text().then(function (value) {
-                    //TODO: loop thru to fill each cell
-                    let board = (JSON.parse(value)).Board;
                     drawGameBoard();
-                    let xVal = board[0].x;
-                    let yVal = board[0].y;
-                    let color = board[0].color;
-                    console.log("in load: " + xVal + " " + yVal + " " +  color);
-                    ctx.fillStyle = color;
-                    ctx.fillRect(375 + (xVal * 28), (yVal *28), 28, 28);
+                    let board = (JSON.parse(value)).Board;
+                    for(var i = 0; i < board.length; i++) {
+                        let xVal = board[i].x;
+                        let yVal = board[i].y;
+                        let color = board[i].color;
+                        console.log("in load: " + xVal + " " + yVal + " " + color);
+                        ctx.fillStyle = color;
+                        //draw piece on board
+                        ctx.beginPath();
+                        ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
+                        ctx.stroke();
+                        ctx.fill();
+                    }
                 })
             }
         })
-
 }
 
 var createNewGameEvent = function() {
@@ -252,6 +256,7 @@ var drawMyGamesHeader = function(canvas, xStart, xEnd){
 
 var drawGameBoard = function () {
     hideMenuAndNavAndFooter();
+    document.getElementById("gameBoard-canvas").style.display = 'initial';
     document.getElementById("leaderBoard-canvas").style.display = 'none';
     document.getElementById("myGames-canvas").style.display = 'none';
 
