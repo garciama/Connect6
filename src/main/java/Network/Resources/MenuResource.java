@@ -33,6 +33,7 @@ public class MenuResource {
         return res;
     }
 
+    //TODO: Write a test for this
     @PUT
     @Path("myGames")
     @Produces(MediaType.APPLICATION_JSON)
