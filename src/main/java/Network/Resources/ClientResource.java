@@ -1,6 +1,5 @@
 package Network.Resources;
 
-
 import javax.ws.rs.*;
 import java.io.InputStream;
 

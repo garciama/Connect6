@@ -25,15 +25,15 @@ public class Main {
         controller = new GameController();
         ModelGateway.setController(controller);
 
-        ModelGateway.getController().registerNewPlayer("Sam");
-        ModelGateway.getController().registerNewPlayer("Nick");
-        ModelGateway.getController().newPublicGame("Sam", "Nick");
+//        ModelGateway.getController().registerNewPlayer("Sam");
+//        ModelGateway.getController().registerNewPlayer("Nick");
+//        ModelGateway.getController().registerNewPlayer("Walker");
+//        ModelGateway.getController().newPublicGame("Sam", "Nick");
+
 
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();
         final ResourceConfig config = new ResourceConfig().packages(RESOURCES_PACKAGES);
         return GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
     }
-
-
 
 }

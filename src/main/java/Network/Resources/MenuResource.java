@@ -3,10 +3,12 @@ package Network.Resources;
 import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.user.User;
+import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -14,39 +16,59 @@ import java.util.Map;
 @Path("menu")
 public class MenuResource {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getMenu() {
-        return "Enter a number to select an option:\n1. Create a user\n2. Create a new game\n3. See games" +
-                " in progress\n4. Join a game\n5. See list of completed games\n6. See leaderboard\n";
-    }
-
-    @PUT
+    @POST
     @Path("createUser")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createUser(String username) {
+
+        JSONObject obj = new JSONObject(username);
+        String name = obj.getString("name");
+
         Response res;
-        if (!ModelGateway.getController().registerNewPlayer(username)){
+        if (!ModelGateway.getController().registerNewPlayer(name)){
             throw new WebApplicationException(400);
         }
-        String str = "user created successfully";
+        String str = "User Created Successfully";
         res = Response.ok(str).build();
         return res;
     }
 
     @GET
     @Path("inProgress")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getGamesInProgress() {
-        String games = ModelGateway.getController().seeInProgressGames();
-        return games;
+        GameInfoList games = new GameInfoList();
+        String inProgressGames = ModelGateway.getController().seeInProgressGames();
+        String[] splitStr = inProgressGames.split("\n");
+        for(int i = 0; i < splitStr.length; i++) {
+            String[] splitRow = splitStr[i].split("\\s+");
+            int id = Integer.parseInt(splitRow[0]);
+            String redP = splitRow[1];
+            String blueP = splitRow[2];
+            GameInfo newObject = new GameInfo(id, redP, blueP);
+            games.addGameInfo(newObject);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(games);
     }
 
     @GET
     @Path("completed")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getFinishedGames() {
-        return ModelGateway.getController().seeFinishedGames();
+        GameInfoList games = new GameInfoList();
+        String inProgressGames = ModelGateway.getController().seeFinishedGames();
+        String[] splitStr = inProgressGames.split("\n");
+        for(int i = 0; i < splitStr.length; i++) {
+            String[] splitRow = splitStr[i].split("\\s+");
+            int id = Integer.parseInt(splitRow[0]);
+            String redP = splitRow[1];
+            String blueP = splitRow[2];
+            GameInfo newObject = new GameInfo(id, redP, blueP);
+            games.addGameInfo(newObject);
+        }
+        Gson gson = new Gson();
+        return gson.toJson(games);
     }
 
     @GET
@@ -55,10 +77,10 @@ public class MenuResource {
 
         LeaderBoardInfo leaderboard = new LeaderBoardInfo();
 
-        Map<String, User> allUsers = ModelGateway.getController().getUsers();
+        Map<String, User> sortedUsers = ModelGateway.getController().getSortedByScore();
 
-        for( String key : allUsers.keySet()){
-            User row = allUsers.get(key);
+        for( String key : sortedUsers.keySet()){
+            User row = sortedUsers.get(key);
 
             UserInfoRow newUser = new UserInfoRow(row.getName(), row.getScore(), row.getWins(),
                                     row.getLosses(), row.getTies());
@@ -82,11 +104,11 @@ public class MenuResource {
     }
 
     public class UserInfoRow {
-        String name;
-        int score;
-        int wins;
-        int losses;
-        int ties;
+        private String name;
+        private int score;
+        private int wins;
+        private int losses;
+        private int ties;
 
         UserInfoRow(String newName, int newScore, int newWins, int newLosses, int newTies){
             name = newName;
@@ -95,6 +117,36 @@ public class MenuResource {
             losses = newLosses;
             ties = newTies;
         }
+
+        public String getName() { return name; }
+        public int getScore() { return score; }
+        public int getWins() { return wins; }
+        public int getLosses() { return losses; }
+        public int getTies() { return ties; }
+    }
+
+    public class GameInfo {
+        private int id;
+        private String redPlayer;
+        private String bluePlayer;
+
+        GameInfo(int newID, String newRed, String newBlue) {
+            id = newID;
+            redPlayer = newRed;
+            bluePlayer = newBlue;
+        }
+
+        public int getId() { return id; }
+        public String getRedPlayer() { return redPlayer; }
+        public String getBluePlayer() { return bluePlayer; }
+    }
+
+    public class GameInfoList {
+        private List<GameInfo> gameInfos = new ArrayList<>();
+
+        public void addGameInfo(GameInfo game) { gameInfos.add(game); }
+
+        public List<GameInfo> getGameInfos() { return gameInfos; }
     }
 
 }

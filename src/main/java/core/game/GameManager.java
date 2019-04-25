@@ -1,7 +1,7 @@
 package core.game;
+
 import core.user.Move;
 import core.user.User;
-
 import java.util.*;
 
 public class GameManager {
@@ -68,8 +68,6 @@ public class GameManager {
             System.out.println("Error: Name too long!");
             return false;
         }
-
-        //TODO: Make it so the new player object won't be created if name already exists.
         User newPlayer = new User(nameOfNewPlayer);
 
         if (allUsers.putIfAbsent(nameOfNewPlayer, newPlayer) == null)
@@ -195,6 +193,9 @@ public class GameManager {
         return sortedUserMap;
     }
 
+    public Map<String, User> getSortedUsers(){
+        return sortMap();
+    }
     /**
      * Gets all the users the have been created
      * @return the map of all users
@@ -229,8 +230,6 @@ public class GameManager {
         StringBuilder str = new StringBuilder();
         for (Game g : allGameMap.values()) {
             if (!g.gameIsFinished() && g.isPublic()) {
-                // TODO you should be able to see private games if you are a
-                // user involved in that game, either through being a player or being invited to see it
                 str.append(getGameInfo(g));
             }
         }
