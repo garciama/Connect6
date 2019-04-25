@@ -67,11 +67,17 @@ var createNewGameEvent = function() {
 
     fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
         .then(function (response) {
+            let el = document.getElementById("create-user-area");
+
             if (response.status == 404) {
-                // TODO: write this to the page directly
-                console.log("user not found");
+                el.innerText = "1 or both users not found, game not created";
+                el.style.color = "red";
+                console.log("user not found, game not created");
             } else if (!response.ok) {
                 // shouldn't see this ever i think maybe
+                el.innerText = "Error code: " + response.status;
+                el.style.fontWeight = "bold";
+                el.style.color = "red";
                 console.log("broke");
             } else {
                 response.text().then( function(value) {
@@ -96,7 +102,8 @@ var joinGameEvent = function(e){
             .then(function (response) {
             let el = document.getElementById("joinName");
                 if (!response.ok) {
-                    el.value = "No games in progress.";
+                    el.value = "";
+                    el.placeholder = "User not found/no games in progress"
                     //document.getElementById("joinName").value = "No games in progress";
                 } else {
                     response.text().then( function(value) {
@@ -128,6 +135,7 @@ var drawMyGames = function(myGamesJSON){
 
     var gameList = JSON.parse(myGamesJSON);
     var rows = gameList.gameInfos;
+
 
     let xStart = (w * 0.2);
     let xEnd = (w * 0.8);
