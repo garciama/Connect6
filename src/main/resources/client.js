@@ -20,8 +20,36 @@ var main = function() {
 
     let createGameButton = document.getElementById("submitUsersForNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
+    //TODO: not the actual join game button, just used for testing loadGameBoard
+    let joinGameButton = document.getElementById("joinGameButton");
+    joinGameButton.addEventListener("click", loadGameBoard);
 
 };
+
+var loadGameBoard = function(board) {
+    let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+    //TODO: make the this is the right path param
+    fetch("game/getBoard/1", {method: "GET"})
+        .then(function (response) {
+            if (!response.ok){
+                console.log("error in loadGameBoard");
+            }else{
+                drawGameBoard();
+                response.text().then(function (value) {
+                    //TODO: loop thru to fill each cell
+                    let board = (JSON.parse(value)).Board;
+                    let xVal = board[0].x;
+                    let yVal = board[0].y;
+                    let color = board[0].color;
+                    console.log(xVal + " " + yVal + " " +  color);
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(375 + (xVal * 28), (yVal *28), 28, 28);
+                })
+            }
+        })
+
+}
 
 var createNewGameEvent = function() {
     let user1 = document.getElementById("user1").value;
@@ -78,11 +106,6 @@ var drawGameBoard = function () {
         var mousePos = getMousePosition(gameBoard, evt);
         gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
         placePieceEvent(redPlayer);
-            /*gridLocation.addEventListener('click', function(evt) {
-            var clicked = evt.target;
-            clicked.style.background = "black";
-            clicked.setAttribute('fill', 'red');
-        }, false)*/
         console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
     }, false);
 
@@ -92,8 +115,6 @@ var playGame = function(){
 
 
 };
-
-
 
 function getMousePosition(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -136,11 +157,6 @@ var placePieceEvent = function(nameVal){
                 }
             });
 };
-/*function changeColor(evt) {
-    var clicked = evt.target;
-    clicked.style.background = "black";
-    clicked.setAttribute('fill', 'red');
-}*/
 
 var createAccEvent = function(e){
     e.preventDefault();
@@ -169,9 +185,6 @@ var createAccEvent = function(e){
 };
 
 var leaderBoardEvent = function(e) {
-    // Send a GET request to the server and display response in the
-    // "leaderboard-response-area" span element.  For details about the fetch function
-    // see:  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
     fetch("/menu/leaderboard", { method: "GET"} )
         .then( function(response) {
             let el = document.getElementById("leaderboard-response-area");

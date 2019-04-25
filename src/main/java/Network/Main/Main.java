@@ -29,6 +29,4 @@ public class Main {
         return GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
     }
 
-
-
 }
