@@ -39,6 +39,7 @@ footer      { color:                black;
             }
 
 form		{ text-align:           left;
+              vertical-align:       middle;
             }
 
 
@@ -54,9 +55,10 @@ form		{ text-align:           left;
 .ngbutton:hover{background-color: #A42828;
                    color: white;}
 
-.jgbutton{color: #C33DCD; }
-.jgbutton:hover{ background-color: #C33DCD;
-                 color: white; }
+.jgbutton{color: #C33DCD;
+         position:  absolute;}
+.jgbutton:hover{background-color: #C33DCD;
+                   color: white;}
 
 .ipbutton{color: #ED9237;}
 .ipbutton:hover{background-color: #ED9237;
@@ -96,7 +98,7 @@ article.col	{
 
 .popcornimage{height: 60%; }
 
-.arrowimage{height; 49%;
+.arrowimage{height: 49%;
             width:  49%;}
 
 .githublink{float: left;
