@@ -201,7 +201,7 @@ var drawMyGames = function(myGamesJSON){
 };
 
 function getMyGameLocation(posX, posY, gridSize, rowNumbers) {
-    var cellRow = Math.floor( posY / (gridSize + 50) );
+    var cellRow = Math.floor( (posY - 50) / gridSize );
     var cellCol = Math.floor(posX / gridSize);
 
     return {row: cellRow, column: cellCol};

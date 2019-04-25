@@ -30,7 +30,12 @@ public class Main {
         ModelGateway.getController().registerNewPlayer("Walker");
         ModelGateway.getController().newPublicGame("Sam", "Nick");
         ModelGateway.getController().newPublicGame("Walker", "Sam");
-        ModelGateway.getController().newPublicGame("Nick", "Walker");
+        ModelGateway.getController().newPublicGame("Sam", "Nick");
+        ModelGateway.getController().newPublicGame("Walker", "Sam");
+        ModelGateway.getController().newPublicGame("Nick", "Sam");
+        ModelGateway.getController().newPublicGame("Sam", "Nick");
+        ModelGateway.getController().newPublicGame("Sam", "Walker");
+
 
 
 
