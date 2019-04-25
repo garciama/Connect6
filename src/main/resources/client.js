@@ -9,6 +9,8 @@ var gameID;
 var redPlayer;
 var bluePlayer;
 var gridLocation;
+var xStart;
+var xEnd;
 
 var main = function() {
 
@@ -83,15 +85,175 @@ var createNewGameEvent = function() {
 };
 
 var joinGameEvent = function(e){
-    hideMenu();
     let username = document.getElementById("joinName").value;
-    console.log(username);
+
+    let json = {
+        name: username
+    };
+
+
+    fetch("menu/myGames", {method: "PUT", body: JSON.stringify(json)})
+            .then(function (response) {
+            let el = document.getElementById("joinName");
+                if (!response.ok) {
+                    el.value = "No games in progress.";
+                    //document.getElementById("joinName").value = "No games in progress";
+                } else {
+                    response.text().then( function(value) {
+                        console.log(value);
+                        //the games are returned as value as a json object
+                        drawMyGames(value);
+                    });
+                }
+        });
+
+
 
 
 };
 
+var drawMyGames = function(myGamesJSON){
+    hideMenu();
+    document.getElementById("gameBoard-canvas").style.display = 'none';
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+
+    let myGamesCanvas = document.getElementById("myGames-canvas");
+    let ctx = myGamesCanvas.getContext("2d");
+
+    myGamesCanvas.width = (window.screen.width - 50) * 0.75;
+    myGamesCanvas.height = window.screen.height - 100;
+
+    let w = myGamesCanvas.width;
+    let h = myGamesCanvas.height;
+
+    var gameList = JSON.parse(myGamesJSON);
+    var rows = gameList.gameInfos;
+
+    let xStart = (w * 0.2);
+    let xEnd = (w * 0.8);
+
+    drawMyGamesHeader(myGamesCanvas, xStart, xEnd);
+
+    yLoc += (headerHeight/2) + 12;
+    var rowsLength = rows.length;
+    var colWidth = (xEnd - xStart)/3;
+
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "gray";
+    for (var i = 0; i < rowsLength; i++){
+
+        //draw the white background bar by bar
+        ctx.fillStyle = "white";
+        ctx.fillRect(xStart, yLoc - 15, (xEnd - xStart), 21 );
+
+        ctx.fillStyle = "black";
+        ctx.fillText(rows[i].id, xLoc, yLoc);
+        ctx.fillText(rows[i].redPlayer, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].bluePlayer, xLoc + 2*colWidth, yLoc)
+
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "gray";
+
+        //Draw the vertical lines between columns
+        ctx.moveTo(xLoc + (colWidth/2) + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + 20, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2) + colWidth + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + colWidth + 20, yLoc + 6);
+        ctx.stroke();
+
+        //Draw left vertical line
+        ctx.moveTo(xStart, yLoc - 15);
+        ctx.lineTo(xStart, yLoc + 6);
+        ctx.stroke();
+
+        //Draw the right vertical line
+        ctx.moveTo(xEnd, yLoc - 15);
+        ctx.lineTo(xEnd, yLoc + 6);
+        ctx.stroke();
+
+        yLoc += 6;
+
+        //Draw the horizontal lines between rows
+        ctx.beginPath();
+        ctx.moveTo(xStart, yLoc);
+        ctx.lineTo(xEnd, yLoc);
+        ctx.stroke();
+
+       yLoc += 15;
+    }
+
+
+    //Move the yLoc back up after the loop.
+    yLoc += -15;
+
+    myGamesCanvas.addEventListener('click', function(evt) {
+            var mousePos = getMousePosition(myGamesCanvas, evt);
+            if (mousePos.x >= xStart && mousePos.x <= xEnd &&
+             mousePos.y >= 50 && mousePos.y <= 50 + (21 * rowsLength)){
+                   gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21, rowsLength);
+            //call joingame get
+               console.log("Row: " + gridLocation.row + " Col: " + gridLocation.column);
+            }
+        }, false);
+};
+
+function getMyGameLocation(posX, posY, gridSize, rowNumbers) {
+    var cellRow = Math.floor( posY / (gridSize + 50) );
+    var cellCol = Math.floor(posX / gridSize);
+
+    return {row: cellRow, column: cellCol};
+};
+
+var drawMyGamesHeader = function(canvas, xStart, xEnd){
+    ctx = canvas.getContext("2d");
+    let w = canvas.width;
+    let h = canvas.height;
+
+
+    ctx.lineWidth = "5";
+    ctx.fillStyle = "white";
+    headerHeight = 50;
+    ctx.fillRect( xStart, 2, (xEnd - xStart), headerHeight );
+
+    //Draw box around
+    ctx.strokeStyle = "gray";
+    ctx.lineWidth = "3";
+    ctx.rect(xStart, 2, (xEnd - xStart), headerHeight);
+    ctx.stroke();
+
+    //Draw the vertical bars colwidth apart.
+    ctx.lineWidth = "2";
+    var colWidth = (xEnd - xStart)/3;
+    for (var i = xStart; i <= (xEnd - xStart); i+= colWidth){
+        ctx.beginPath();
+        if (i != xStart){
+            ctx.moveTo(i, 2);
+            ctx.lineTo(i, headerHeight);
+            ctx.stroke();
+        }
+    }
+
+    xLoc = xStart + (colWidth/2) - 20;
+    yLoc = 30;
+
+    ctx.font = "14px Sans SC"
+    ctx.fillStyle = "black";
+    ctx.fillText("Game ID", xLoc, yLoc);
+    ctx.fillText("Red Player", xLoc + colWidth, yLoc);
+    ctx.fillText("Blue Player", xLoc + 2*colWidth, yLoc);
+
+
+};
+
+
 var drawGameBoard = function () {
     hideMenuAndNavAndFooter();
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
+
     let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
 
@@ -205,7 +367,6 @@ var leaderBoardEvent = function(e) {
                 el.style.color = "red";
             } else {
                 response.text().then( function(value) {
-                    hideMenu();
                     drawLeaderBoard(value);
                 });
             }
@@ -223,14 +384,18 @@ var hideMenu = function(){
     document.getElementById("art1").style.display = 'none';
     document.getElementById("art2").style.display = 'none';
     document.getElementById("art3").style.display = 'none';
+
 };
 
 var drawLeaderBoard = function(jsonLeaderBoard){
+    hideMenu();
+    document.getElementById("gameBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
 
     let leaderBoard = document.getElementById("leaderBoard-canvas");
     let ctx = leaderBoard.getContext("2d");
-    leaderBoard.width = 1500;
-    leaderBoard.height = 750;
+    leaderBoard.width = window.screen.width - 50;
+    leaderBoard.height = window.screen.height - 100;
 
     let w = leaderBoard.width;
     let h = leaderBoard.height;

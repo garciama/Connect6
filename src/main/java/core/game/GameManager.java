@@ -264,6 +264,17 @@ public class GameManager {
         return String.format("%s %s %s\n", Integer.toString(id), redPlayer, bluePlayer);
     }
 
+    public String getMyGameInfo(String playerName){
+        StringBuilder str = new StringBuilder();
+        for (Game g: allGameMap.values()){
+            if (playerName.equalsIgnoreCase(g.getRedPlayerName())
+                    || playerName.equalsIgnoreCase(g.getBluePlayerName())){
+                str.append(getGameInfo(g));
+            }
+        }
+        return str.toString();
+    }
+
     /**
      * Makes a move in a game with the given ID
      * @param ID ID of game to make move in
@@ -309,4 +320,6 @@ public class GameManager {
     public boolean checkGameExists(int id){ return (allGameMap.containsKey(id)); }
 
     public List<Move> getMovesInGame(int id) { return allGameMap.get(id).getMoves(); }
+
+
 }

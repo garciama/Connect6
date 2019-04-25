@@ -33,6 +33,35 @@ public class MenuResource {
         return res;
     }
 
+    @PUT
+    @Path("myGames")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String myGamesInProgress(String username){
+        JSONObject obj = new JSONObject(username);
+        String name = obj.getString("name");
+
+        GameInfoList games = new GameInfoList();
+
+        String myInProgressGames = ModelGateway.getController().seeMyGames(name);
+        String[] splitStr = myInProgressGames.split("\n");
+
+        if (splitStr.length == 0){
+            throw new WebApplicationException(400);
+        }
+
+        for (int i = 0; i < splitStr.length; i++){
+            String[] splitRow = splitStr[i].split("\\s+");
+            int id = Integer.parseInt(splitRow[0]);
+            String redPlayer = splitRow[1];
+            String bluePlayer = splitRow[2];
+            GameInfo newObj = new GameInfo(id, redPlayer, bluePlayer);
+            games.addGameInfo(newObj);
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(games);
+    }
+
     @GET
     @Path("inProgress")
     @Produces(MediaType.APPLICATION_JSON)

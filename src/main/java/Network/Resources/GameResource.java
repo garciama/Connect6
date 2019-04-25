@@ -2,7 +2,6 @@ package Network.Resources;
 
 import Network.ModelGateway;
 import com.google.gson.Gson;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import core.Color;
 import core.user.Move;
 import java.util.ArrayList;

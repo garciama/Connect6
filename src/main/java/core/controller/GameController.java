@@ -69,4 +69,7 @@ public class GameController {
     public Map<String, User> getUsers() { return gameManager.getAllUsers(); }
 
     public Map<String, User> getSortedByScore(){ return  gameManager.getSortedUsers(); }
+
+    public String seeMyGames(String playerName){ return gameManager.getMyGameInfo(playerName); }
+
 }
