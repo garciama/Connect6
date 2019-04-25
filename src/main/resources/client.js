@@ -129,8 +129,12 @@ var placePieceEvent = function(nameVal){
                     response.text().then( function(value) {
                     //specify error to user
                     ctx.fillStyle = "red";
-                    ctx.fillRect(375 + (xVal * 28), (yVal *28), 28, 28);
-                    console.log(value);
+
+                    //draw piece on board
+                    ctx.beginPath();
+                    ctx.arc(375 + (xVal * 28) + 14 , (yVal *28) + 14, 8, 0, 2 * Math.PI);
+                    ctx.stroke();
+                    ctx.fill();
                     return true;
                     });
                 }
