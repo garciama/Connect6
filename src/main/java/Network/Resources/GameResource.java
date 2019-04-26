@@ -89,10 +89,12 @@ public class GameResource {
     /* data will contain an x coordinate, y coordinate and name.
       Json eg '{"x": "5", "y": "7", "name": "Sam"}' */
     public Response makeMove(@PathParam("id") String idNumber, String data){
+        System.out.println(idNumber);
         int id = -1;
         Response res;
         String response;
 
+        System.out.println("got here 1");
         try {
             id = Integer.parseInt(idNumber);
         } catch( NumberFormatException e ) {
@@ -101,6 +103,8 @@ public class GameResource {
             res = Response.status(404).entity(response).build();
             return res;
         }
+
+        System.out.println("got here 2");
         if (!ModelGateway.getController().checkIfGameExists(id)) {
             //If game id doesn't exist
             response = "no games found with id " + id;
@@ -108,11 +112,13 @@ public class GameResource {
             return res;
         }
 
+        System.out.println("got here 3");
         JSONObject obj = new JSONObject(data);
         int x = obj.getInt("x");
         int y = obj.getInt("y");
         String userName = obj.getString("name");
 
+        System.out.println("got here 4");
 
         if (! (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
             ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
@@ -121,31 +127,35 @@ public class GameResource {
             return res;
         }
 
-
+        System.out.println("got here 5");
         if (!ModelGateway.getController().userCurrentTurn(id).equalsIgnoreCase(userName)){
             response = "it is not your turn";
             res = Response.status(403).entity(response).build();
             return res;
         }
 
+        System.out.println("got here 6");
         if (x < 0 || x > 18 || y < 0 || y > 18) {
             response = "out of bounds value";
             res = Response.status(400).entity(response).build();
             return res;
         }
 
+        System.out.println("got here 7");
         if (!ModelGateway.getController().hasPlayerRegistered(userName)){
             response = "player " + userName + " not found";
             res = Response.status(404).entity(response).build();
             return res;
         }
 
+        System.out.println("got here 8");
         if (!ModelGateway.getController().makeMove(id, x, y, userName)) {
             response = "invalid move(square taken)";
             res = Response.status(400).entity(response).build();
             return res;
         }
 
+        System.out.println("got here 9");
 
         response = "move made";
         res = Response.ok(response).build();
