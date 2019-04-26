@@ -15,14 +15,15 @@
 			          color:				white;
 			          padding:				5px;
 			          margin:				2px;
-			          background-color:		#E8C49B; }
+			          background-color:		#E8C49B;
+        }
 
         header		{ text-align:			center;
                       font-family:			"Alegreya Sans SC";
                       font-weight:			bold;
                       color:				white;
                       font-size:			100px;
-                      background-image: 	url();
+
                       border-radius:		5px;
                       padding:				30px 20px 30px 20px;
                       margin-bottom:		1px;
@@ -53,6 +54,7 @@
         form		{ text-align:           left;
                       vertical-align:       middle;
                     }
+        a           { color: inherit; }
         gameBord-canvas     { padding: 0;
                             margin: auto;
                             display: block;
@@ -104,7 +106,7 @@
                      width:                31.5%;
                      color:				    white;
                      padding:				10px 0px 10px 00px;
-                     position:             bottom: 50;}
+                     bottom:              50px;}
 
         article.col	{
 		        	 height:				250px;
@@ -131,7 +133,8 @@
 
 <body>
 
-    <header>Welcome to Connect6</header>
+<header> <a href="./client">Welcome to Connect6</a> </header>
+
     <hr/>
 
     <nav id="nav">
@@ -186,7 +189,7 @@
         <br/>
         <b>Join a game!</b>
         <br/>
-        Your username: <input type ="text" username="name" id="joinName">
+        Your username: <input type ="text" username="name" id="joinName" placeholder="">
         <br/>
         Rejoin any in-progress matches you are in.
         <br/><br/>

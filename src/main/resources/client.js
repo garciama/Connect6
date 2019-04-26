@@ -12,6 +12,7 @@ var gridLocation;
 var xStart;
 var xEnd;
 var currentPlayer;
+var gameBoard;
 
 var main = function() {
 
@@ -39,21 +40,23 @@ var loadGameBoard = function(id) {
                 console.log("error in loadGameBoard");
             }else{
                 response.text().then(function (value) {
-                    //TODO: loop thru to fill each cell
-                    let board = (JSON.parse(value)).Board;
                     drawGameBoard(currentPlayer);
-                    let xVal = board[0].x;
-                    let yVal = board[0].y;
-                    let color = board[0].color;
-                    ctx.fillStyle = color;
-                    ctx.beginPath();
-                    ctx.arc(375 + (xVal * 28) + 14 , (yVal *28) + 14, 8, 0, 2 * Math.PI);
-                    ctx.stroke();
-                    ctx.fill();
+                    let board = (JSON.parse(value)).Board;
+                    for(var i = 0; i < board.length; i++) {
+                        let xVal = board[i].x;
+                        let yVal = board[i].y;
+                        let color = board[i].color;
+                        console.log("in load: " + xVal + " " + yVal + " " + color);
+                        ctx.fillStyle = color;
+                        //draw piece on board
+                        ctx.beginPath();
+                        ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
+                        ctx.stroke();
+                        ctx.fill();
+                    }
                 })
             }
         })
-
 }
 
 var createNewGameEvent = function() {
@@ -71,11 +74,17 @@ var createNewGameEvent = function() {
 
     fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
         .then(function (response) {
+            let el = document.getElementById("create-user-area");
+
             if (response.status == 404) {
-                // TODO: write this to the page directly
-                console.log("user not found");
+                el.innerText = "1 or both users not found, game not created";
+                el.style.color = "red";
+                console.log("user not found, game not created");
             } else if (!response.ok) {
                 // shouldn't see this ever i think maybe
+                el.innerText = "Error code: " + response.status;
+                el.style.fontWeight = "bold";
+                el.style.color = "red";
                 console.log("broke");
             } else {
                 response.text().then( function(value) {
@@ -101,11 +110,11 @@ var joinGameEvent = function(e){
             .then(function (response) {
             let el = document.getElementById("joinName");
                 if (!response.ok) {
-                    el.value = "No games in progress.";
+                    el.value = "";
+                    el.placeholder = "User not found/no games in progress"
                     //document.getElementById("joinName").value = "No games in progress";
                 } else {
                     response.text().then( function(value) {
-                        console.log(value);
                         //the games are returned as value as a json object
                         drawMyGames(value);
                     });
@@ -133,6 +142,7 @@ var drawMyGames = function(myGamesJSON){
 
     var gameList = JSON.parse(myGamesJSON);
     var rows = gameList.gameInfos;
+
 
     let xStart = (w * 0.2);
     let xEnd = (w * 0.8);
@@ -201,6 +211,9 @@ var drawMyGames = function(myGamesJSON){
                    gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21);
 
                 var id = rows[gridLocation.row].id;
+                redPlayer = rows[gridLocation.row].redPlayer;
+                bluePlayer = rows[gridLocation.row].bluePlayer;
+                console.log("my blue: " + bluePlayer + " my red: " + redPlayer);
                 gameID = id;
                console.log("Row: " + gridLocation.row + " id: " + id);
                loadGameBoard(id);
@@ -290,6 +303,10 @@ var drawGameBoard = function (user) {
 
 };
 
+var gameBoardEventListener = function(){
+
+};
+
 var playGame = function(){
 
 };
@@ -324,7 +341,6 @@ var placePieceEvent = function(nameVal){
             .then( function(response){
                 if (!response.ok){
                     console.log("can't make move " + response.status);
-                    return false;
                 } else {
                     response.text().then( function(value) {
                     console.log("currentPlayer: " + currentPlayer + " bluePlayer: " + bluePlayer);
@@ -339,7 +355,6 @@ var placePieceEvent = function(nameVal){
                     ctx.arc(375 + (xVal * 28) + 14 , (yVal *28) + 14, 8, 0, 2 * Math.PI);
                     ctx.stroke();
                     ctx.fill();
-                    return true;
                     });
                 }
             });
