@@ -11,6 +11,8 @@ var bluePlayer;
 var gridLocation;
 var xStart;
 var xEnd;
+var currentPlayer;
+var gameBoard;
 
 var main = function() {
 
@@ -48,7 +50,7 @@ var loadGameBoard = function(id) {
                 console.log("error in loadGameBoard");
             }else{
                 response.text().then(function (value) {
-                    drawGameBoard();
+                    drawGameBoard(currentPlayer);
                     let board = (JSON.parse(value)).Board;
                     for(var i = 0; i < board.length; i++) {
                         let xVal = board[i].x;
@@ -72,6 +74,7 @@ var createNewGameEvent = function() {
     let user2 = document.getElementById("user2").value;
 
     redPlayer = user1;
+    currentPlayer = redPlayer;
     bluePlayer = user2;
 
     let json = {
@@ -97,7 +100,7 @@ var createNewGameEvent = function() {
                 response.text().then( function(value) {
                 console.log("id: " + value);
                 gameID = value;
-                drawGameBoard();
+                drawGameBoard(currentPlayer);
 
                 });
             }
@@ -106,6 +109,7 @@ var createNewGameEvent = function() {
 
 var joinGameEvent = function(e){
     let username = document.getElementById("joinName").value;
+    currentPlayer = username;
 
     let json = {
         name: username
@@ -121,7 +125,6 @@ var joinGameEvent = function(e){
                     //document.getElementById("joinName").value = "No games in progress";
                 } else {
                     response.text().then( function(value) {
-                        console.log(value);
                         //the games are returned as value as a json object
                         drawMyGames(value);
                     });
@@ -215,15 +218,20 @@ var drawMyGames = function(myGamesJSON){
             var mousePos = getMousePosition(myGamesCanvas, evt);
             if (mousePos.x >= xStart && mousePos.x <= xEnd &&
              mousePos.y >= 50 && mousePos.y <= 50 + (21 * rowsLength)){
-                   gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21, rowsLength);
-            //call joingame get
-               console.log("Row: " + gridLocation.row + " Col: " + gridLocation.column + " id: " + rows[gridLocation.row].id);
-               loadGameBoard(rows[gridLocation.row].id);
+                   gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21);
+
+                var id = rows[gridLocation.row].id;
+                redPlayer = rows[gridLocation.row].redPlayer;
+                bluePlayer = rows[gridLocation.row].bluePlayer;
+                console.log("my blue: " + bluePlayer + " my red: " + redPlayer);
+                gameID = id;
+               console.log("Row: " + gridLocation.row + " id: " + id);
+               loadGameBoard(id);
             }
         }, false);
 };
 
-function getMyGameLocation(posX, posY, gridSize, rowNumbers) {
+function getMyGameLocation(posX, posY, gridSize) {
     var cellRow = Math.floor( (posY - 50) / gridSize );
     var cellCol = Math.floor(posX / gridSize);
 
@@ -272,7 +280,7 @@ var drawMyGamesHeader = function(canvas, xStart, xEnd){
 };
 
 
-var drawGameBoard = function () {
+var drawGameBoard = function (user) {
     hideMenuAndNavAndFooter();
     document.getElementById("gameBoard-canvas").style.display = 'initial';
     document.getElementById("leaderBoard-canvas").style.display = 'none';
@@ -299,9 +307,13 @@ var drawGameBoard = function () {
     gameBoard.addEventListener('click', function(evt) {
         var mousePos = getMousePosition(gameBoard, evt);
         gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-        placePieceEvent(redPlayer);
+        placePieceEvent(user);
         console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
     }, false);
+
+};
+
+var gameBoardEventListener = function(){
 
 };
 
@@ -321,6 +333,7 @@ function getGridLocation(posX, posY, gridSize) {
 };
 
 var placePieceEvent = function(nameVal){
+
     let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     var xVal = gridLocation.column;
@@ -338,18 +351,20 @@ var placePieceEvent = function(nameVal){
             .then( function(response){
                 if (!response.ok){
                     console.log("can't make move " + response.status);
-                    return false;
                 } else {
                     response.text().then( function(value) {
-                    //specify error to user
-                    ctx.fillStyle = "red";
+                    console.log("currentPlayer: " + currentPlayer + " bluePlayer: " + bluePlayer);
+                    if (currentPlayer === redPlayer)
+                        ctx.fillStyle = "red";
+                    else if (currentPlayer === bluePlayer)
+                        ctx.fillStyle = "blue";
+
 
                     //draw piece on board
                     ctx.beginPath();
                     ctx.arc(375 + (xVal * 28) + 14 , (yVal *28) + 14, 8, 0, 2 * Math.PI);
                     ctx.stroke();
                     ctx.fill();
-                    return true;
                     });
                 }
             });

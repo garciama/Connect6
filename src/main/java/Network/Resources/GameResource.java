@@ -101,6 +101,7 @@ public class GameResource {
             res = Response.status(404).entity(response).build();
             return res;
         }
+
         if (!ModelGateway.getController().checkIfGameExists(id)) {
             //If game id doesn't exist
             response = "no games found with id " + id;
@@ -113,14 +114,12 @@ public class GameResource {
         int y = obj.getInt("y");
         String userName = obj.getString("name");
 
-
         if (! (ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
             ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
             response = "You aren't part of this game";
             res = Response.status(403).entity(response).build();
             return res;
         }
-
 
         if (!ModelGateway.getController().userCurrentTurn(id).equalsIgnoreCase(userName)){
             response = "it is not your turn";
@@ -145,7 +144,6 @@ public class GameResource {
             res = Response.status(400).entity(response).build();
             return res;
         }
-
 
         response = "move made";
         res = Response.ok(response).build();
