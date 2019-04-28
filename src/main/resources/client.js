@@ -25,8 +25,18 @@ var main = function() {
 
     let joinGameButton = document.getElementById("joinGameButton");
     joinGameButton.addEventListener("click", joinGameEvent);
+    
+    let watchGamesButton = document.getElementById("inProgressButton");
+    watchGamesButton.add("click", );
 
 };
+
+var watchGames = function () {
+    fetch("menu/inProgress", {method: "GET"})
+        .then(function (response) {
+            
+        })
+}
 
 var loadGameBoard = function(id) {
     let gameBoard = document.getElementById("gameBoard-canvas");
