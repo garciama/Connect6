@@ -13,6 +13,7 @@ var xStart;
 var xEnd;
 var currentPlayer;
 var gameBoard;
+//var gameIsFinished;
 
 var main = function() {
 
@@ -31,29 +32,62 @@ var main = function() {
 };
 
 var loadGameBoard = function(id) {
-    let gameBoard = document.getElementById("gameBoard-canvas");
-    let ctx = gameBoard.getContext("2d");
-    //TODO: make the this is the right path param
-    fetch("game/getBoard/" + id, {method: "GET"})
+    // We should clean this up, I tried making this function call the checkGameStatus
+    // function, but there is an issue referencing the global value gameIsFinished from here.
+    fetch("game/getGameStatus/" + id, {method: "GET"})
         .then(function (response) {
             if (!response.ok){
-                console.log("error in loadGameBoard");
+                console.log("Incorrect game ID given to checkGameStatus.");
+            }else{
+                response.text().then(function (gameisFinished) {
+                    console.log(gameisFinished);
+                    if(gameisFinished === "true") {
+                        console.log("Game is finished.");
+                    } else {
+                        console.log("finished game status: " + gameisFinished);
+                        let gameBoard = document.getElementById("gameBoard-canvas");
+                        let ctx = gameBoard.getContext("2d");
+                        //TODO: make the this is the right path param
+                        fetch("game/getBoard/" + id, {method: "GET"})
+                            .then(function (response) {
+                                if (!response.ok){
+                                    console.log("error in loadGameBoard");
+                                }else{
+                                    response.text().then(function (value) {
+                                        drawGameBoard(currentPlayer);
+                                        let board = (JSON.parse(value)).Board;
+                                        for(var i = 0; i < board.length; i++) {
+                                            let xVal = board[i].x;
+                                            let yVal = board[i].y;
+                                            let color = board[i].color;
+                                            console.log("in load: " + xVal + " " + yVal + " " + color);
+                                            ctx.fillStyle = color;
+                                            //draw piece on board
+                                            ctx.beginPath();
+                                            ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
+                                            ctx.stroke();
+                                            ctx.fill();
+                                        }
+                                    })
+                                }
+                            })
+                    }
+
+                })
+            }
+        })
+}
+
+var checkGameStatus = function(id) {
+    // Checking game status, don't allow moves if game is over
+    fetch("game/getGameStatus/" + id, {method: "GET"})
+        .then(function (response) {
+            if (!response.ok){
+                console.log("Incorrect game ID given to checkGameStatus.");
             }else{
                 response.text().then(function (value) {
-                    drawGameBoard(currentPlayer);
-                    let board = (JSON.parse(value)).Board;
-                    for(var i = 0; i < board.length; i++) {
-                        let xVal = board[i].x;
-                        let yVal = board[i].y;
-                        let color = board[i].color;
-                        console.log("in load: " + xVal + " " + yVal + " " + color);
-                        ctx.fillStyle = color;
-                        //draw piece on board
-                        ctx.beginPath();
-                        ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
-                        ctx.stroke();
-                        ctx.fill();
-                    }
+                    gameIsFinished = value;
+                    console.log("gameisFinished = " + gameIsFinished)
                 })
             }
         })

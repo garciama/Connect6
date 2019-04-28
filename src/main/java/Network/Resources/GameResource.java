@@ -184,6 +184,21 @@ public class GameResource {
         return gson.toJson(newBoardInfo);
     }
 
+    @GET
+    @Path("getGameStatus/{id}")
+    public Boolean getGameStatus(@PathParam("id") String idNumber){
+        int id = -1;
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        return ModelGateway.getController().checkForFinishedGame(id);
+    }
+
 
     public class SquareInfo {
         private int x;
