@@ -206,6 +206,26 @@ public class menuResourceTest {
 
     }
 
+    @Test
+    public void myGamesTest() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+        ModelGateway.getController().registerNewPlayer("Sam");
+        ModelGateway.getController().registerNewPlayer("Nick");
+        ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().newPublicGame("Sam", "Nick");
+        ModelGateway.getController().newPublicGame("Sam", "Walker");
 
+        Entity data = Entity.entity("{\"name\":\"Sam\"}", MediaType.APPLICATION_JSON);
 
+        String response = client.target(HOST_URI)
+                .path("menu/myGames")
+                .request(MediaType.APPLICATION_JSON)
+                .put(data, String.class);
+
+        Assert.assertEquals("{\"gameInfos\":[{\"id\":1,\"redPlayer\":\"Sam\",\"bluePlayer\":" +
+                "\"Nick\"},{\"id\":2,\"redPlayer\":\"Sam\",\"bluePlayer\":\"Walker\"}]}", response);
+    }
 }
+
+
