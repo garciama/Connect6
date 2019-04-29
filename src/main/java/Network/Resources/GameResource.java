@@ -185,8 +185,8 @@ public class GameResource {
     }
 
     @GET
-    @Path("getGameStatus/{id}")
-    public Boolean getGameStatus(@PathParam("id") String idNumber){
+    @Path("{id}/isFinished")
+    public String isFinished(@PathParam("id") String idNumber ){
         int id = -1;
         try {
             id = Integer.parseInt(idNumber);
@@ -196,7 +196,12 @@ public class GameResource {
         if (!ModelGateway.getController().checkIfGameExists(id))
             throw new WebApplicationException(404);
 
-        return ModelGateway.getController().checkForFinishedGame(id);
+        boolean isFinished = ModelGateway.getController().isFinished(id);
+
+        Gson gson = new Gson();
+        return  gson.toJson(isFinished);
+
+
     }
 
 

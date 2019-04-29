@@ -72,4 +72,6 @@ public class GameController {
 
     public String seeMyGames(String playerName){ return gameManager.getMyGameInfo(playerName); }
 
+    public boolean isFinished(int id){ return gameManager.checkFinishedGame(id); }
+
 }
