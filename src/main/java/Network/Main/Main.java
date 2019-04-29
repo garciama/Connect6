@@ -28,6 +28,8 @@ public class Main {
         ModelGateway.getController().registerNewPlayer("Sam");
         ModelGateway.getController().registerNewPlayer("Nick");
         ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().registerNewPlayer("Michael");
+        ModelGateway.getController().newPublicGame("Michael", "Nick");
         ModelGateway.getController().newPublicGame("Sam", "Nick");
         ModelGateway.getController().newPublicGame("Walker", "Sam");
         ModelGateway.getController().newPublicGame("Sam", "Nick");
@@ -35,9 +37,16 @@ public class Main {
         ModelGateway.getController().newPublicGame("Nick", "Sam");
         ModelGateway.getController().newPublicGame("Sam", "Nick");
         ModelGateway.getController().newPublicGame("Sam", "Walker");
-
-
-
+        ModelGateway.getController().makeMove(1,0,0, "Michael");
+        ModelGateway.getController().makeMove(1,1,1, "Nick");
+        ModelGateway.getController().makeMove(1,2,2, "Nick");
+        ModelGateway.getController().makeMove(1,0,1, "Michael");
+        ModelGateway.getController().makeMove(1,0,2, "Michael");
+        ModelGateway.getController().makeMove(1,3,3, "Nick");
+        ModelGateway.getController().makeMove(1,4,4, "Nick");
+        ModelGateway.getController().makeMove(1,0,3, "Michael");
+        ModelGateway.getController().makeMove(1,0,4, "Michael");
+        ModelGateway.getController().makeMove(1,5,5, "Nick");
 
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();
         final ResourceConfig config = new ResourceConfig().packages(RESOURCES_PACKAGES);
