@@ -2,6 +2,7 @@ package Network.Resources;
 
 import Network.ModelGateway;
 import com.google.gson.Gson;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import core.Color;
 import core.user.Move;
 import java.util.ArrayList;
@@ -182,6 +183,26 @@ public class GameResource {
 
         Gson gson = new Gson();
         return gson.toJson(newBoardInfo);
+    }
+
+    @GET
+    @Path("{id}/isFinished")
+    public String isFinished(@PathParam("id") String idNumber ){
+        int id = -1;
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        boolean isFinished = ModelGateway.getController().isFinished(id);
+
+        Gson gson = new Gson();
+        return  gson.toJson(isFinished);
+
+
     }
 
 

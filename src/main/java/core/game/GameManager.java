@@ -267,8 +267,8 @@ public class GameManager {
     public String getMyGameInfo(String playerName){
         StringBuilder str = new StringBuilder();
         for (Game g: allGameMap.values()){
-            if (playerName.equalsIgnoreCase(g.getRedPlayerName())
-                    || playerName.equalsIgnoreCase(g.getBluePlayerName())){
+            if ( (playerName.equalsIgnoreCase(g.getRedPlayerName())
+                    || playerName.equalsIgnoreCase(g.getBluePlayerName()) ) && !(g.gameIsFinished()) ){
                 str.append(getGameInfo(g));
             }
         }
@@ -320,6 +320,8 @@ public class GameManager {
     public boolean checkGameExists(int id){ return (allGameMap.containsKey(id)); }
 
     public List<Move> getMovesInGame(int id) { return allGameMap.get(id).getMoves(); }
+
+    public boolean checkFinishedGame(int id) { return allGameMap.get(id).gameIsFinished(); }
 
 
 }

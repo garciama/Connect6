@@ -46,7 +46,6 @@ var loadGameBoard = function(id) {
                         let xVal = board[i].x;
                         let yVal = board[i].y;
                         let color = board[i].color;
-                        console.log("in load: " + xVal + " " + yVal + " " + color);
                         ctx.fillStyle = color;
                         //draw piece on board
                         ctx.beginPath();
@@ -213,9 +212,7 @@ var drawMyGames = function(myGamesJSON){
                 var id = rows[gridLocation.row].id;
                 redPlayer = rows[gridLocation.row].redPlayer;
                 bluePlayer = rows[gridLocation.row].bluePlayer;
-                console.log("my blue: " + bluePlayer + " my red: " + redPlayer);
                 gameID = id;
-               console.log("Row: " + gridLocation.row + " id: " + id);
                loadGameBoard(id);
             }
         }, false);
@@ -294,12 +291,53 @@ var drawGameBoard = function (user) {
         ctx.stroke();
     }
 
-    gameBoard.addEventListener('click', function(evt) {
-        var mousePos = getMousePosition(gameBoard, evt);
-        gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-        placePieceEvent(user);
-        console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
-    }, false);
+        gameBoard.addEventListener('click', function(evt) {
+            var mousePos = getMousePosition(gameBoard, evt);
+            gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
+
+            checkFinished(user)
+
+            console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
+        }, false);
+
+
+};
+
+var checkFinished = function(user){
+
+    fetch("/game/" + gameID + "/isFinished", { method: "GET"} )
+                .then(function (response) {
+                    if (!response.ok) {
+                        console.log("Error: " + response.status);
+                        return false;
+                        //document.getElementById("joinName").value = "No games in progress";
+                    } else {
+                        response.text().then( function(value) {
+
+                            /*If the returned value is false, then place the piece down, because the
+                            game is still going */
+                            if (value === "false")
+                                placePieceEvent(user);
+                            else if (value === "true")
+                                drawGameOver();
+
+                        });
+                    }
+            });
+
+};
+
+var drawGameOver = function(){
+    let gameOverCanvas = document.getElementById("gameBoard-canvas");
+    let ctx = gameOverCanvas.getContext("2d");
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Sans SC";
+    ctx.fillText("Game Over!", 250, 266);
+
+
+
+
 
 };
 
@@ -323,7 +361,6 @@ function getGridLocation(posX, posY, gridSize) {
 };
 
 var placePieceEvent = function(nameVal){
-
     let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     var xVal = gridLocation.column;
@@ -335,20 +372,17 @@ var placePieceEvent = function(nameVal){
         name: nameVal
     };
 
-    console.log(xVal + " " + yVal);
-
     fetch("game/makeMove/" + gameID , {method: "PUT", headers:{"Content-Type": "application/json"}, body: JSON.stringify(data)} )
             .then( function(response){
                 if (!response.ok){
                     console.log("can't make move " + response.status);
                 } else {
                     response.text().then( function(value) {
-                    console.log("currentPlayer: " + currentPlayer + " bluePlayer: " + bluePlayer);
+
                     if (currentPlayer === redPlayer)
                         ctx.fillStyle = "red";
                     else if (currentPlayer === bluePlayer)
                         ctx.fillStyle = "blue";
-
 
                     //draw piece on board
                     ctx.beginPath();
