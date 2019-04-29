@@ -323,5 +323,4 @@ public class GameManager {
 
     public boolean checkFinishedGame(int id) { return allGameMap.get(id).gameIsFinished(); }
 
-
 }

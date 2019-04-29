@@ -67,7 +67,6 @@ public class GameResource {
             return res;
         }
         //Now we now the game exists and is in progress.
-
         //If the username passed in isn't the username of the red player in the game or the blue player,
         //throw a 403 forbidden.
         if (!(ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
@@ -165,7 +164,6 @@ public class GameResource {
         List<Move> moves = ModelGateway.getController().getMovesInGame(id);
         BoardInfo newBoardInfo = new BoardInfo();
 
-
         for(int i = 0; i < moves.size(); i++){
             int x = moves.get(i).getX();
             int y = moves.get(i).getY();
@@ -197,11 +195,8 @@ public class GameResource {
             throw new WebApplicationException(404);
 
         boolean isFinished = ModelGateway.getController().isFinished(id);
-
         Gson gson = new Gson();
         return  gson.toJson(isFinished);
-
-
     }
 
 
@@ -227,7 +222,6 @@ public class GameResource {
             Board.add(newObject);
         }
         public List<SquareInfo> getBoardSquares(){ return Board; }
-
     }
 
 }

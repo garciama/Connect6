@@ -1,4 +1,5 @@
 package core.game;
+
 import core.Color;
 
 public class Board {
