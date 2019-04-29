@@ -8,7 +8,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,6 @@ public class MenuResource {
         return res;
     }
 
-    //TODO: Write a test for this
     @PUT
     @Path("myGames")
     @Produces(MediaType.APPLICATION_JSON)
