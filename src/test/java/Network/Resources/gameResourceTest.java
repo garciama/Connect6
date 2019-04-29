@@ -292,10 +292,42 @@ public class gameResourceTest {
         Assert.assertEquals(7, squares.getBoardSquares().get(1).getY());
         Assert.assertEquals(Color.Blue, squares.getBoardSquares().get(1).getColor());
 
+    }
 
+    @Test
+    public void isFinishedTest() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
 
+        ModelGateway.getController().registerNewPlayer("Sam");
+        ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().newPublicGame("Sam", "Walker");
 
+        String response = client.target(HOST_URI)
+                .path("game/1/isFinished")
+                .request(MediaType.TEXT_PLAIN)
+                .get(String.class);
 
+        Assert.assertEquals("false", response);
+
+        ModelGateway.getController().makeMove(1, 1, 1, "Sam");
+        ModelGateway.getController().makeMove(1, 2,1,"Walker");
+        ModelGateway.getController().makeMove(1, 3,1,"Walker");
+        ModelGateway.getController().makeMove(1, 1, 2, "Sam");
+        ModelGateway.getController().makeMove(1, 1, 3, "Sam");
+        ModelGateway.getController().makeMove(1, 4,1,"Walker");
+        ModelGateway.getController().makeMove(1, 5,1,"Walker");
+        ModelGateway.getController().makeMove(1, 1, 4, "Sam");
+        ModelGateway.getController().makeMove(1, 1, 5, "Sam");
+        ModelGateway.getController().makeMove(1, 6,1,"Walker");
+        ModelGateway.getController().makeMove(1, 7,1,"Walker");
+
+        response = client.target(HOST_URI)
+                .path("game/1/isFinished")
+                .request(MediaType.TEXT_PLAIN)
+                .get(String.class);
+
+        Assert.assertEquals("true", response);
     }
 
 }
