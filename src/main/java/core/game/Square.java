@@ -32,7 +32,4 @@ public class Square {
         return this.color;
     }
 
-    public int getxCoord() { return xCoord; }
-
-    public int getyCoord() { return yCoord; }
 }

@@ -83,7 +83,7 @@ public class Game {
     /**
      * Method that checks the board for the last move and returns the
      * user's name.
-     * @return User's name who made the last move.
+     * @return Username of who's turn it is
      */
     public String currentMoveUser(){
 
@@ -112,6 +112,11 @@ public class Game {
         return lastPiece.getOwnerName();
     }
 
+    /**
+     * If a user has put down a piece during their turn
+     * @param userName the user to see if they have put down a piece
+     * @return true if they put down a piece during their turn, false otherwise
+     */
     public boolean hasPutDownPiece(String userName) {
         /*If the game was left before the first turn was made, then pretend
         that the red player already put down a piece, so later they only get to put

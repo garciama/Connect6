@@ -2,6 +2,7 @@ package core.game;
 import core.Color;
 import core.controller.GameController;
 import core.user.User;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -282,8 +283,41 @@ public class gamePackageTest {
             users.get("Michael").addLoss();
 
         System.out.println(gm.leaderboardToString());
+    }
 
+    @Test
+    public void currentMoveUserTest() {
+        gm.createNewUser("red");
+        gm.createNewUser("blue");
 
+        gm.createNewGame("red", "blue", true);
+        gm.moveInGame(1, 1, 1, "red");
+
+        Assert.assertEquals("blue", gm.getInstanceOfGame(1).currentMoveUser());
+        gm.moveInGame(1,2,1,"blue");
+        Assert.assertEquals("blue", gm.getInstanceOfGame(1).currentMoveUser());
+        gm.moveInGame(1,3,1,"blue");
+        Assert.assertEquals("red", gm.getInstanceOfGame(1).currentMoveUser());
+
+    }
+
+    @Test
+    public void hasPutDownPieceTest() {
+        gm.createNewUser("red");
+        gm.createNewUser("blue");
+
+        gm.createNewGame("red", "blue", true);
+        // for reason its always true before anyone makes a move
+        Assert.assertEquals(true, gm.getInstanceOfGame(1).hasPutDownPiece("red"));
+        Assert.assertEquals(true, gm.getInstanceOfGame(1).hasPutDownPiece("blue"));
+
+        gm.moveInGame(1, 1, 1, "red");
+        Assert.assertEquals(true, gm.getInstanceOfGame(1).hasPutDownPiece("red"));
+        Assert.assertEquals(false, gm.getInstanceOfGame(1).hasPutDownPiece("blue"));
+
+        gm.moveInGame(1,2,1,"blue");
+        Assert.assertEquals(false, gm.getInstanceOfGame(1).hasPutDownPiece("red"));
+        Assert.assertEquals(true, gm.getInstanceOfGame(1).hasPutDownPiece("blue"));
 
     }
 
