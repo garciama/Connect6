@@ -32,14 +32,22 @@ var main = function() {
     joinGameButton.addEventListener("click", joinGameEvent);
     
     let watchGamesButton = document.getElementById("inProgressButton");
-    //watchGamesButton.add("click", );
+    watchGamesButton.addEventListener("click", watchGamesEvent);
 
 };
 
-var watchGames = function () {
+
+var watchGamesEvent = function () {
     fetch("menu/inProgress", {method: "GET"})
         .then(function (response) {
-            
+            if (!response.ok) {
+                console.log("an error occurred");
+            } else {
+                response.text().then( function(value) {
+                    //the games are returned as value as a json object
+                    drawMyGames(value);
+                });
+            }
         })
 }
 
@@ -608,6 +616,7 @@ var drawLeaderBoardHeader = function(canvas){
         ctx.fillText("Ties", xLoc + 5*colWidth, yLoc);
 
 };
+
 
 document.addEventListener("DOMContentLoaded", main);
 

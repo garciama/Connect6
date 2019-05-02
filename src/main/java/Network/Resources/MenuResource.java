@@ -98,6 +98,7 @@ public class MenuResource {
             GameInfo newObject = new GameInfo(id, redP, blueP);
             games.addGameInfo(newObject);
         }
+
         Gson gson = new Gson();
         return gson.toJson(games);
     }
