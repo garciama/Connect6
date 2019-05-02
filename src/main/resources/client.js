@@ -29,14 +29,23 @@ var main = function() {
     joinGameButton.addEventListener("click", joinGameEvent);
     
     let watchGamesButton = document.getElementById("inProgressButton");
-    watchGamesButton.add("click", );
+    watchGamesButton.addEventListener("click", watchGamesEvent);
+
 
 };
 
-var watchGames = function () {
+
+var watchGamesEvent = function () {
     fetch("menu/inProgress", {method: "GET"})
         .then(function (response) {
-            
+            if (!response.ok) {
+                console.log("an error occurred");
+            } else {
+                response.text().then( function(value) {
+                    //the games are returned as value as a json object
+                    drawMyGames(value);
+                });
+            }
         })
 }
 
@@ -459,7 +468,20 @@ var hideMenu = function(){
     document.getElementById("art3").style.display = 'none';
 
 };
+/*
+var showMenu = function() {
+    console.log("button pressed");
+    document.getElementById("art1").style.display = 'initial';
+    document.getElementById("art2").style.display = 'initial';
+    document.getElementById("art3").style.display = 'initial';
+    document.getElementById("footer").style.display = 'initial';
+    document.getElementById("nav").style.display = 'initial';
 
+    document.getElementById("gameBoard-canvas").style.display = "none";
+    document.getElementById("leaderBoard-canvas").style.display = "none";
+    document.getElementById("myGames-canvas").style.display = "none";
+}
+*/
 var drawLeaderBoard = function(jsonLeaderBoard){
     hideMenu();
     document.getElementById("gameBoard-canvas").style.display = 'none';
