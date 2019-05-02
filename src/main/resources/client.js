@@ -31,7 +31,6 @@ var main = function() {
     let watchGamesButton = document.getElementById("inProgressButton");
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
-
 };
 
 
@@ -468,20 +467,7 @@ var hideMenu = function(){
     document.getElementById("art3").style.display = 'none';
 
 };
-/*
-var showMenu = function() {
-    console.log("button pressed");
-    document.getElementById("art1").style.display = 'initial';
-    document.getElementById("art2").style.display = 'initial';
-    document.getElementById("art3").style.display = 'initial';
-    document.getElementById("footer").style.display = 'initial';
-    document.getElementById("nav").style.display = 'initial';
 
-    document.getElementById("gameBoard-canvas").style.display = "none";
-    document.getElementById("leaderBoard-canvas").style.display = "none";
-    document.getElementById("myGames-canvas").style.display = "none";
-}
-*/
 var drawLeaderBoard = function(jsonLeaderBoard){
     hideMenu();
     document.getElementById("gameBoard-canvas").style.display = 'none';
