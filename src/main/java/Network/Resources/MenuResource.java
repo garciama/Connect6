@@ -86,6 +86,9 @@ public class MenuResource {
     public String getFinishedGames() {
         GameInfoList games = new GameInfoList();
         String inProgressGames = ModelGateway.getController().seeFinishedGames();
+        if (inProgressGames.isEmpty()){
+            return "";
+        }
         String[] splitStr = inProgressGames.split("\n");
         for(int i = 0; i < splitStr.length; i++) {
             String[] splitRow = splitStr[i].split("\\s+");

@@ -22,6 +22,9 @@ var main = function() {
     let seeLeaderboardButton = document.getElementById("leaderboardButton");
     seeLeaderboardButton.addEventListener("click", leaderBoardEvent);
 
+    let seeCompletedGames = document.getElementById("completedButton");
+    seeCompletedGames.addEventListener("click", completedGamesEvent);
+
     let createGameButton = document.getElementById("createNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
 
@@ -29,7 +32,7 @@ var main = function() {
     joinGameButton.addEventListener("click", joinGameEvent);
     
     let watchGamesButton = document.getElementById("inProgressButton");
-    watchGamesButton.add("click", );
+    //watchGamesButton.add("click", );
 
 };
 
@@ -447,6 +450,22 @@ var leaderBoardEvent = function(e) {
 
 };
 
+var completedGamesEvent = function() {
+    fetch("menu/completed", {method: "GET"} )
+        .then(function(response) {
+        let el = document.getElementById("leaderboard-response-area");
+        if( !response.ok ){
+            el.innerText = "Error code: " + response.status;
+            el.style.fontWeight = "bold";
+            el.style.color = "red";
+        } else {
+            response.text().then(function (value) {
+               drawMyGames(value);
+            });
+        }
+    });
+}
+
 var hideMenuAndNavAndFooter = function () {
     hideMenu();
     document.getElementById("footer").style.display = 'none';
@@ -590,5 +609,18 @@ var drawLeaderBoardHeader = function(canvas){
 
 };
 
-
 document.addEventListener("DOMContentLoaded", main);
+
+var drawCompletedGames = function(jsonCompletedGames){
+    hideMenu();
+    document.getElementById("gameBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
+
+    let leaderBoard = document.getElementById("leaderBoard-canvas");
+    let ctx = leaderBoard.getContext("2d");
+    leaderBoard.width = window.screen.width - 50;
+    leaderBoard.height = window.screen.height - 100;
+
+    let w = leaderBoard.width;
+    let h = leaderBoard.height;
+};
