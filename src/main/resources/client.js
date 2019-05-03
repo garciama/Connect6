@@ -619,17 +619,3 @@ var drawLeaderBoardHeader = function(canvas){
 
 
 document.addEventListener("DOMContentLoaded", main);
-
-var drawCompletedGames = function(jsonCompletedGames){
-    hideMenu();
-    document.getElementById("gameBoard-canvas").style.display = 'none';
-    document.getElementById("myGames-canvas").style.display = 'none';
-
-    let leaderBoard = document.getElementById("leaderBoard-canvas");
-    let ctx = leaderBoard.getContext("2d");
-    leaderBoard.width = window.screen.width - 50;
-    leaderBoard.height = window.screen.height - 100;
-
-    let w = leaderBoard.width;
-    let h = leaderBoard.height;
-};
