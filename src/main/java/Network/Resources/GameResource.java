@@ -19,7 +19,6 @@ import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseBroadcaster;
 import javax.ws.rs.sse.SseEventSink;
 
-
 @Path("game")
 public class GameResource {
 
@@ -227,9 +226,11 @@ public class GameResource {
     }
 
     @PUT
+    @Path("broadcastBoard")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response broadcastBoard(String data){
+        System.out.println("got here broadcast");
         Response res;
         JSONObject obj = new JSONObject(data);
         int id = obj.getInt("id");
@@ -248,9 +249,12 @@ public class GameResource {
 
    @GET
    @Produces(MediaType.SERVER_SENT_EVENTS)
-   public void listenToBroadCast(@Context SseEventSink eventSink, int id){
-        if (broadcasterMap.containsKey(id))
-            broadcasterMap.get(id).register(eventSink);
+   public void listenToBroadCast(@Context SseEventSink eventSink){
+       System.out.println("gothererererereasdfzxdv");
+//        if (broadcasterMap.containsKey(id))
+//            broadcasterMap.get(id).register(eventSink);
+
+        //if it doesnt have it create the broadcaster and add it to the map.
    }
 
     public class SquareInfo {
