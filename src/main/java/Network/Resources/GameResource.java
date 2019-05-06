@@ -38,9 +38,17 @@ public class GameResource {
         JSONObject obj = new JSONObject(players);
         String redPlayer = obj.getString("red");
         String bluePlayer = obj.getString("blue");
+        boolean priv = obj.getBoolean("private");
+
+        int id = -1;
         Response res;
-        if(ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
-           int id = ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
+
+        if (ModelGateway.getController().hasPlayerRegistered(redPlayer) && ModelGateway.getController().hasPlayerRegistered(bluePlayer)){
+            if (priv)
+                id = ModelGateway.getController().newPrivateGame(redPlayer, bluePlayer);
+            else
+                id = ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
+
             String str = Integer.toString(id);
             res = Response.ok(str).build();
 

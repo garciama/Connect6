@@ -68,6 +68,7 @@ public class MenuResource {
         GameInfoList games = new GameInfoList();
         String inProgressGames = ModelGateway.getController().seeInProgressGames();
         String[] splitStr = inProgressGames.split("\n");
+
         for(int i = 0; i < splitStr.length; i++) {
             String[] splitRow = splitStr[i].split("\\s+");
             int id = Integer.parseInt(splitRow[0]);
@@ -86,6 +87,9 @@ public class MenuResource {
     public String getFinishedGames() {
         GameInfoList games = new GameInfoList();
         String inProgressGames = ModelGateway.getController().seeFinishedGames();
+        if (inProgressGames.isEmpty()){
+            return "";
+        }
         String[] splitStr = inProgressGames.split("\n");
         for(int i = 0; i < splitStr.length; i++) {
             String[] splitRow = splitStr[i].split("\\s+");
@@ -95,6 +99,7 @@ public class MenuResource {
             GameInfo newObject = new GameInfo(id, redP, blueP);
             games.addGameInfo(newObject);
         }
+
         Gson gson = new Gson();
         return gson.toJson(games);
     }

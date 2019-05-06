@@ -22,14 +22,17 @@ var main = function() {
     let seeLeaderboardButton = document.getElementById("leaderboardButton");
     seeLeaderboardButton.addEventListener("click", leaderBoardEvent);
 
+    let seeCompletedGames = document.getElementById("completedButton");
+    seeCompletedGames.addEventListener("click", completedGamesEvent);
+
     let createGameButton = document.getElementById("createNewGameButton");
     createGameButton.addEventListener("click", createNewGameEvent);
 
     let joinGameButton = document.getElementById("joinGameButton");
     joinGameButton.addEventListener("click", joinGameEvent);
-    
-//    let watchGamesButton = document.getElementById("inProgressButton");
-//    watchGamesButton.add("click", );
+
+    let watchGamesButton = document.getElementById("inProgressButton");
+    watchGamesButton.addEventListener("click", watchGamesEvent);
 
 };
 
@@ -39,10 +42,18 @@ var init = function(evt){
 
 }
 
-var watchGames = function () {
+
+var watchGamesEvent = function () {
     fetch("menu/inProgress", {method: "GET"})
         .then(function (response) {
-            
+            if (!response.ok) {
+                console.log("an error occurred");
+            } else {
+                response.text().then( function(value) {
+                    //the games are returned as value as a json object
+                    drawMyGames(value);
+                });
+            }
         })
 };
 
@@ -68,8 +79,6 @@ var loadGameBoard = function(id) {
                         ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
                         ctx.stroke();
                         ctx.fill();
-
-                        //Once the p
                     }
                 })
             }
@@ -79,6 +88,8 @@ var loadGameBoard = function(id) {
 var createNewGameEvent = function() {
     let user1 = document.getElementById("user1").value;
     let user2 = document.getElementById("user2").value;
+    var priv = document.getElementById('priv').checked;
+
 
     redPlayer = user1;
     currentPlayer = redPlayer;
@@ -86,7 +97,8 @@ var createNewGameEvent = function() {
 
     let json = {
         red: user1,
-        blue: user2
+        blue: user2,
+        private: priv
     };
 
     fetch("game/createGame", {method: "PUT", body: JSON.stringify(json)})
@@ -454,6 +466,22 @@ var leaderBoardEvent = function(e) {
         });
 
 };
+
+var completedGamesEvent = function() {
+    fetch("menu/completed", {method: "GET"} )
+        .then(function(response) {
+        let el = document.getElementById("leaderboard-response-area");
+        if( !response.ok ){
+            el.innerText = "Error code: " + response.status;
+            el.style.fontWeight = "bold";
+            el.style.color = "red";
+        } else {
+            response.text().then(function (value) {
+               drawMyGames(value);
+            });
+        }
+    });
+}
 
 var hideMenuAndNavAndFooter = function () {
     hideMenu();
