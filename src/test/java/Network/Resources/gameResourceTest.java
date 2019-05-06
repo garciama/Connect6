@@ -43,7 +43,7 @@ public class gameResourceTest {
         ModelGateway.getController().registerNewPlayer("Walker");
         ModelGateway.getController().registerNewPlayer("Sam");
         // The data to send with the PUT
-        Entity data = Entity.entity("{\"red\":\"Walker\",\"blue\":\"Sam\"}", MediaType.APPLICATION_JSON);
+        Entity data = Entity.entity("{\"red\":\"Walker\",\"blue\":\"Sam\", \"private\":\"false\"}", MediaType.APPLICATION_JSON);
 
         String before = ModelGateway.getController().seeInProgressGames();
         Assert.assertEquals("", before);
@@ -61,7 +61,7 @@ public class gameResourceTest {
         //Test to make sure the gameid counter is working
         ModelGateway.getController().registerNewPlayer("Nick");
 
-        data = Entity.entity("{\"red\":\"Walker\",\"blue\":\"Nick\"}", MediaType.APPLICATION_JSON);
+        data = Entity.entity("{\"red\":\"Walker\",\"blue\":\"Nick\", \"private\": \"false\"}", MediaType.APPLICATION_JSON);
 
         client.target(HOST_URI)
                 .path("game/createGame")
