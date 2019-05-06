@@ -253,6 +253,23 @@ public class GameResource {
             broadcasterMap.get(id).register(eventSink);
    }
 
+    @GET
+    @Path("{id}/movesInGame")
+    public String movesInGame(@PathParam("id") String idNumber ){
+        int id = -1;
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        List<Move> allMoves = ModelGateway.getController().getMovesInGame(id);
+        Gson gson = new Gson();
+        return  gson.toJson(allMoves);
+    }
+
     public class SquareInfo {
         private int x;
         private int y;

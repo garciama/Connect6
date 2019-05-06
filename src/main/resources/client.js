@@ -38,8 +38,6 @@ var main = function() {
     document.getElementById("nextMoveButton").style.display = 'none';
     document.getElementById("previousMoveButton").style.display = 'none';
 
-
-
 };
 
 var init = function(evt){
@@ -339,6 +337,31 @@ var drawGameBoard = function (user) {
 
 };
 
+var drawEmptyGameBoard = function () {
+    hideMenuAndNavAndFooter();
+    document.getElementById("gameBoard-canvas").style.display = 'initial';
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
+
+    let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+    gameBoard.width = 1000;
+    gameBoard.height = 532;
+
+    ctx.fillStyle = "#bf912f";
+    ctx.fillRect(375, 0, 532, 532);
+
+    for(var i = 0; i < 19; i++){
+        ctx.moveTo(i * 28 + 375, 0);
+        ctx.lineTo(i * 28 + 375, 532);
+        ctx.stroke();
+        ctx.moveTo(375, i  * 28);
+        ctx.lineTo(907, i * 28);
+        ctx.stroke();
+    }
+};
+
 var checkFinished = function(user){
 
     fetch("/game/" + gameID + "/isFinished", { method: "GET"} )
@@ -370,11 +393,6 @@ var drawGameOver = function(){
     ctx.fillStyle = "white";
     ctx.font = "20px Sans SC";
     ctx.fillText("Game Over!", 250, 266);
-
-
-
-
-
 };
 
 var gameBoardEventListener = function(){
@@ -496,6 +514,26 @@ var completedGamesEvent = function() {
 }
 
 var startGameReplay = function() {
+    document.getElementById("replayButton").style.display = 'none';
+    document.getElementById("previousMoveButton").style.display = 'initial';
+    document.getElementById("nextMoveButton").style.display = 'initial';
+
+    drawEmptyGameBoard();
+
+    fetch("game/" + gameID+ "/movesInGame", {method: "GET"} )
+        .then(function(response) {
+            if( !response.ok ){
+                // el.innerText = "Error code: " + response.status;
+                // el.style.fontWeight = "bold";
+                // el.style.color = "red";
+                console.log("Error");
+            } else {
+                response.text().then(function (value) {
+                    var allMoves = JSON.parse(value);
+                    console.log(allMoves.toString())
+                });
+            }
+        });
 
 }
 
