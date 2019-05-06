@@ -38,14 +38,55 @@ var main = function() {
     document.getElementById("nextMoveButton").style.display = 'none';
     document.getElementById("previousMoveButton").style.display = 'none';
 
+    gameBoard = document.getElementById("gameBoard-canvas");
+    gameBoard.addEventListener('click', gameBoardEventListener);
+
+
 };
 
 var init = function(evt){
-    let eventSource = new EventSource('');
+
+    //one stream for both move history and updating board.
+    //use a big json object.
+//    let eventSource = new EventSource('/game');
+//    eventSource.onmessage = messageReceived;
+
+//    var messageInput = document.getElementById("gameBoard-canvas");
+//    messageInput.addEventListener("click", function(e){
+//
+//    if (typeof(gameID) != "undefined"){
+//
+//        let json = {
+//            xVal: gridLocation.column,
+//            yVal: gridLocation.row,
+//            id: gameID
+//        };
+//    });
+//
+//    }
+
+};
+
+var sendMessage = function(message){
+    console.log(message);
+    fetch("game/broadcastBoard", {method: "PUT", body: JSON.stringify(message)})
+        .then( function(response) {
+            console.log(response);
+        });
+
+};
+
+var messageReceived = function(e){
+    console.log("e: " + e.data);
 
 
-}
+};
 
+var gameBoardEventListener = function(evt){
+    var mousePos = getMousePosition(gameBoard, evt);
+    gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
+    checkFinished(currentPlayer)
+};
 
 var watchGamesEvent = function () {
     fetch("menu/inProgress", {method: "GET"})
@@ -62,7 +103,7 @@ var watchGamesEvent = function () {
 };
 
 var loadGameBoard = function(id) {
-    let gameBoard = document.getElementById("gameBoard-canvas");
+    //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     //TODO: make the this is the right path param
     fetch("game/getBoard/" + id, {method: "GET"})
@@ -123,6 +164,10 @@ var createNewGameEvent = function() {
                 response.text().then( function(value) {
                 console.log("id: " + value);
                 gameID = value;
+
+                let eventSource = new EventSource('/game/' + gameID);
+                eventSource.onmessage = messageReceived;
+
                 drawGameBoard(currentPlayer);
 
                 });
@@ -307,7 +352,7 @@ var drawGameBoard = function (user) {
     document.getElementById("leaderBoard-canvas").style.display = 'none';
     document.getElementById("myGames-canvas").style.display = 'none';
 
-    let gameBoard = document.getElementById("gameBoard-canvas");
+    //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
 
     gameBoard.width = 1000;
@@ -325,14 +370,13 @@ var drawGameBoard = function (user) {
         ctx.stroke();
     }
 
-        gameBoard.addEventListener('click', function(evt) {
-            var mousePos = getMousePosition(gameBoard, evt);
-            gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-
-            checkFinished(user)
-
-            console.log("Row: " + gridLocation.row + " Column: " + gridLocation.column);
-        }, false);
+//        gameBoard.addEventListener('click', function(evt) {
+//            var mousePos = getMousePosition(gameBoard, evt);
+//            gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
+//
+//            checkFinished(user)
+//
+//        }, false);
 
 
 };
@@ -375,8 +419,17 @@ var checkFinished = function(user){
 
                             /*If the returned value is false, then place the piece down, because the
                             game is still going */
-                            if (value === "false")
+                            if (value === "false"){
                                 placePieceEvent(user);
+
+                                let json = {
+                                    xVal: gridLocation.column,
+                                    yVal: gridLocation.row,
+                                    id: gameID
+                                };
+
+                                 sendMessage(json);
+                            }
                             else if (value === "true")
                                 drawGameOver();
 
@@ -395,9 +448,7 @@ var drawGameOver = function(){
     ctx.fillText("Game Over!", 250, 266);
 };
 
-var gameBoardEventListener = function(){
 
-};
 
 var playGame = function(){
 
@@ -415,7 +466,7 @@ function getGridLocation(posX, posY, gridSize) {
 };
 
 var placePieceEvent = function(nameVal){
-    let gameBoard = document.getElementById("gameBoard-canvas");
+    //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     var xVal = gridLocation.column;
     var yVal = gridLocation.row;
@@ -683,3 +734,4 @@ var drawLeaderBoardHeader = function(canvas){
 
 
 document.addEventListener("DOMContentLoaded", main);
+document.addEventListener("DOMContentLoaded", init);
