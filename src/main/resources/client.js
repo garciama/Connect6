@@ -35,6 +35,9 @@ var main = function() {
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
     document.getElementById("replayButton").style.display = 'none';
+    document.getElementById("nextMoveButton").style.display = 'none';
+    document.getElementById("previousMoveButton").style.display = 'none';
+
 
 
 };
@@ -486,7 +489,16 @@ var completedGamesEvent = function() {
             });
         }
     });
+
+    let startReplayButton = document.getElementById("replayButton");
+    startReplayButton.addEventListener("click", startGameReplay);
+
 }
+
+var startGameReplay = function() {
+
+}
+
 
 var hideMenuAndNavAndFooter = function () {
     hideMenu();
