@@ -5,15 +5,31 @@ import com.google.gson.Gson;
 import core.Color;
 import core.user.Move;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.json.JSONObject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.sse.OutboundSseEvent;
+import javax.ws.rs.sse.Sse;
+import javax.ws.rs.sse.SseBroadcaster;
+import javax.ws.rs.sse.SseEventSink;
 
 
 @Path("game")
 public class GameResource {
+
+    private Sse sse;
+    private Map<Integer, SseBroadcaster> broadcasterMap;
+
+    public GameResource(@Context final Sse sse){
+        this.sse = sse;
+        broadcasterMap = new HashMap<>();
+    }
 
     @PUT
     @Path("createGame")
@@ -27,6 +43,9 @@ public class GameResource {
            int id = ModelGateway.getController().newPublicGame(redPlayer, bluePlayer);
             String str = Integer.toString(id);
             res = Response.ok(str).build();
+
+            SseBroadcaster broadcaster =  sse.newBroadcaster();
+            broadcasterMap.put(id, broadcaster);
         }
         else{
             String str1 = "players not found, try again or create players";
@@ -69,8 +88,8 @@ public class GameResource {
         //Now we now the game exists and is in progress.
         //If the username passed in isn't the username of the red player in the game or the blue player,
         //throw a 403 forbidden.
-        if (!(ModelGateway.getController().getUserNameRed(id).equalsIgnoreCase(userName) ||
-            ModelGateway.getController().getUserNameBlue(id).equalsIgnoreCase(userName))){
+        if (!(ModelGateway.getController().getUserNameRed(id).equals(userName) ||
+            ModelGateway.getController().getUserNameBlue(id).equals(userName))){
             response = "You aren't part of this game.";
             res = Response.status(403).entity(response).build();
             return res;
@@ -199,6 +218,32 @@ public class GameResource {
         return  gson.toJson(isFinished);
     }
 
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response broadcastBoard(String data){
+        Response res;
+        JSONObject obj = new JSONObject(data);
+        int id = obj.getInt("id");
+
+        final OutboundSseEvent event = sse.newEventBuilder()
+                .name("piece")
+                .mediaType(MediaType.TEXT_PLAIN_TYPE)
+                .data(String.class, obj)
+                .build();
+
+        broadcasterMap.get(id).broadcast(event);
+
+        res = Response.ok().build();
+        return res;
+    }
+
+   @GET
+   @Produces(MediaType.SERVER_SENT_EVENTS)
+   public void listenToBroadCast(@Context SseEventSink eventSink, int id){
+        if (broadcasterMap.containsKey(id))
+            broadcasterMap.get(id).register(eventSink);
+   }
 
     public class SquareInfo {
         private int x;

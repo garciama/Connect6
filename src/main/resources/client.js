@@ -28,17 +28,23 @@ var main = function() {
     let joinGameButton = document.getElementById("joinGameButton");
     joinGameButton.addEventListener("click", joinGameEvent);
     
-    let watchGamesButton = document.getElementById("inProgressButton");
-    watchGamesButton.add("click", );
+//    let watchGamesButton = document.getElementById("inProgressButton");
+//    watchGamesButton.add("click", );
 
 };
+
+var init = function(evt){
+    let eventSource = new EventSource('');
+
+
+}
 
 var watchGames = function () {
     fetch("menu/inProgress", {method: "GET"})
         .then(function (response) {
             
         })
-}
+};
 
 var loadGameBoard = function(id) {
     let gameBoard = document.getElementById("gameBoard-canvas");
@@ -62,6 +68,8 @@ var loadGameBoard = function(id) {
                         ctx.arc(375 + (xVal * 28) + 14, (yVal * 28) + 14, 8, 0, 2 * Math.PI);
                         ctx.stroke();
                         ctx.fill();
+
+                        //Once the p
                     }
                 })
             }
