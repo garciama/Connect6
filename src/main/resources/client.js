@@ -34,6 +34,9 @@ var main = function() {
     let watchGamesButton = document.getElementById("inProgressButton");
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
+    document.getElementById("replayButton").style.display = 'none';
+
+
 };
 
 var init = function(evt){
@@ -468,6 +471,8 @@ var leaderBoardEvent = function(e) {
 };
 
 var completedGamesEvent = function() {
+    document.getElementById("replayButton").style.display = 'initial';
+
     fetch("menu/completed", {method: "GET"} )
         .then(function(response) {
         let el = document.getElementById("leaderboard-response-area");
