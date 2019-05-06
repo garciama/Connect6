@@ -15,7 +15,6 @@ var currentPlayer;
 var gameBoard;
 
 var main = function() {
-//in init set up event listeners
 
     let createUserButton = document.getElementById("createUserButton");
     createUserButton.addEventListener("click", createAccEvent);
@@ -35,6 +34,9 @@ var main = function() {
     let watchGamesButton = document.getElementById("inProgressButton");
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
+    document.getElementById("replayButton").style.display = 'none';
+
+
     gameBoard = document.getElementById("gameBoard-canvas");
     gameBoard.addEventListener('click', gameBoardEventListener);
 
@@ -45,8 +47,8 @@ var init = function(evt){
 
     //one stream for both move history and updating board.
     //use a big json object.
-    let eventSource = new EventSource('/game');
-    eventSource.onmessage = messageReceived;
+//    let eventSource = new EventSource('/game');
+//    eventSource.onmessage = messageReceived;
 
 //    var messageInput = document.getElementById("gameBoard-canvas");
 //    messageInput.addEventListener("click", function(e){
@@ -161,6 +163,10 @@ var createNewGameEvent = function() {
                 response.text().then( function(value) {
                 console.log("id: " + value);
                 gameID = value;
+
+                let eventSource = new EventSource('/game/' + gameID);
+                eventSource.onmessage = messageReceived;
+
                 drawGameBoard(currentPlayer);
 
                 });
@@ -516,6 +522,8 @@ var leaderBoardEvent = function(e) {
 };
 
 var completedGamesEvent = function() {
+    document.getElementById("replayButton").style.display = 'initial';
+
     fetch("menu/completed", {method: "GET"} )
         .then(function(response) {
         let el = document.getElementById("leaderboard-response-area");

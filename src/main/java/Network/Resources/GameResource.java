@@ -248,11 +248,18 @@ public class GameResource {
     }
 
    @GET
+   @Path("{id}")
    @Produces(MediaType.SERVER_SENT_EVENTS)
-   public void listenToBroadCast(@Context SseEventSink eventSink){
+   public void listenToBroadCast(@Context SseEventSink eventSink, @PathParam("id") String idNumber){
        System.out.println("gothererererereasdfzxdv");
-//        if (broadcasterMap.containsKey(id))
-//            broadcasterMap.get(id).register(eventSink);
+       int id = Integer.parseInt(idNumber);
+        if (broadcasterMap.containsKey(id))
+            broadcasterMap.get(id).register(eventSink);
+        else {
+            SseBroadcaster broadcaster = sse.newBroadcaster();
+            broadcasterMap.put(id, broadcaster);
+            broadcasterMap.get(id).register(eventSink);
+        }
 
         //if it doesnt have it create the broadcaster and add it to the map.
    }
