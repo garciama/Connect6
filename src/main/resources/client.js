@@ -13,6 +13,7 @@ var xStart;
 var xEnd;
 var currentPlayer;
 var gameBoard;
+var eventSource;
 
 var main = function() {
 
@@ -36,11 +37,8 @@ var main = function() {
 
     document.getElementById("replayButton").style.display = 'none';
 
-
     gameBoard = document.getElementById("gameBoard-canvas");
     gameBoard.addEventListener('click', gameBoardEventListener);
-
-
 };
 
 var init = function(evt){
@@ -67,18 +65,31 @@ var init = function(evt){
 };
 
 var sendMessage = function(message){
-    console.log(message);
-    fetch("game/broadcastBoard", {method: "PUT", body: JSON.stringify(message)})
-        .then( function(response) {
-            console.log(response);
-        });
+
+    let json = {
+        xVal: message.xVal,
+        yVal: message.yVal,
+        id: message.id
+    };
+
+    fetch("game/broadcastBoard", {method: "POST", headers:{"Content-Type": "application/json"}, body: JSON.stringify(json) })
+                .then(function (response) {
+                    if (!response.ok) {
+                        console.log("an error occurred");
+                    } else {
+                        response.text().then( function(value) {
+                            //the games are returned as value as a json object
+                            console.log(value + "bbb")
+
+                        });
+                    }
+                })
 
 };
 
 var messageReceived = function(e){
-    console.log("e: " + e.data);
-
-
+    console.log(eventSource.readyState);
+    console.log("message received yuhh");
 };
 
 var gameBoardEventListener = function(evt){
@@ -102,6 +113,9 @@ var watchGamesEvent = function () {
 };
 
 var loadGameBoard = function(id) {
+    eventSource = new EventSource('/game/' + id);
+    eventSource.onmessage = messageReceived;
+
     //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     //TODO: make the this is the right path param
@@ -161,17 +175,19 @@ var createNewGameEvent = function() {
                 console.log("broke");
             } else {
                 response.text().then( function(value) {
-                console.log("id: " + value);
                 gameID = value;
 
-                let eventSource = new EventSource('/game/' + gameID);
+                eventSource = new EventSource('/game/' + gameID);
                 eventSource.onmessage = messageReceived;
 
                 drawGameBoard(currentPlayer);
 
                 });
             }
+
     });
+
+
 };
 
 var joinGameEvent = function(e){
@@ -395,14 +411,6 @@ var checkFinished = function(user){
                             game is still going */
                             if (value === "false"){
                                 placePieceEvent(user);
-
-                                let json = {
-                                    xVal: gridLocation.column,
-                                    yVal: gridLocation.row,
-                                    id: gameID
-                                };
-
-                                 sendMessage(json);
                             }
                             else if (value === "true")
                                 drawGameOver();
@@ -473,6 +481,13 @@ var placePieceEvent = function(nameVal){
                     ctx.arc(375 + (xVal * 28) + 14 , (yVal *28) + 14, 8, 0, 2 * Math.PI);
                     ctx.stroke();
                     ctx.fill();
+
+                    let json = {
+                        xVal: gridLocation.column,
+                        yVal: gridLocation.row,
+                        id: gameID
+                    };
+                     sendMessage(json);
                     });
                 }
             });

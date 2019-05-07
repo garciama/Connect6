@@ -4,12 +4,12 @@ import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.Color;
 import core.user.Move;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import org.json.JSONObject;
+
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +19,7 @@ import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseBroadcaster;
 import javax.ws.rs.sse.SseEventSink;
 
+@Singleton
 @Path("game")
 public class GameResource {
 
@@ -27,7 +28,7 @@ public class GameResource {
 
     public GameResource(@Context final Sse sse){
         this.sse = sse;
-        broadcasterMap = new HashMap<>();
+        broadcasterMap = Collections.synchronizedMap(new HashMap<>());
     }
 
     @PUT
@@ -51,8 +52,8 @@ public class GameResource {
             String str = Integer.toString(id);
             res = Response.ok(str).build();
 
-            SseBroadcaster broadcaster =  sse.newBroadcaster();
-            broadcasterMap.put(id, broadcaster);
+//            SseBroadcaster broadcaster =  sse.newBroadcaster();
+//            broadcasterMap.put(id, broadcaster);
         }
         else{
             String str1 = "players not found, try again or create players";
@@ -225,25 +226,24 @@ public class GameResource {
         return  gson.toJson(isFinished);
     }
 
-    @PUT
+    @POST
     @Path("broadcastBoard")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response broadcastBoard(String data){
-        System.out.println("got here broadcast");
         Response res;
         JSONObject obj = new JSONObject(data);
         int id = obj.getInt("id");
 
         final OutboundSseEvent event = sse.newEventBuilder()
-                .name("piece")
-                .mediaType(MediaType.TEXT_PLAIN_TYPE)
+                .name("message")
+                .mediaType(MediaType.APPLICATION_JSON_TYPE)
                 .data(String.class, obj)
                 .build();
 
         broadcasterMap.get(id).broadcast(event);
 
-        res = Response.ok().build();
+        res = Response.ok().entity("message sent").build();
         return res;
     }
 
@@ -251,18 +251,16 @@ public class GameResource {
    @Path("{id}")
    @Produces(MediaType.SERVER_SENT_EVENTS)
    public void listenToBroadCast(@Context SseEventSink eventSink, @PathParam("id") String idNumber){
-       System.out.println("gothererererereasdfzxdv");
        int id = Integer.parseInt(idNumber);
-        if (broadcasterMap.containsKey(id))
+        if (broadcasterMap.containsKey(id)) {
             broadcasterMap.get(id).register(eventSink);
-        else {
+        }else {
             SseBroadcaster broadcaster = sse.newBroadcaster();
             broadcasterMap.put(id, broadcaster);
             broadcasterMap.get(id).register(eventSink);
         }
 
-        //if it doesnt have it create the broadcaster and add it to the map.
-   }
+    }
 
     public class SquareInfo {
         private int x;
