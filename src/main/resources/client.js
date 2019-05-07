@@ -13,6 +13,8 @@ var xStart;
 var xEnd;
 var currentPlayer;
 var gameBoard;
+var movesInGame;
+var currentMove;
 
 var main = function() {
 
@@ -41,6 +43,14 @@ var main = function() {
     gameBoard = document.getElementById("gameBoard-canvas");
     gameBoard.addEventListener('click', gameBoardEventListener);
 
+    let previousMoveButton = document.getElementById("previousMoveButton");
+    previousMoveButton.addEventListener("click", previousMoveInReplay);
+
+    let nextMoveButton = document.getElementById("nextMoveButton");
+    nextMoveButton.addEventListener("click", nextMoveInReplay);
+
+    let startReplayButton = document.getElementById("replayButton");
+    startReplayButton.addEventListener("click", startGameReplay);
 
 };
 
@@ -465,6 +475,23 @@ function getGridLocation(posX, posY, gridSize) {
     return {row: cellRow, column: cellCol};
 };
 
+var placePieceOnReplay = function(thisPlayer, thisX, thisY) {
+    //let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+
+    if (thisPlayer === redPlayer)
+        ctx.fillStyle = "red";
+    else if (thisPlayer === bluePlayer)
+        ctx.fillStyle = "blue";
+
+    //draw piece on board
+    ctx.beginPath();
+    ctx.arc(375 + (thisX * 28) + 14 , (thisY *28) + 14, 8, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+}
+
 var placePieceEvent = function(nameVal){
     //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
@@ -558,11 +585,7 @@ var completedGamesEvent = function() {
             });
         }
     });
-
-    let startReplayButton = document.getElementById("replayButton");
-    startReplayButton.addEventListener("click", startGameReplay);
-
-}
+};
 
 var startGameReplay = function() {
     document.getElementById("replayButton").style.display = 'none';
@@ -580,13 +603,108 @@ var startGameReplay = function() {
                 console.log("Error");
             } else {
                 response.text().then(function (value) {
-                    var allMoves = JSON.parse(value);
-                    console.log(allMoves.toString())
+                    movesInGame = JSON.parse(value);
+                    currentMove = -1;
+                    console.log(movesInGame);
+                    console.log(redPlayer);
+                    console.log(bluePlayer);
+                    //drawMovesList();
                 });
             }
         });
 
-}
+
+};
+
+var drawMovesList = function (){
+    let movesCanvas = document.getElementById("gameMoves-canvas");
+    let ctx = movesCanvas.getContext("2d");
+
+    ctx.fillStyle = "white";
+    ctx.font = "12px Sans SC";
+    ctx.width = 400;
+    ctx.height = 800;
+    console.log(movesInGame);
+
+    movesCanvas.width = (window.screen.width - 50) * 0.75;
+    movesCanvas.height = window.screen.height - 100;
+
+    let w = movesCanvas.width;
+    let h = movesCanvas.height;
+
+    var moveList = JSON.parse(movesInGame);
+    var rows = moveList;
+
+
+    let xStart = (w * 0.2);
+    let xEnd = (w * 0.8);
+
+    yLoc += (headerHeight/2) + 12;
+    var rowsLength = rows.length;
+    var colWidth = (xEnd - xStart)/3;
+
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "gray";
+    for (var i = 0; i < rowsLength; i++){
+
+        //draw the white background bar by bar
+        ctx.fillStyle = "white";
+        ctx.fillRect(xStart, yLoc - 15, (xEnd - xStart), 21 );
+
+        ctx.fillStyle = "black";
+        ctx.fillText(rows[i].owner.name, xLoc, yLoc);
+        ctx.fillText(rows[i].x, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].y, xLoc + 2*colWidth, yLoc)
+
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "gray";
+
+        //Draw the vertical lines between columns
+        ctx.moveTo(xLoc + (colWidth/2) + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + 20, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2) + colWidth + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + colWidth + 20, yLoc + 6);
+        ctx.stroke();
+
+        //Draw left vertical line
+        ctx.moveTo(xStart, yLoc - 15);
+        ctx.lineTo(xStart, yLoc + 6);
+        ctx.stroke();
+
+        //Draw the right vertical line
+        ctx.moveTo(xEnd, yLoc - 15);
+        ctx.lineTo(xEnd, yLoc + 6);
+        ctx.stroke();
+
+        yLoc += 6;
+
+        //Draw the horizontal lines between rows
+        ctx.beginPath();
+        ctx.moveTo(xStart, yLoc);
+        ctx.lineTo(xEnd, yLoc);
+        ctx.stroke();
+
+        yLoc += 15;
+    }
+};
+
+var previousMoveInReplay = function(){
+
+};
+
+var nextMoveInReplay = function() {
+    if (currentMove < movesInGame.length - 1) {
+        currentMove++;
+        placePieceOnReplay(movesInGame[currentMove].owner.name, movesInGame[currentMove].x, movesInGame[currentMove].y);
+    } else {
+        alert("Already at last move in replay!");
+    }
+};
+
+
 
 
 var hideMenuAndNavAndFooter = function () {

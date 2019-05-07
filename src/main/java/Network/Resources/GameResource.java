@@ -278,6 +278,7 @@ public class GameResource {
 
         List<Move> allMoves = ModelGateway.getController().getMovesInGame(id);
         Gson gson = new Gson();
+        //System.out.println(gson.toJson(allMoves));
         return  gson.toJson(allMoves);
     }
 
