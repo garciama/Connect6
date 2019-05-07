@@ -213,6 +213,102 @@ var joinGameEvent = function(e){
 
 };
 
+var drawReplayGames = function(myGamesJSON){
+    hideMenu();
+    document.getElementById("gameBoard-canvas").style.display = 'none';
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+
+    let myGamesCanvas = document.getElementById("myGames-canvas");
+    let ctx = myGamesCanvas.getContext("2d");
+
+    myGamesCanvas.width = (window.screen.width - 50) * 0.75;
+    myGamesCanvas.height = window.screen.height - 100;
+
+    let w = myGamesCanvas.width;
+    let h = myGamesCanvas.height;
+
+    var gameList = JSON.parse(myGamesJSON);
+    var rows = gameList.gameInfos;
+
+
+    let xStart = (w * 0.2);
+    let xEnd = (w * 0.8);
+
+    drawMyGamesHeader(myGamesCanvas, xStart, xEnd);
+
+    yLoc += (headerHeight/2) + 12;
+    var rowsLength = rows.length;
+    var colWidth = (xEnd - xStart)/3;
+
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "gray";
+    for (var i = 0; i < rowsLength; i++){
+
+        //draw the white background bar by bar
+        ctx.fillStyle = "white";
+        ctx.fillRect(xStart, yLoc - 15, (xEnd - xStart), 21 );
+
+        ctx.fillStyle = "black";
+        ctx.fillText(rows[i].id, xLoc, yLoc);
+        ctx.fillText(rows[i].redPlayer, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].bluePlayer, xLoc + 2*colWidth, yLoc)
+
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "gray";
+
+        //Draw the vertical lines between columns
+        ctx.moveTo(xLoc + (colWidth/2) + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + 20, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2) + colWidth + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + colWidth + 20, yLoc + 6);
+        ctx.stroke();
+
+        //Draw left vertical line
+        ctx.moveTo(xStart, yLoc - 15);
+        ctx.lineTo(xStart, yLoc + 6);
+        ctx.stroke();
+
+        //Draw the right vertical line
+        ctx.moveTo(xEnd, yLoc - 15);
+        ctx.lineTo(xEnd, yLoc + 6);
+        ctx.stroke();
+
+        yLoc += 6;
+
+        //Draw the horizontal lines between rows
+        ctx.beginPath();
+        ctx.moveTo(xStart, yLoc);
+        ctx.lineTo(xEnd, yLoc);
+        ctx.stroke();
+
+        yLoc += 15;
+    }
+
+
+    //Move the yLoc back up after the loop.
+    yLoc += -15;
+
+    myGamesCanvas.addEventListener('click', function(evt) {
+        var mousePos = getMousePosition(myGamesCanvas, evt);
+        if (mousePos.x >= xStart && mousePos.x <= xEnd &&
+            mousePos.y >= 50 && mousePos.y <= 50 + (21 * rowsLength)){
+            gridLocation = getMyGameLocation(mousePos.x, mousePos.y, 21);
+
+            var id = rows[gridLocation.row].id;
+            redPlayer = rows[gridLocation.row].redPlayer;
+            bluePlayer = rows[gridLocation.row].bluePlayer;
+            gameID = id;
+            loadGameBoard(id);
+            document.getElementById("replayButton").style.display = 'initial';
+        }
+    }, false);
+};
+
+
+
 var drawMyGames = function(myGamesJSON){
     hideMenu();
     document.getElementById("gameBoard-canvas").style.display = 'none';
@@ -583,8 +679,7 @@ var completedGamesEvent = function() {
             el.style.color = "red";
         } else {
             response.text().then(function (value) {
-               drawMyGames(value);
-               document.getElementById("replayButton").style.display = 'initial';
+               drawReplayGames(value);
             });
         }
     });
