@@ -302,6 +302,7 @@ var drawReplayGames = function(myGamesJSON){
             bluePlayer = rows[gridLocation.row].bluePlayer;
             gameID = id;
             loadGameBoard(id);
+            //Had to add this to make the button not show up on list of games screen.
             document.getElementById("replayButton").style.display = 'initial';
         }
     }, false);
