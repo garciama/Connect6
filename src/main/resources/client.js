@@ -591,7 +591,6 @@ var completedGamesEvent = function() {
 };
 
 var startGameReplay = function() {
-
     document.getElementById("leaderBoard-canvas").style.display = 'none';
     document.getElementById("myGames-canvas").style.display = 'none';
     document.getElementById("replayButton").style.display = 'none';
