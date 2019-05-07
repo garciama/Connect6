@@ -47,6 +47,7 @@ public class Main {
         ModelGateway.getController().makeMove(1,0,3, "Michael");
         ModelGateway.getController().makeMove(1,0,4, "Michael");
         ModelGateway.getController().makeMove(1,5,5, "Nick");
+        ModelGateway.getController().makeMove(1,6,6,"Nick");
 
         URI baseUri = UriBuilder.fromUri(URI).port(PORT).build();
         final ResourceConfig config = new ResourceConfig().packages(RESOURCES_PACKAGES);

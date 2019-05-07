@@ -55,23 +55,27 @@
                       vertical-align:       middle;
                     }
         a           { color: inherit; }
-        gameBord-canvas     { padding: 0;
+        table       {
+                        float: top;
+                        border: 1px solid black;
+                        background-color: antiquewhite;
+                        color: black;
+                    }
+        td          {
+                        border: 1px solid black;
+                        background-color: antiquewhite;
+                        color: black;
+                    }
+        gameBoard-canvas     { padding: 0;
                             margin: auto;
                             display: block;
-                            position: center;}
+                            float: right;}
 
         leaderboard-canvas  { margin: 0;
                               overflow: hidden;
                               background-color: white;
                               width: 100%;
                               height: 100%; }
-        gameMoves-canvas    {
-                                margin: 0;
-                                overflow: hidden;
-                                background-color: white;
-                                width: 100%;
-                                height: 100%;
-                            }
 
         .btn        { border:                 none;
                       background-color:       inherit;
@@ -98,7 +102,15 @@
                            color: white;}
 
         .replayButton {
-            vertical-align: middle;
+            float: left;
+            color: white;
+            background-color: red;
+            border: 1px solid transparent;
+            font-size: 13px;
+        }
+
+        .moveButton {
+            float: bottom;
             color: white;
             background-color: red;
             border: 1px solid transparent;
@@ -132,6 +144,16 @@
 			        text-align:            center;
 		        	background-color:      white;
 			  }
+
+        article.replay	{
+            width: 400px;
+            border:				    thin solid black;
+            padding:			    10px 10px 10px 10px;
+            float:                 left;
+            color:                 black;
+            text-align:            center;
+            background-color:      white;
+        }
 
         .popcornimage{height: 60%; }
 
@@ -235,22 +257,35 @@
         <br/><br/>
     </article>
 
+
     <canvas id="gameBoard-canvas"></canvas>
     <canvas id="leaderBoard-canvas"></canvas>
     <canvas id="myGames-canvas"></canvas>
-    <canvas id="gameMoves-canvas"></canvas>
 
     <button class="btn replayButton" id = "replayButton">
     <i class="fa fa-replay" aria-hidden="true"></i>
     See Game Replay</button>
 
-    <button class="btn replayButton" id = "nextMoveButton">
-    <i class="fa fa-replay" aria-hidden="true"></i>
-    Next Move</button>
 
-    <button class="btn replayButton" id = "previousMoveButton">
-    <i class="fa fa-replay" aria-hidden="true"></i>
-    Previous Move</button>
+    <article class="replay" id="replayMovesArticle">
+        <table id="movesTable">
+            <tr>
+                <th>Move Number</th>
+                <th>Player Name</th>
+                <th>X-Coordinate</th>
+                <th>Y-Coordinate</th>
+            </tr>
+        </table>
+
+        <button class="btn moveButton" id = "previousMoveButton">
+            <i class="fa fa-replay" aria-hidden="true"></i>
+            Previous Move</button>
+
+        <button class="btn moveButton" id = "nextMoveButton">
+        <i class="fa fa-replay" aria-hidden="true"></i>
+        Next Move</button>
+
+    </article>
 
     <footer id="footer">
         Cunning Coders™ 👀👌🔥🔥🔥
