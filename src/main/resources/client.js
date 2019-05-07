@@ -492,8 +492,18 @@ var placePieceOnReplay = function(thisPlayer, thisX, thisY) {
     ctx.fill();
 }
 
+var removePieceOnReplay = function(thisX, thisY) {
+    let ctx = gameBoard.getContext("2d");
+
+    ctx.fillStyle = "#bf912f";
+
+    // Remove piece on board, which basically makes the game go back 1 turn.
+    ctx.beginPath();
+    ctx.arc(375 + (thisX * 28) + 14 , (thisY *28) + 14, 10, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
 var placePieceEvent = function(nameVal){
-    //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
     var xVal = gridLocation.column;
     var yVal = gridLocation.row;
@@ -692,7 +702,12 @@ var drawMovesList = function (){
 };
 
 var previousMoveInReplay = function(){
-
+    if (currentMove > -1) {
+        removePieceOnReplay(movesInGame[currentMove].x, movesInGame[currentMove].y);
+        currentMove--;
+    } else {
+        alert("Game replay is at the beginning already!");
+    }
 };
 
 var nextMoveInReplay = function() {
