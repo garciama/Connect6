@@ -89,7 +89,7 @@ var sendMessage = function(message){
 
 var messageReceived = function(e){
     console.log(eventSource.readyState);
-    console.log("message received yuhh");
+    console.log("message received yyy");
 };
 
 var gameBoardEventListener = function(evt){
@@ -178,7 +178,8 @@ var createNewGameEvent = function() {
                 gameID = value;
 
                 eventSource = new EventSource('/game/' + gameID);
-                eventSource.onmessage = messageReceived;
+                console.log("After new event source");
+                eventSource.onerror = messageReceived;
 
                 drawGameBoard(currentPlayer);
 

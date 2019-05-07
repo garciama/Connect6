@@ -51,9 +51,6 @@ public class GameResource {
 
             String str = Integer.toString(id);
             res = Response.ok(str).build();
-
-//            SseBroadcaster broadcaster =  sse.newBroadcaster();
-//            broadcasterMap.put(id, broadcaster);
         }
         else{
             String str1 = "players not found, try again or create players";
