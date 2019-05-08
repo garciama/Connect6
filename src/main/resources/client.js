@@ -13,7 +13,10 @@ var xStart;
 var xEnd;
 var currentPlayer;
 var gameBoard;
+var movesInGame;
+var currentMove;
 var eventSource;
+var isFinished;
 
 var main = function() {
 
@@ -36,9 +39,22 @@ var main = function() {
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
     document.getElementById("replayButton").style.display = 'none';
+    document.getElementById("nextMoveButton").style.display = 'none';
+    document.getElementById("previousMoveButton").style.display = 'none';
+
 
     gameBoard = document.getElementById("gameBoard-canvas");
     gameBoard.addEventListener('click', gameBoardEventListener);
+
+    let previousMoveButton = document.getElementById("previousMoveButton");
+    previousMoveButton.addEventListener("click", previousMoveInReplay);
+
+    let nextMoveButton = document.getElementById("nextMoveButton");
+    nextMoveButton.addEventListener("click", nextMoveInReplay);
+
+    let startReplayButton = document.getElementById("replayButton");
+    startReplayButton.addEventListener("click", startGameReplay);
+
 };
 
 var init = function(evt){
@@ -46,7 +62,6 @@ var init = function(evt){
     //one stream for both move history and updating board.
     //use a big json object.
 //    let eventSource = new EventSource('/game');
-//    eventSource.onmessage = messageReceived;
 
 //    var messageInput = document.getElementById("gameBoard-canvas");
 //    messageInput.addEventListener("click", function(e){
@@ -66,20 +81,15 @@ var init = function(evt){
 
 var sendMessage = function(message){
 
-    let json = {
-        xVal: message.xVal,
-        yVal: message.yVal,
-        id: message.id
-    };
 
-    fetch("game/broadcastBoard", {method: "POST", headers:{"Content-Type": "application/json"}, body: JSON.stringify(json) })
+    fetch("game/broadcastBoard", {method: "POST", headers:{"Content-Type": "application/json"}, body: JSON.stringify(message) })
                 .then(function (response) {
                     if (!response.ok) {
                         console.log("an error occurred");
                     } else {
                         response.text().then( function(value) {
                             //the games are returned as value as a json object
-                            console.log(value + "bbb")
+                            console.log(value + " from game/broadcast");
 
                         });
                     }
@@ -88,14 +98,50 @@ var sendMessage = function(message){
 };
 
 var messageReceived = function(e){
-    console.log(eventSource.readyState);
-    console.log("message received yyy");
+    console.log("json: " + e.data);
+    var json = JSON.parse(e.data);
+    var x = json.xVal;
+    var y = json.yVal;
+    var id = json.id;
+    var thisPlayer = json.player;
+
+    fetch("/game/" + gameID + "/isFinished", { method: "GET"} )
+        .then(function (response) {
+            if (!response.ok) {
+                console.log("Error: " + response.status);
+            } else {
+                response.text().then( function(value) {
+
+                    if (value === "false"){
+                            let ctx = gameBoard.getContext("2d");
+
+                            if (thisPlayer === redPlayer)
+                                ctx.fillStyle = "red";
+                            else if (thisPlayer === bluePlayer)
+                                ctx.fillStyle = "blue";
+
+                                //draw piece on board
+
+                                ctx.beginPath();
+                                ctx.arc(375 + (x * 28) + 14 , (y *28) + 14, 8, 0, 2 * Math.PI);
+                                ctx.stroke();
+                                ctx.fill();
+                    }
+                    else if (value === "true")
+                        drawGameOver();
+
+                });
+            }
+    });
+
+
+
 };
 
 var gameBoardEventListener = function(evt){
     var mousePos = getMousePosition(gameBoard, evt);
     gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-    checkFinished(currentPlayer)
+    isFinished = checkFinished()
 };
 
 var watchGamesEvent = function () {
@@ -113,8 +159,8 @@ var watchGamesEvent = function () {
 };
 
 var loadGameBoard = function(id) {
-    eventSource = new EventSource('/game/' + id);
-    eventSource.onmessage = messageReceived;
+   eventSource = new EventSource('/game/' + id);
+   eventSource.onmessage = messageReceived;
 
     //let gameBoard = document.getElementById("gameBoard-canvas");
     let ctx = gameBoard.getContext("2d");
@@ -125,7 +171,7 @@ var loadGameBoard = function(id) {
                 console.log("error in loadGameBoard");
             }else{
                 response.text().then(function (value) {
-                    drawGameBoard(currentPlayer);
+                    drawGameBoard();
                     let board = (JSON.parse(value)).Board;
                     for(var i = 0; i < board.length; i++) {
                         let xVal = board[i].x;
@@ -150,7 +196,7 @@ var createNewGameEvent = function() {
 
 
     redPlayer = user1;
-    currentPlayer = redPlayer;
+    currentPlayer = user1;
     bluePlayer = user2;
 
     let json = {
@@ -179,9 +225,11 @@ var createNewGameEvent = function() {
 
                 eventSource = new EventSource('/game/' + gameID);
                 console.log("After new event source");
-                eventSource.onerror = messageReceived;
+                eventSource.onmessage = messageReceived;
+                //maybe just join game and then create event source in join game rather than
+                //handlign special case.
 
-                drawGameBoard(currentPlayer);
+                drawGameBoard();
 
                 });
             }
@@ -362,7 +410,7 @@ var drawMyGamesHeader = function(canvas, xStart, xEnd){
 };
 
 
-var drawGameBoard = function (user) {
+var drawGameBoard = function () {
     hideMenuAndNavAndFooter();
     document.getElementById("gameBoard-canvas").style.display = 'initial';
     document.getElementById("leaderBoard-canvas").style.display = 'none';
@@ -397,7 +445,32 @@ var drawGameBoard = function (user) {
 
 };
 
-var checkFinished = function(user){
+var drawEmptyGameBoard = function () {
+    hideMenuAndNavAndFooter();
+    document.getElementById("gameBoard-canvas").style.display = 'initial';
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
+
+    let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+    gameBoard.width = 1000;
+    gameBoard.height = 532;
+
+    ctx.fillStyle = "#bf912f";
+    ctx.fillRect(375, 0, 532, 532);
+
+    for(var i = 0; i < 19; i++){
+        ctx.moveTo(i * 28 + 375, 0);
+        ctx.lineTo(i * 28 + 375, 532);
+        ctx.stroke();
+        ctx.moveTo(375, i  * 28);
+        ctx.lineTo(907, i * 28);
+        ctx.stroke();
+    }
+};
+
+var checkFinished = function(){
 
     fetch("/game/" + gameID + "/isFinished", { method: "GET"} )
                 .then(function (response) {
@@ -411,7 +484,7 @@ var checkFinished = function(user){
                             /*If the returned value is false, then place the piece down, because the
                             game is still going */
                             if (value === "false"){
-                                placePieceEvent(user);
+                                placePieceEvent();
                             }
                             else if (value === "true")
                                 drawGameOver();
@@ -429,11 +502,6 @@ var drawGameOver = function(){
     ctx.fillStyle = "white";
     ctx.font = "20px Sans SC";
     ctx.fillText("Game Over!", 250, 266);
-
-
-
-
-
 };
 
 
@@ -453,8 +521,35 @@ function getGridLocation(posX, posY, gridSize) {
     return {row: cellRow, column: cellCol};
 };
 
-var placePieceEvent = function(nameVal){
+var placePieceOnReplay = function(thisPlayer, thisX, thisY) {
     //let gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+
+    if (thisPlayer === redPlayer)
+        ctx.fillStyle = "red";
+    else if (thisPlayer === bluePlayer)
+        ctx.fillStyle = "blue";
+
+    //draw piece on board
+    ctx.beginPath();
+    ctx.arc(375 + (thisX * 28) + 14 , (thisY *28) + 14, 8, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+}
+
+var removePieceOnReplay = function(thisX, thisY) {
+    let ctx = gameBoard.getContext("2d");
+
+    ctx.fillStyle = "#bf912f";
+
+    // Remove piece on board, which basically makes the game go back 1 turn.
+    ctx.beginPath();
+    ctx.arc(375 + (thisX * 28) + 14 , (thisY *28) + 14, 10, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
+var placePieceEvent = function(nameVal){
     let ctx = gameBoard.getContext("2d");
     var xVal = gridLocation.column;
     var yVal = gridLocation.row;
@@ -462,7 +557,7 @@ var placePieceEvent = function(nameVal){
     let data = {
         x: xVal,
         y: yVal,
-        name: nameVal
+        name: currentPlayer
     };
 
     fetch("game/makeMove/" + gameID , {method: "PUT", headers:{"Content-Type": "application/json"}, body: JSON.stringify(data)} )
@@ -486,8 +581,11 @@ var placePieceEvent = function(nameVal){
                     let json = {
                         xVal: gridLocation.column,
                         yVal: gridLocation.row,
-                        id: gameID
+                        id: gameID,
+                        player: currentPlayer
                     };
+
+                    console.log("before msg send: " + currentPlayer);
                      sendMessage(json);
                     });
                 }
@@ -553,7 +651,132 @@ var completedGamesEvent = function() {
             });
         }
     });
-}
+};
+
+var startGameReplay = function() {
+    document.getElementById("replayButton").style.display = 'none';
+    document.getElementById("previousMoveButton").style.display = 'initial';
+    document.getElementById("nextMoveButton").style.display = 'initial';
+
+    drawEmptyGameBoard();
+
+    fetch("game/" + gameID+ "/movesInGame", {method: "GET"} )
+        .then(function(response) {
+            if( !response.ok ){
+                // el.innerText = "Error code: " + response.status;
+                // el.style.fontWeight = "bold";
+                // el.style.color = "red";
+                console.log("Error");
+            } else {
+                response.text().then(function (value) {
+                    movesInGame = JSON.parse(value);
+                    currentMove = -1;
+                    console.log(movesInGame);
+                    console.log(redPlayer);
+                    console.log(bluePlayer);
+                    //drawMovesList();
+                });
+            }
+        });
+
+
+};
+
+var drawMovesList = function (){
+    let movesCanvas = document.getElementById("gameMoves-canvas");
+    let ctx = movesCanvas.getContext("2d");
+
+    ctx.fillStyle = "white";
+    ctx.font = "12px Sans SC";
+    ctx.width = 400;
+    ctx.height = 800;
+    console.log(movesInGame);
+
+    movesCanvas.width = (window.screen.width - 50) * 0.75;
+    movesCanvas.height = window.screen.height - 100;
+
+    let w = movesCanvas.width;
+    let h = movesCanvas.height;
+
+    var moveList = JSON.parse(movesInGame);
+    var rows = moveList;
+
+
+    let xStart = (w * 0.2);
+    let xEnd = (w * 0.8);
+
+    yLoc += (headerHeight/2) + 12;
+    var rowsLength = rows.length;
+    var colWidth = (xEnd - xStart)/3;
+
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "gray";
+    for (var i = 0; i < rowsLength; i++){
+
+        //draw the white background bar by bar
+        ctx.fillStyle = "white";
+        ctx.fillRect(xStart, yLoc - 15, (xEnd - xStart), 21 );
+
+        ctx.fillStyle = "black";
+        ctx.fillText(rows[i].owner.name, xLoc, yLoc);
+        ctx.fillText(rows[i].x, xLoc + colWidth, yLoc);
+        ctx.fillText(rows[i].y, xLoc + 2*colWidth, yLoc)
+
+        ctx.beginPath();
+        ctx.lineWidth = "2";
+        ctx.strokeStyle = "gray";
+
+        //Draw the vertical lines between columns
+        ctx.moveTo(xLoc + (colWidth/2) + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + 20, yLoc + 6);
+        ctx.stroke();
+
+        ctx.moveTo(xLoc + (colWidth/2) + colWidth + 20, yLoc - 15);
+        ctx.lineTo(xLoc + (colWidth/2) + colWidth + 20, yLoc + 6);
+        ctx.stroke();
+
+        //Draw left vertical line
+        ctx.moveTo(xStart, yLoc - 15);
+        ctx.lineTo(xStart, yLoc + 6);
+        ctx.stroke();
+
+        //Draw the right vertical line
+        ctx.moveTo(xEnd, yLoc - 15);
+        ctx.lineTo(xEnd, yLoc + 6);
+        ctx.stroke();
+
+        yLoc += 6;
+
+        //Draw the horizontal lines between rows
+        ctx.beginPath();
+        ctx.moveTo(xStart, yLoc);
+        ctx.lineTo(xEnd, yLoc);
+        ctx.stroke();
+
+        yLoc += 15;
+    }
+};
+
+var previousMoveInReplay = function(){
+    if (currentMove > -1) {
+        removePieceOnReplay(movesInGame[currentMove].x, movesInGame[currentMove].y);
+        currentMove--;
+    } else {
+        alert("Game replay is at the beginning already!");
+    }
+};
+
+var nextMoveInReplay = function() {
+    if (currentMove < movesInGame.length - 1) {
+        currentMove++;
+        placePieceOnReplay(movesInGame[currentMove].owner.name, movesInGame[currentMove].x, movesInGame[currentMove].y);
+    } else {
+        alert("Already at last move in replay!");
+    }
+};
+
+
+
 
 var hideMenuAndNavAndFooter = function () {
     hideMenu();

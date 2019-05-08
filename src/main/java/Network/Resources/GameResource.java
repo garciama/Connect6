@@ -225,17 +225,18 @@ public class GameResource {
 
     @POST
     @Path("broadcastBoard")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response broadcastBoard(String data){
         Response res;
         JSONObject obj = new JSONObject(data);
         int id = obj.getInt("id");
 
+
         final OutboundSseEvent event = sse.newEventBuilder()
                 .name("message")
                 .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                .data(String.class, obj)
+                .data(String.class, obj.toString())
                 .build();
 
         broadcasterMap.get(id).broadcast(event);
@@ -257,6 +258,24 @@ public class GameResource {
             broadcasterMap.get(id).register(eventSink);
         }
 
+    }
+
+    @GET
+    @Path("{id}/movesInGame")
+    public String movesInGame(@PathParam("id") String idNumber ){
+        int id = -1;
+        try {
+            id = Integer.parseInt(idNumber);
+        } catch( NumberFormatException e ) {
+            throw new WebApplicationException(404);
+        }
+        if (!ModelGateway.getController().checkIfGameExists(id))
+            throw new WebApplicationException(404);
+
+        List<Move> allMoves = ModelGateway.getController().getMovesInGame(id);
+        Gson gson = new Gson();
+        //System.out.println(gson.toJson(allMoves));
+        return  gson.toJson(allMoves);
     }
 
     public class SquareInfo {
