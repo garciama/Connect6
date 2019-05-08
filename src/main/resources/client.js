@@ -255,6 +255,7 @@ var drawReplayGames = function(myGamesJSON){
     document.getElementById("leaderBoard-canvas").style.display = 'none';
 
     let myGamesCanvas = document.getElementById("myGames-canvas");
+    myGamesCanvas.style.display = "block";
     let ctx = myGamesCanvas.getContext("2d");
 
     myGamesCanvas.width = (window.screen.width - 50) * 0.75;
