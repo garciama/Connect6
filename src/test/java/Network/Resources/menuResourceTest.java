@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 //Maybe restart server for each test.
 public class menuResourceTest {
 
-    private static final String HOST_URI = "http://localhost:6969/";
+    private static final String HOST_URI = "http://localhost:5002/";
     private static HttpServer server;
     private static Client client;
     private static GameController controller;

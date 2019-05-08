@@ -258,7 +258,7 @@ public class GameManager {
      * @return string representation of the passed in game, including the gameID and each players name
      */
     private String getGameInfo(Game g) {
-        int id = g.gameID;
+        int id = g.getID();
         String redPlayer = g.redPlayer.getName();
         String bluePlayer = g.bluePlayer.getName();
         return String.format("%s %s %s\n", Integer.toString(id), redPlayer, bluePlayer);

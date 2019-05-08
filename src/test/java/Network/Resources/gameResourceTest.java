@@ -16,7 +16,7 @@ import java.util.List;
 
 public class gameResourceTest {
 
-    private static final String HOST_URI = "http://localhost:6969/";
+    private static final String HOST_URI = "http://localhost:5002/";
     private static HttpServer server;
     private static Client client;
     private static GameController controller;

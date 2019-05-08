@@ -8,12 +8,12 @@ import java.util.List;
 
 public class Game {
 
-    public int gameID;
+    private int gameID;
     private boolean isPublic;
     private boolean isFinished;
     private Board board;
     User redPlayer, bluePlayer;
-    public ArrayList<Move> movesInGame;
+    private ArrayList<Move> movesInGame;
 
     public Game(int id, User redName, User blueName, boolean isPublic) {
         movesInGame = new ArrayList<>();
@@ -24,6 +24,8 @@ public class Game {
         isFinished = false;
         this.isPublic = isPublic;
     }
+
+    public int getID() { return this.gameID; }
 
     public String getBoard() { return board.displayBoard(); }
 
