@@ -483,39 +483,6 @@ var drawGameBoard = function () {
     let ctx = gameBoard.getContext("2d");
 
     gameBoard.width = 1000;
-    gameBoard.height = 532;
-
-    ctx.fillStyle = "#bf912f";
-    ctx.fillRect(375, 0, 532, 532);
-
-    for(var i = 0; i < 19; i++){
-        ctx.moveTo(i * 28 + 375, 0);
-        ctx.lineTo(i * 28 + 375, 532);
-        ctx.stroke();
-        ctx.moveTo(375, i  * 28);
-        ctx.lineTo(907, i * 28);
-        ctx.stroke();
-    }
-
-//        gameBoard.addEventListener('click', function(evt) {
-//            var mousePos = getMousePosition(gameBoard, evt);
-//            gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
-//
-//            checkFinished(user)
-//
-//        }, false);
-};
-
-var drawEmptyGameBoard = function () {
-    hideMenuAndNavAndFooter();
-    document.getElementById("gameBoard-canvas").style.display = 'initial';
-    document.getElementById("leaderBoard-canvas").style.display = 'none';
-    document.getElementById("myGames-canvas").style.display = 'none';
-
-    let gameBoard = document.getElementById("gameBoard-canvas");
-    let ctx = gameBoard.getContext("2d");
-
-    gameBoard.width = 1000;
     //gameBoard.height = 532;
     gameBoard.height = 600;
 
@@ -528,8 +495,63 @@ var drawEmptyGameBoard = function () {
         ctx.stroke();
         ctx.moveTo(375, i  * 28);
         ctx.lineTo(907, i * 28);
-        ctx.stroke("A", 375 + (28/2), 532);
+        ctx.stroke();
     }
+
+    ctx.fillStyle = "black";
+    ctx.font = "19px Sans SC";
+
+    for (var i = 0 ; i < 19; i++){
+        ctx.fillText(String.fromCharCode(65 + i), 375 + 8 + (28*i), 549);
+    };
+
+    for (var i = 0; i <= 19; i++){
+        if (i < 10)
+            ctx.fillText(i, 375 - 14, 0 + (28*i) - 5 );
+        else
+            ctx.fillText(i, 375 - 23, 0 + (28*i) - 5);
+    };
+};
+
+var drawEmptyGameBoard = function () {
+    hideMenuAndNavAndFooter();
+    document.getElementById("gameBoard-canvas").style.display = 'initial';
+    document.getElementById("leaderBoard-canvas").style.display = 'none';
+    document.getElementById("myGames-canvas").style.display = 'none';
+
+    gameBoard = document.getElementById("gameBoard-canvas");
+    let ctx = gameBoard.getContext("2d");
+
+    gameBoard.width = 1000;
+    gameBoard.height = 600;
+
+    ctx.fillStyle = "#bf912f";
+    ctx.fillRect(375, 0, 532, 532);
+
+    for(var i = 0; i < 19; i++){
+        ctx.moveTo(i * 28 + 375, 0);
+        ctx.lineTo(i * 28 + 375, 532);
+        ctx.stroke();
+        ctx.moveTo(375, i  * 28);
+        ctx.lineTo(907, i * 28);
+        ctx.stroke();
+    }
+
+     ctx.fillStyle = "black";
+        ctx.font = "19px Sans SC";
+
+        for (var i = 0 ; i < 19; i++){
+            ctx.fillText(String.fromCharCode(65 + i), 375 + 8 + (28*i), 549);
+        };
+
+        for (var i = 0; i <= 19; i++){
+            if (i < 10)
+                ctx.fillText(i, 375 - 14, 0 + (28*i) - 5 );
+            else
+                ctx.fillText(i, 375 - 23, 0 + (28*i) - 5);
+        };
+
+
 };
 
 var checkFinished = function(){
@@ -748,8 +770,8 @@ var drawMovesList = function (){
         var yCoordinateCell = row.insertCell(3);
         moveNumberCell.innerHTML = i+1;
         playerNameCell.innerHTML = movesInGame[i].owner.name;
-        xCoordinateCell.innerHTML = movesInGame[i].x;
-        yCoordinateCell.innerHTML = movesInGame[i].y;
+        xCoordinateCell.innerHTML = String.fromCharCode(65 + movesInGame[i].x);
+        yCoordinateCell.innerHTML = movesInGame[i].y + 1;
     }
 };
 
