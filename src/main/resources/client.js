@@ -789,6 +789,7 @@ var drawLeaderBoard = function(jsonLeaderBoard){
     document.getElementById("myGames-canvas").style.display = 'none';
 
     let leaderBoard = document.getElementById("leaderBoard-canvas");
+    leaderBoard.style.display = "block";
     let ctx = leaderBoard.getContext("2d");
     leaderBoard.width = window.screen.width - 50;
     leaderBoard.height = window.screen.height - 100;
