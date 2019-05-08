@@ -531,6 +531,10 @@ var drawGameBoard = function () {
         ctx.stroke();
     }
 
+    ctx.fillText()
+
+
+
 //        gameBoard.addEventListener('click', function(evt) {
 //            var mousePos = getMousePosition(gameBoard, evt);
 //            gridLocation = getGridLocation(mousePos.x, mousePos.y, 28);
@@ -552,7 +556,8 @@ var drawEmptyGameBoard = function () {
     let ctx = gameBoard.getContext("2d");
 
     gameBoard.width = 1000;
-    gameBoard.height = 532;
+    //gameBoard.height = 532;
+    gameBoard.height = 600;
 
     ctx.fillStyle = "#bf912f";
     ctx.fillRect(375, 0, 532, 532);
@@ -563,7 +568,7 @@ var drawEmptyGameBoard = function () {
         ctx.stroke();
         ctx.moveTo(375, i  * 28);
         ctx.lineTo(907, i * 28);
-        ctx.stroke();
+        ctx.stroke("A", 375 + (28/2), 532);
     }
 };
 
