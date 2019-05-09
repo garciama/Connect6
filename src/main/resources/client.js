@@ -17,6 +17,7 @@ var movesInGame;
 var currentMove;
 var eventSource;
 var isFinished;
+var currentPlayerTurn;
 
 var main = function() {
 
@@ -39,9 +40,7 @@ var main = function() {
     watchGamesButton.addEventListener("click", watchGamesEvent);
 
     document.getElementById("replayButton").style.display = 'none';
-    document.getElementById("nextMoveButton").style.display = 'none';
-    document.getElementById("previousMoveButton").style.display = 'none';
-
+    document.getElementById("moveButtons").style.display = 'none';
 
     gameBoard = document.getElementById("gameBoard-canvas");
     gameBoard.addEventListener('click', gameBoardEventListener);
@@ -106,7 +105,7 @@ var messageReceived = function(e){
     var id = json.id;
     var thisPlayer = json.player;
 
-    fetch("/game/" + gameID + "/isFinished", { method: "GET"} )
+    fetch("/game/" + id + "/isFinished", { method: "GET"} )
         .then(function (response) {
             if (!response.ok) {
                 console.log("Error: " + response.status);
@@ -134,6 +133,94 @@ var messageReceived = function(e){
                 });
             }
     });
+
+    var moveTable = document.getElementById("movesTable");
+    var owner;
+
+    fetch("game/" + id + "/movesInGame", {method: "GET"} )
+            .then(function(response) {
+                if( !response.ok ){
+                    console.log("Error in message received movesinGame");
+                } else {
+                    response.text().then(function (value) {
+                        movesInGame = JSON.parse(value);
+                        currentMove = -1;
+                        console.log(movesInGame);
+                        console.log(redPlayer);
+                        console.log(bluePlayer);
+
+
+                        var row = movesTable.insertRow();
+                        var moveNumberCell = row.insertCell(0);
+                        var playerNameCell = row.insertCell(1);
+                        var xCoordinateCell = row.insertCell(2);
+                        var yCoordinateCell = row.insertCell(3);
+                        moveNumberCell.innerHTML = movesInGame.length;
+                        playerNameCell.innerHTML = movesInGame[movesInGame.length-1].owner.name;
+                        xCoordinateCell.innerHTML = String.fromCharCode(65 + movesInGame[movesInGame.length-1].x);
+                        yCoordinateCell.innerHTML = movesInGame[movesInGame.length-1].y + 1;
+
+                        owner = movesInGame[movesInGame.length-1].owner.name;
+                        determineTurn(owner, id);
+
+                    });
+                }
+            });
+
+//            var other;
+//
+//            console.log("redplayer: " + redPlayer + " bluePlaer: " + bluePlayer);
+//            if (owner === redPlayer)
+//                other = bluePlayer;
+//            else
+//                other = redPlayer;
+//
+//            console.log("owner: " + owner + " other: " + other);
+
+//            if (movesInGame.length === 1)
+//                updatePlayerTurn(bluePlayer);
+//
+//            if (movesInGame[movesInGame.length-1] === movesInGame[movesInGame.length-2])
+
+
+};
+
+var determineTurn = function(player, gID){
+    var other;
+    if (player === redPlayer)
+        other = bluePlayer;
+    else
+        other = redPlayer;
+
+
+    if(typeof(movesInGame) === "undefined"){
+        fetch("game/" + gID + "/movesInGame", {method: "GET"} )
+            .then(function(response) {
+                if( !response.ok ){
+                    console.log("Error in determine player");
+                } else {
+                    response.text().then(function (value) {
+                        movesInGame = JSON.parse(value);
+
+                        if (movesInGame.length === 1)
+                            updatePlayerTurn(bluePlayer);
+                        else if (movesInGame[movesInGame.length-1].owner.name === movesInGame[movesInGame.length-2].owner.name)
+                            updatePlayerTurn(other);
+                        else
+                            updatePlayerTurn(player);
+                    });
+                }
+            });
+    }else{
+
+        if (movesInGame.length === 1)
+            updatePlayerTurn(bluePlayer);
+        else if (movesInGame[movesInGame.length-1].owner.name === movesInGame[movesInGame.length-2].owner.name)
+            updatePlayerTurn(other);
+        else
+            updatePlayerTurn(player);
+    }
+
 };
 
 var gameBoardEventListener = function(evt){
@@ -168,6 +255,10 @@ var loadGameBoard = function(id) {
             }else{
                 response.text().then(function (value) {
                     drawGameBoard();
+                    drawMovesList();
+
+                    determineTurn(currentPlayer, id);
+
                     let board = (JSON.parse(value)).Board;
                     for(var i = 0; i < board.length; i++) {
                         let xVal = board[i].x;
@@ -186,6 +277,7 @@ var loadGameBoard = function(id) {
 }
 
 var createNewGameEvent = function() {
+
     let user1 = document.getElementById("user1").value;
     let user2 = document.getElementById("user2").value;
     var priv = document.getElementById('priv').checked;
@@ -221,6 +313,7 @@ var createNewGameEvent = function() {
                 //maybe just join game and then create event source in join game rather than
                 //handlin gspecial case.
                 drawGameBoard();
+                updatePlayerTurn(redPlayer);
                 });
             }
     });
@@ -480,6 +573,8 @@ var drawGameBoard = function () {
     document.getElementById("gameBoard-canvas").style.display = 'initial';
     document.getElementById("leaderBoard-canvas").style.display = 'none';
     document.getElementById("myGames-canvas").style.display = 'none';
+    document.getElementById("replayMovesArticle").style.display = 'initial';
+    document.getElementById("moveButtons").style.display = 'none';
 
     let ctx = gameBoard.getContext("2d");
 
@@ -512,6 +607,12 @@ var drawGameBoard = function () {
         else
             ctx.fillText(i, 375 - 23, 0 + (28*i) - 5);
     };
+};
+
+var updatePlayerTurn = function(player){
+    document.getElementById("currentplayermove").style.display = 'initial';
+    document.getElementById("currentplayermove").innerText = player + "'s Turn";
+    currentPlayerTurn = player;
 };
 
 var drawEmptyGameBoard = function () {
@@ -662,7 +763,6 @@ var placePieceEvent = function(nameVal){
                         player: currentPlayer
                     };
 
-                    console.log("before msg send: " + currentPlayer);
                      sendMessage(json);
                     });
                 }
@@ -734,46 +834,50 @@ var startGameReplay = function() {
     document.getElementById("myGames-canvas").style.display = 'none';
     document.getElementById("replayButton").style.display = 'none';
     document.getElementById("replayMovesArticle").style.display = 'initial';
-    document.getElementById("nextMoveButton").style.display = 'initial';
-    document.getElementById("previousMoveButton").style.display = 'initial';
+    document.getElementById("moveButtons").style.display = 'initial';
+    document.getElementById("currentplayermove").style.display = 'none';
 
     drawEmptyGameBoard();
+    drawMovesList();
 
-    fetch("game/" + gameID+ "/movesInGame", {method: "GET"} )
-        .then(function(response) {
-            if( !response.ok ){
-                // el.innerText = "Error code: " + response.status;
-                // el.style.fontWeight = "bold";
-                // el.style.color = "red";
-                console.log("Error");
-            } else {
-                response.text().then(function (value) {
-                    movesInGame = JSON.parse(value);
-                    currentMove = -1;
-                    console.log(movesInGame);
-                    console.log(redPlayer);
-                    console.log(bluePlayer);
-                    drawMovesList();
-                });
-            }
-        });
+
 };
 
 var drawMovesList = function (){
 
-    var movesTable = document.getElementById("movesTable");
+    fetch("game/" + gameID+ "/movesInGame", {method: "GET"} )
+            .then(function(response) {
+                if( !response.ok ){
+                    // el.innerText = "Error code: " + response.status;
+                    // el.style.fontWeight = "bold";
+                    // el.style.color = "red";
+                    console.log("Error");
+                } else {
+                    response.text().then(function (value) {
+                        movesInGame = JSON.parse(value);
+                        currentMove = -1;
+                        console.log(movesInGame);
+                        console.log(redPlayer);
+                        console.log(bluePlayer);
 
-    for( i = 0; i < movesInGame.length; i++) {
-        var row = movesTable.insertRow(i+1);
-        var moveNumberCell = row.insertCell(0);
-        var playerNameCell = row.insertCell(1);
-        var xCoordinateCell = row.insertCell(2);
-        var yCoordinateCell = row.insertCell(3);
-        moveNumberCell.innerHTML = i+1;
-        playerNameCell.innerHTML = movesInGame[i].owner.name;
-        xCoordinateCell.innerHTML = String.fromCharCode(65 + movesInGame[i].x);
-        yCoordinateCell.innerHTML = movesInGame[i].y + 1;
-    }
+                        var movesTable = document.getElementById("movesTable");
+
+                        for( i = 0; i < movesInGame.length; i++) {
+                            var row = movesTable.insertRow(i+1);
+                            var moveNumberCell = row.insertCell(0);
+                            var playerNameCell = row.insertCell(1);
+                            var xCoordinateCell = row.insertCell(2);
+                            var yCoordinateCell = row.insertCell(3);
+                            moveNumberCell.innerHTML = i+1;
+                            playerNameCell.innerHTML = movesInGame[i].owner.name;
+                            xCoordinateCell.innerHTML = String.fromCharCode(65 + movesInGame[i].x);
+                            yCoordinateCell.innerHTML = movesInGame[i].y + 1;
+                            }
+                    });
+                }
+            });
+
+
 };
 
 var previousMoveInReplay = function(){
