@@ -1,22 +1,14 @@
 package core.user;
 
-import java.util.Date;
-
 public class Move {
 
-    private Date date;
     private int x,y;
     private User owner;
 
     public Move(int x, int y, User player) {
-        date = new Date();
         this.x = x;
         this.y = y;
         this.owner = player;
-    }
-
-    public Date getDate() {
-        return date;
     }
 
     public String toString() {

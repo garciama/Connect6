@@ -2,7 +2,6 @@ package core.user;
 
 import org.junit.Before;
 import org.junit.Test;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -42,13 +41,6 @@ public class userPackageTest {
     public void testGetName() {
         assertEquals("test", u1.getName());
         assertEquals("test1", u2.getName());
-    }
-
-    @Test
-    public void testDateAndTime() {
-        Move move = new Move(0, 0, u1);
-        Date date = new Date();
-        assertEquals(move.getDate(),date);
     }
 
     @Test

@@ -4,11 +4,8 @@ import Network.ModelGateway;
 import com.google.gson.Gson;
 import core.Color;
 import core.user.Move;
-
 import java.util.*;
-
 import org.json.JSONObject;
-
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -257,7 +254,6 @@ public class GameResource {
             broadcasterMap.put(id, broadcaster);
             broadcasterMap.get(id).register(eventSink);
         }
-
     }
 
     @GET

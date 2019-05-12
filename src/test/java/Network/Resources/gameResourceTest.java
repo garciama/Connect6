@@ -330,4 +330,34 @@ public class gameResourceTest {
         Assert.assertEquals("true", response);
     }
 
+    @Test
+    public void movesInGameTest() {
+        controller = new GameController();
+        ModelGateway.setController(controller);
+
+        ModelGateway.getController().registerNewPlayer("Sam");
+        ModelGateway.getController().registerNewPlayer("Walker");
+        ModelGateway.getController().newPublicGame("Sam", "Walker");
+
+        String response = client.target(HOST_URI)
+                .path("game/1/movesInGame")
+                .request(MediaType.TEXT_PLAIN)
+                .get(String.class);
+
+        Assert.assertEquals(response, "[]");
+
+        ModelGateway.getController().makeMove(1, 1, 1, "Sam");
+        ModelGateway.getController().makeMove(1, 2,1,"Walker");
+
+
+        response = client.target(HOST_URI)
+                .path("game/1/movesInGame")
+                .request(MediaType.TEXT_PLAIN)
+                .get(String.class);
+
+        Assert.assertEquals(response, "[{\"x\":1,\"y\":1,\"owner\":{\"wins\":0,\"losses\":0,\"ties\":0,\"name\":\"Sam\"}}," +
+                "{\"x\":2,\"y\":1,\"owner\":{\"wins\":0,\"losses\":0,\"ties\":0,\"name\":\"Walker\"}}]");
+
+    }
+
 }
