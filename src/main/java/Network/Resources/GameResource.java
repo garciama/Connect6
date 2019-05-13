@@ -298,4 +298,5 @@ public class GameResource {
         public List<SquareInfo> getBoardSquares(){ return Board; }
     }
 
+    
 }
