@@ -267,6 +267,17 @@
     See Game Replay</button>
 
     <article class="replay" id="replayMovesArticle">
+        <div id="moveButtons">
+            <button class="btn moveButton" id = "previousMoveButton">
+                <i class="fa fa-replay" aria-hidden="true"></i>
+                Previous Move</button>
+
+            <button class="btn moveButton" id = "nextMoveButton">
+                <i class="fa fa-replay" aria-hidden="true"></i>
+                Next Move</button>
+        </div> <br>
+        <small id="currentplayermove"></small>
+
         <table id="movesTable">
             <tr>
                 <th>Move Number</th>
@@ -275,18 +286,6 @@
                 <th>Y-Coordinate</th>
             </tr>
         </table>
-        <br>
-        <div id="moveButtons">
-            <button class="btn moveButton" id = "previousMoveButton">
-                <i class="fa fa-replay" aria-hidden="true"></i>
-                Previous Move</button>
-
-            <button class="btn moveButton" id = "nextMoveButton">
-            <i class="fa fa-replay" aria-hidden="true"></i>
-            Next Move</button>
-        </div>
-        <small id="currentplayermove"></small>
-
     </article>
 
     <footer id="footer">
